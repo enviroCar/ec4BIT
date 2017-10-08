@@ -16,12 +16,17 @@
         <relativePath/><!-- lookup parent from repository -->
     </parent>
     
+    <modules>
+        <module>connector</module>
+    </modules>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
         <maven.compiler.version>3.7.0</maven.compiler.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.license.plugin.version>1.10.b1</maven.license.plugin.version>
         
         <spring.boot.mvn.version>1.5.8.BUILD-SNAPSHOT</spring.boot.mvn.version>
         <spring.boot.version>1.5.8.BUILD-SNAPSHOT</spring.boot.version>
@@ -68,7 +73,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <pluginManagement>
             <plugins>
@@ -93,12 +98,15 @@
                         </execution>
                     </executions>
                 </plugin>
-            </plugins>
+                <plugin>
+                    <groupId>com.mycila.maven-license-plugin</groupId>
+                    <artifactId>maven-license-plugin</artifactId>
+                    <version>${maven.license.plugin.version}</version>
+                </plugin>
+            </plugins>        
         </pluginManagement>
     </build>
-    <modules>
-        <module>connector</module>
-    </modules>
+
     <repositories>
         <repository>
             <id>BIG IoT Repository</id>
