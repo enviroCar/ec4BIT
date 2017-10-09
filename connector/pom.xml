@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.envirocar</groupId>
-        <artifactId>ec4BIT</artifactId>
+        <artifactId>ec4bit</artifactId>
         <version>0.1</version>
     </parent>
     <groupId>org.envirocar.ec4bit</groupId>
@@ -46,10 +46,16 @@
             <scope>test</scope>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+        </dependency>
+        
+        <!-- modules -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
     

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.envirocar</groupId>
-    <artifactId>ec4BIT</artifactId>
+    <artifactId>ec4bit</artifactId>
     <version>0.1</version>
     <packaging>pom</packaging>
     
@@ -17,6 +17,7 @@
     </parent>
     
     <modules>
+        <module>core</module>
         <module>connector</module>
     </modules>
     
@@ -32,6 +33,7 @@
         <spring.boot.version>1.5.8.BUILD-SNAPSHOT</spring.boot.version>
         
         <bigiot.version>0.9.2</bigiot.version>
+        <retrofit.version>2.3.0</retrofit.version>
         <slf4j.version>1.7.25</slf4j.version>
         <commons.logging.version>1.2</commons.logging.version>
     </properties>
@@ -60,6 +62,13 @@
                 <version>${bigiot.version}</version>
             </dependency>
             
+            <!-- Retrofit -->
+            <dependency>
+                <groupId>com.squareup.retrofit2</groupId>
+                <artifactId>retrofit</artifactId>
+                <version>${retrofit.version}</version>
+            </dependency>
+            
             <!-- logging -->
             <dependency>
                 <groupId>commons-logging</groupId>
@@ -75,6 +84,36 @@
     </dependencyManagement>
 
     <build>
+        <plugins>
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <inherited>false</inherited>
+                <configuration>
+                    <aggregate>true</aggregate>
+                    <header>etc/LICENSE_HEADER</header>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                    <strictCheck>true</strictCheck>
+                    <properties>
+                        <author>The enviroCar project</author>
+                        <year>${project.inceptionYear}</year>
+                    </properties>
+                    <mapping>
+                        <java>SLASHSTAR_STYLE</java>
+                    </mapping>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
         <pluginManagement>
             <plugins>
                 <plugin>
