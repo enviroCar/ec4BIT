@@ -18,7 +18,7 @@
  */
 package org.envirocar.ec4bit.connector;
 
-import org.envirocar.ec4bit.core.remote.RepoConfig;
+import org.envirocar.ec4bit.core.RemoteConfiguration;
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -31,7 +31,7 @@ import org.springframework.context.annotation.Import;
  */
 @SpringBootApplication
 @ComponentScan
-@Import(RepoConfig.class)
+@Import(RemoteConfiguration.class)
 public class EC4BITConnector {
 
     public static void main(String[] args) {

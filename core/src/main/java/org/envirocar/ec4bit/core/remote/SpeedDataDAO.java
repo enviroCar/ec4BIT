@@ -20,7 +20,7 @@ package org.envirocar.ec4bit.core.remote;
 
 import java.util.List;
 import okhttp3.ResponseBody;
-import org.envirocar.ec4BIT.core.model.SpeedValue;
+import org.envirocar.ec4bit.core.model.SpeedValue;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

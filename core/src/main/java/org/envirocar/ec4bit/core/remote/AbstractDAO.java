@@ -18,7 +18,8 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-import org.envirocar.ec4BIT.core.model.BaseEntity;
+import org.envirocar.ec4bit.core.model.BaseEntity;
+
 
 /**
  *

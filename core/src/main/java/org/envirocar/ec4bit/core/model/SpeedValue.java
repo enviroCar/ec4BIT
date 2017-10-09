@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4BIT.core.model;
+package org.envirocar.ec4bit.core.model;
 
 /**
  *
@@ -26,6 +26,40 @@ public class SpeedValue implements BaseEntity {
 
     private double longitude;
     private double latitude;
-    private double Speed;
+    private double speed;
+
+    public SpeedValue() {
+        this(0, 0, 0);
+    }
+
+    public SpeedValue(double longitude, double latitude, double speed) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.speed = speed;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
 
 }

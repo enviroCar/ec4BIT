@@ -16,22 +16,25 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.remote;
+package org.envirocar.ec4bit.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import org.envirocar.ec4bit.core.decoder.ECModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 
 /**
  *
  * @author Arne de Wall <a.dewall@52north.org>
  */
 @Configuration
-public class RepoConfig {
+public class RemoteConfiguration {
 
     private static HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://envirocar.org/api/stable/");
 
@@ -51,8 +54,15 @@ public class RepoConfig {
     }
 
     @Bean
-    public Retrofit retrofit(HttpUrl baseUrl, OkHttpClient client) {
+    public ObjectMapper createObjectMapper() {
+        return new ObjectMapper()
+                .registerModule(new ECModule());
+    }
+
+    @Bean
+    public Retrofit retrofit(HttpUrl baseUrl, OkHttpClient client, ObjectMapper mapper) {
         return new Retrofit.Builder()
+                .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .baseUrl(baseUrl)
                 .client(client)
                 .build();
