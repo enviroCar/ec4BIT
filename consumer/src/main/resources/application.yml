@@ -1,0 +1,5 @@
+spring.application.name: TestConsumer
+
+bigiot:
+    marketplace:
+        url: https://market.big-iot.org
