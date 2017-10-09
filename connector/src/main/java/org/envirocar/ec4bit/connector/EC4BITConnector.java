@@ -36,6 +36,7 @@ public class EC4BITConnector {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(EC4BITConnector.class)
+                .properties("spring.config.name:application,secret")
                 .web(true)
                 .bannerMode(Banner.Mode.CONSOLE)
                 .run(args);

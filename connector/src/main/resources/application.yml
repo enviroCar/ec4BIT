@@ -1,0 +1,23 @@
+spring.application.name: Connector
+
+ec4bit:
+    contact: envirocar@52north.org
+
+envirocar:
+    url: http://envirocar.org/api/stable
+
+bigiot:
+    marketplace: 
+        url:  https://market.big-iot.org
+    provider:
+#        id: @id@
+#        secret: @secret@
+        address: localhost
+        port: 7777
+    applications:
+        speed_data:
+            local_id: speed-offering
+            name: Traffic Speed Values
+            route: speedvalues
+            
+            

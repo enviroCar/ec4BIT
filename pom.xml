@@ -24,10 +24,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         
+        <!-- plugins -->
+        <maven.license.plugin.version>1.10.b1</maven.license.plugin.version>
+        <maven.replacer.version>1.5.3</maven.replacer.version>
+        <maven.properties.version>1.0.0</maven.properties.version>
+                
         <maven.compiler.version>3.7.0</maven.compiler.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.license.plugin.version>1.10.b1</maven.license.plugin.version>
         
         <spring.boot.mvn.version>1.5.8.BUILD-SNAPSHOT</spring.boot.mvn.version>
         <spring.boot.version>1.5.8.BUILD-SNAPSHOT</spring.boot.version>

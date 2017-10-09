@@ -39,6 +39,7 @@ public class EC4BITConfiguration {
             @Value("${bigiot.provider.address") String localDomain,
             @Value("${bigiot.provider.port}") int port,
             @Value("${bigiot.provider.secret}") String secret) throws IOException {
+        System.out.println(providerId + " : " + secret);
         Provider provider = new ProviderSpark(providerId, marketplaceUri, localDomain, port);
         provider.authenticate(secret);
         return provider;
