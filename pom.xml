@@ -19,6 +19,7 @@
     <modules>
         <module>core</module>
         <module>connector</module>
+        <module>testconsumer</module>
     </modules>
     
     <properties>
