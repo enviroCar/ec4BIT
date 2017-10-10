@@ -16,32 +16,37 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.remote.services;
+package org.envirocar.ec4bit.core.model;
 
-import okhttp3.ResponseBody;
-import org.envirocar.ec4bit.core.model.SpeedValues;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author Arne de Wall <a.dewall@52north.org>
+ * @author hafenkran
  */
-public interface MeasurementService {
+public class SpeedValues {
 
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse();
+    private List<SpeedValue> speedValues;
 
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox);
+    public SpeedValues() {
+        this.speedValues = new ArrayList<>();
+    }
 
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
+    public void addSpeedValue(SpeedValue speedValue) {
+        this.speedValues.add(speedValue);
+    }
 
-    @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues();
+    public List<SpeedValue> getSpeedValues() {
+        return speedValues;
+    }
 
-    @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
+    public void setSpeedValues(List<SpeedValue> speedValues) {
+        this.speedValues = speedValues;
+    }
+
+    @Override
+    public String toString() {
+        return "SpeedValues{" + "speedValues=" + speedValues + '}';
+    }
 }

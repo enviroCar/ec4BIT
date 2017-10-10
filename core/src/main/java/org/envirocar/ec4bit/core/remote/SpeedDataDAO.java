@@ -43,7 +43,7 @@ public class SpeedDataDAO implements AbstractDAO<SpeedValue> {
         String bboxString = String.join(",", String.valueOf(bbox[0]), String.valueOf(bbox[1]),
                 String.valueOf(bbox[2]), String.valueOf(bbox[3]));
 
-        Call<ResponseBody> measurements = measurementService.getMeasurements();
+        Call<ResponseBody> measurements = measurementService.getAsRawResponse();
         return null;
     }
 

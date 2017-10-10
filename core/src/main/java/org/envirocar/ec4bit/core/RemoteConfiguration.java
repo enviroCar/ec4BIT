@@ -55,8 +55,9 @@ public class RemoteConfiguration {
 
     @Bean
     public ObjectMapper createObjectMapper() {
-        return new ObjectMapper()
-                .registerModule(new ECModule());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new ECModule());
+        return mapper;
     }
 
     @Bean
