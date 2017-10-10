@@ -52,7 +52,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
     public void afterPropertiesSet() throws Exception {
         this.offeringDescription = getOfferingDescription();
         this.provider.register(getOfferingDescription());
-        this.enableSwagger(offeringDescription);
+//        this.enableSwagger(offeringDescription);
     }
 
     @Override
