@@ -30,7 +30,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  *
- * @author dewall   
+ * @author dewall
  */
 @SpringBootApplication
 @ComponentScan
@@ -38,6 +38,7 @@ public class TestApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(TestApplication.class)
+                .properties("spring.config.name:application,secret")
                 .web(false)
                 .bannerMode(Banner.Mode.OFF)
                 .run(args);
