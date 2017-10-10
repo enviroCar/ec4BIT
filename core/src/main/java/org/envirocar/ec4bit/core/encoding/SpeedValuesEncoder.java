@@ -16,29 +16,23 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.connector;
+package org.envirocar.ec4bit.core.encoding;
 
-import org.envirocar.ec4bit.core.RemoteConfiguration;
-import org.springframework.boot.Banner;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
+import org.envirocar.ec4bit.core.model.SpeedValues;
 
 /**
  *
  * @author hafenkran
  */
-@SpringBootApplication
-@ComponentScan({"org.envirocar.ec4bit"})
-@Import(RemoteConfiguration.class)
-public class EC4BITConnector {
+public class SpeedValuesEncoder extends BaseJSONEncoder<SpeedValues>{
 
-    public static void main(String[] args) {
-        new SpringApplicationBuilder(EC4BITConnector.class)
-                .properties("spring.config.name:application,secret")
-                .web(true)
-                .bannerMode(Banner.Mode.CONSOLE)
-                .run(args);
+    @Override
+    public void serialize(SpeedValues value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        writeArrayOfObjects(gen, value.getSpeedValues());
     }
+
 }

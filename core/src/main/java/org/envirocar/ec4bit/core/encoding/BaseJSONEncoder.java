@@ -16,24 +16,32 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.decoder;
+package org.envirocar.ec4bit.core.encoding;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.envirocar.ec4bit.core.encoding.SpeedValueEncoder;
-import org.envirocar.ec4bit.core.encoding.SpeedValuesEncoder;
-import org.envirocar.ec4bit.core.model.SpeedValue;
-import org.envirocar.ec4bit.core.model.SpeedValues;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import java.io.IOException;
+import java.util.List;
 
 /**
  *
  * @author dewall
  */
-public class ECModule extends SimpleModule {
+public abstract class BaseJSONEncoder<T> extends JsonSerializer<T> {
 
-    public ECModule() {
-        this.addSerializer(SpeedValue.class, new SpeedValueEncoder());
-        this.addSerializer(SpeedValues.class, new SpeedValuesEncoder());
-        this.addDeserializer(SpeedValues.class, new SpeedValuesDecoder());
+    protected final void writeArrayOfObjects(JsonGenerator gen, String fieldName, List<?> objects) throws IOException {
+        gen.writeArrayFieldStart(fieldName);
+        for (Object o : objects) {
+            gen.writeObject(o);
+        }
+        gen.writeEndArray();
     }
 
+    protected final void writeArrayOfObjects(JsonGenerator gen, List<?> objects) throws IOException {
+        gen.writeStartArray();
+        for (Object o : objects) {
+            gen.writeObject(o);
+        }
+        gen.writeEndArray();
+    }
 }

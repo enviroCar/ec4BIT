@@ -16,24 +16,27 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.decoder;
+package org.envirocar.ec4bit.core.encoding;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.envirocar.ec4bit.core.encoding.SpeedValueEncoder;
-import org.envirocar.ec4bit.core.encoding.SpeedValuesEncoder;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
 import org.envirocar.ec4bit.core.model.SpeedValue;
-import org.envirocar.ec4bit.core.model.SpeedValues;
 
 /**
  *
  * @author dewall
  */
-public class ECModule extends SimpleModule {
+public class SpeedValueEncoder extends BaseJSONEncoder<SpeedValue> {
 
-    public ECModule() {
-        this.addSerializer(SpeedValue.class, new SpeedValueEncoder());
-        this.addSerializer(SpeedValues.class, new SpeedValuesEncoder());
-        this.addDeserializer(SpeedValues.class, new SpeedValuesDecoder());
+    @Override
+    public void serialize(SpeedValue value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        gen.writeStartObject();
+        gen.writeObjectField("longitude", value.getLongitude());
+        gen.writeObjectField("latitude", value.getLatitude());
+        gen.writeObjectField("speed", value.getSpeed());
+        gen.writeEndObject();
     }
 
 }
