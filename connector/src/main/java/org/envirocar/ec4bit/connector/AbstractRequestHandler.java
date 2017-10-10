@@ -24,7 +24,10 @@ import java.util.Map;
 import org.eclipse.bigiot.lib.handlers.AccessRequestHandler;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
+import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.SpatialFilter;
+import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,20 +78,37 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         }
     }
 
-    protected <T> T checkAndGetValue(String key, Map<String, Object> input) throws Exception {
+    protected <T> T checkAndGetValue(String key, Map<String, Object> input) throws KeyNotFoundException {
         if (!input.containsKey(key)) {
-            throw new Exception("Key does not exist: " + key);
+            throw new KeyNotFoundException(key);
         }
         return (T) input.get(key);
     }
 
-    protected double[] getBoundingBoxParams(Map<String, Object> input) throws Exception {
+    protected SpatialFilter getSpatialFilterParams(Map<String, Object> input) throws KeyNotFoundException {
+        Map<String, Object> bbox = checkAndGetValue(BBOX, input);
+        double xMax = Double.valueOf(checkAndGetValue(BBOX_XMAX, bbox));
+        double yMax = Double.valueOf(checkAndGetValue(BBOX_YMAX, bbox));
+        double xMin = Double.valueOf(checkAndGetValue(BBOX_XMIN, bbox));
+        double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
+        return new SpatialFilter(xMin, yMin, xMax, yMax);
+    }
+
+    protected double[] getBoundingBoxParams(Map<String, Object> input) throws KeyNotFoundException {
         Map<String, Object> bbox = checkAndGetValue(BBOX, input);
         double xMax = Double.valueOf(checkAndGetValue(BBOX_XMAX, bbox));
         double yMax = Double.valueOf(checkAndGetValue(BBOX_YMAX, bbox));
         double xMin = Double.valueOf(checkAndGetValue(BBOX_XMIN, bbox));
         double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
         return new double[]{xMin, yMin, xMax, yMax};
+    }
+
+    protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) {
+        return null; // TODO 
+    }
+
+    protected int getPageParam(Map<String, Object> input) throws Exception {
+        return Integer.valueOf(checkAndGetValue(PAGE, input));
     }
 
     public abstract E processRequest(OfferingDescription od, Map<String, Object> map) throws RequestProcessingException;

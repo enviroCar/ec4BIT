@@ -16,17 +16,20 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.remote;
-
-import org.envirocar.ec4bit.core.model.BaseEntity;
+package org.envirocar.ec4bit.connector.exception;
 
 /**
  *
- * @author hafenkran
- * @param <E>
- * @param <F>
+ * @author dewall
  */
-public interface AbstractDAO<E extends BaseEntity, F> {
+public class KeyNotFoundException extends Exception {
 
-    E get(F filter);
+    /**
+     * Constructor.
+     *
+     * @param key the key value.
+     */
+    public KeyNotFoundException(String key) {
+        super("Key does not exist: " + key);
+    }
 }

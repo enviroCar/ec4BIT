@@ -23,9 +23,9 @@ import java.util.List;
 
 /**
  *
- * @author hafenkran
+ * @author dewall
  */
-public class SpeedValues {
+public class SpeedValues implements BaseEntity {
 
     private List<SpeedValue> speedValues;
 
@@ -45,8 +45,4 @@ public class SpeedValues {
         this.speedValues = speedValues;
     }
 
-    @Override
-    public String toString() {
-        return "SpeedValues{" + "speedValues=" + speedValues + '}';
-    }
 }

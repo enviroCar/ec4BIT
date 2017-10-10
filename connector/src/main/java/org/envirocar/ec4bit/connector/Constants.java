@@ -16,7 +16,6 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-
 package org.envirocar.ec4bit.connector;
 
 /**
@@ -24,15 +23,19 @@ package org.envirocar.ec4bit.connector;
  * @author hafenkran
  */
 interface Constants {
+
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
+
+    static final String PAGE = "page";
+    static final String TIME = "time";
 
     static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
     static final String BBOX_YMIN = "yMin";
     static final String BBOX_XMAX = "xMax";
     static final String BBOX_YMAX = "yMax";
-    
+
     static final String SCHEMA_BBOX = "schema:BBox";
     static final String SCHEMA_BBOX_XMIN = "schema:xMin";
     static final String SCHEMA_BBOX_YMIN = "schema:yMin";

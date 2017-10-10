@@ -21,14 +21,17 @@ package org.envirocar.ec4bit.connector.producer;
 import java.util.Map;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
+import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.SpatialFilter;
+import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
+import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.SpeedValues;
-import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+import org.envirocar.ec4bit.core.remote.SpeedValuesDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import retrofit2.Call;
 
 /**
  *
@@ -40,7 +43,7 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
     private static final Logger LOG = LoggerFactory.getLogger(SpeedRequestHandler.class);
 
     @Autowired
-    private MeasurementService measurementService;
+    private SpeedValuesDAO speedValuesDao;
 
     /**
      * Constructor.
@@ -52,10 +55,23 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
     @Override
     public SpeedValues processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
-            double[] bbox = getBoundingBoxParams(input);
-            Call<SpeedValues> asSpeedValues = this.measurementService.getAsSpeedValues(2);
-            return asSpeedValues.execute().body();
-        } catch (Exception ex) {
+            SpatialFilter spatialFilter = null;
+            TemporalFilter temporalFilter = null;
+            Integer page = null;
+
+            if (input.containsKey(BBOX)) {
+                spatialFilter = getSpatialFilterParams(input);
+            }
+            if (input.containsKey(TIME)) {
+                temporalFilter = getTemporalFilterParams(input);
+            }
+            if (input.containsKey(PAGE)) {
+                page = checkAndGetValue(PAGE, input);
+            }
+
+            SpeedValueFilter filter = new SpeedValueFilter(spatialFilter, temporalFilter, page);
+            return speedValuesDao.get(filter);
+        } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
         }
     }

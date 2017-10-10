@@ -89,8 +89,8 @@ public class SpeedDataConsumer {
             AccessParameters accessParameters = AccessParameters.create()
                     .addNameValue("bbox", AccessParameters.create()
                             .addNameValue("xMin", 50.22)
-                            .addNameValue("yMin", 8.11)
-                            .addNameValue("xMax", 50.22)
+                            .addNameValue("yMin", 7.11)
+                            .addNameValue("xMax", 52.22)
                             .addNameValue("yMax", 8.11));
 
             // Create an Access Feed with callbacks for the received results		
