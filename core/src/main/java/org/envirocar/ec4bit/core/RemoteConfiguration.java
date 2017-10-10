@@ -19,6 +19,7 @@
 package org.envirocar.ec4bit.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.concurrent.TimeUnit;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import okhttp3.HttpUrl;
@@ -71,7 +72,10 @@ public class RemoteConfiguration {
 
     @Bean
     public OkHttpClient okHttpClient() {
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .connectTimeout(15, TimeUnit.SECONDS)
+                .readTimeout(15, TimeUnit.SECONDS)
+                .build();
         return client;
     }
 
