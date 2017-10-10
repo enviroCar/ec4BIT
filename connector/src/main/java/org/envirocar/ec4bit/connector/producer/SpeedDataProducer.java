@@ -41,9 +41,9 @@ public class SpeedDataProducer extends EC4BITProducer {
 
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:trafficSpeed";
 
-    @Value("${bigiot.applications.speeddata.local_id")
+    @Value("${bigiot.applications.speeddata.local_id}")
     private String localId;
-    @Value("${bigiot.applications.speeddata.name}")
+    @Value("${bigiot.applications.speeddata.name}") 
     private String name;
     @Value("${bigiot.applications.speeddata.route}")
     private String route;
