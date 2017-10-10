@@ -18,41 +18,45 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
-import java.util.List;
 import java.util.Map;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
-import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
-import org.envirocar.ec4bit.core.model.SpeedValue;
-import org.envirocar.ec4bit.core.remote.SpeedDataDAO;
+import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.model.SpeedValues;
+import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import retrofit2.Call;
 
 /**
  *
- * @author hafenkran
+ * @author dewall
  */
 @Component
-public class SpeedRequestHandler extends AbstractRequestHandler {
+public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(SpeedRequestHandler.class);
 
     @Autowired
-    private SpeedDataDAO speedDataDAO;
+    private MeasurementService measurementService;
 
-    @Override
-    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> input) {
-        try {
-            double[] bbox = getBoundingBoxParams(input);
-            List<SpeedValue> entities = speedDataDAO.getEntities(bbox);
-
-            return BigIotHttpResponse.okay()
-                    //                    .withBody(blockingGet.get(0).string())
-                    .asJsonType();
-        } catch (Exception ex) {
-            return BigIotHttpResponse.error()
-                    .withBody("{\"status\":\"error\"}")
-                    .withStatus(422)
-                    .asJsonType();
-        }
+    /**
+     * Constructor.
+     */
+    public SpeedRequestHandler() {
+        super(SpeedValues.class);
     }
 
+    @Override
+    public SpeedValues processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+        try {
+            double[] bbox = getBoundingBoxParams(input);
+            Call<SpeedValues> asSpeedValues = this.measurementService.getAsSpeedValues(2);
+            return asSpeedValues.execute().body();
+        } catch (Exception ex) {
+            throw new RequestProcessingException(ex.getMessage(), 500);
+        }
+    }
 }

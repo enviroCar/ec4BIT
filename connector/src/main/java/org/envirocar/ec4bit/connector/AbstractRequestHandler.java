@@ -16,17 +16,64 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-
 package org.envirocar.ec4bit.connector;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 import org.eclipse.bigiot.lib.handlers.AccessRequestHandler;
+import org.eclipse.bigiot.lib.offering.OfferingDescription;
+import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
+import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
- * @author hafenkran
+ * @author dewall
  */
-public abstract class AbstractRequestHandler implements AccessRequestHandler, Constants {
+public abstract class AbstractRequestHandler<E> implements AccessRequestHandler, Constants {
+
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractRequestHandler.class);
+
+    @Autowired
+    private ObjectMapper mapper;
+
+    private Class<? extends E> clazz;
+
+    /**
+     * Constructor.
+     *
+     * @param clazz
+     */
+    public AbstractRequestHandler(Class<? extends E> clazz) {
+        this.clazz = clazz;
+    }
+
+    @Override
+    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map) {
+        try {
+            E responseEntity = processRequest(od, map);
+            String body = mapper.writeValueAsString(responseEntity);
+
+            return BigIotHttpResponse.okay()
+                    .withBody(body)
+                    .asJsonType();
+        } catch (RequestProcessingException e) {
+            LOG.error(e.getMessage(), e);
+            return BigIotHttpResponse.error()
+                    .withBody("{\"status\":\"error\"}")
+                    .withStatus(e.getErrorCode())
+                    .asJsonType();
+        } catch (JsonProcessingException e) {
+            LOG.error(e.getMessage(), e);
+            return BigIotHttpResponse.error()
+                    .withBody("{\"status\":\"error\"}")
+                    .withStatus(422)
+                    .asJsonType();
+        }
+    }
 
     protected <T> T checkAndGetValue(String key, Map<String, Object> input) throws Exception {
         if (!input.containsKey(key)) {
@@ -43,4 +90,6 @@ public abstract class AbstractRequestHandler implements AccessRequestHandler, Co
         double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
         return new double[]{xMin, yMin, xMax, yMax};
     }
+
+    public abstract E processRequest(OfferingDescription od, Map<String, Object> map) throws RequestProcessingException;
 }
