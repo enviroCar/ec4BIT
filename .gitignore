@@ -23,5 +23,5 @@ hs_err_pid*
 /connector/target/
 **/secret.yml
 /core/target/
-
+**/www/
 /consumer/target/

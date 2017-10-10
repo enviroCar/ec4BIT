@@ -10,12 +10,10 @@ bigiot:
     marketplace: 
         url:  https://market.big-iot.org
     provider:
-#        id: @id@
-#        secret: @secret@
         address: localhost
         port: 7777
     applications:
-        speed_data:
+        speeddata:
             local_id: speed-offering
             name: Traffic Speed Values
             route: speedvalues
