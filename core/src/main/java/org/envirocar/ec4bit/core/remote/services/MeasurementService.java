@@ -46,12 +46,6 @@ public interface MeasurementService {
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
     @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox);
-
-    @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("page") int page);
-
-    @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("time") String time,
             @Query("page") Integer page);
 }
