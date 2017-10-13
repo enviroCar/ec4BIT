@@ -86,11 +86,9 @@ public class TemporalFilter {
         return true;
     }
 
-    // TODO: fix with dynmaic values from start and end DateTime objects:
     public String string() {
         return String.join(",", String.valueOf(start.toString(TEMPORAL_TIME_PATTERN)),
                             String.valueOf(end.toString(TEMPORAL_TIME_PATTERN)));
-//        return "2017-09-21T11:49:57Z,2017-10-27T11:49:57Z";
     }
 
     @Override

@@ -27,14 +27,12 @@ import retrofit2.http.Query;
 /**
  *
  * @author Arne de Wall <a.dewall@52north.org>
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 public interface MeasurementService {
 
     @GET("measurements/")
     Call<ResponseBody> getAsRawResponse();
-
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox);
 
     @GET("measurements/")
     Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
@@ -50,11 +48,6 @@ public interface MeasurementService {
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
     @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox);
-    @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("page") int page);
-
-    @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("during") String during, 
+    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("during") String time,
             @Query("page") Integer page);
 }

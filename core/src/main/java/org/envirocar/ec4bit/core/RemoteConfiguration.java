@@ -53,7 +53,7 @@ public class RemoteConfiguration {
     public MeasurementService createMeasurementService(Retrofit retrofit) {
         return retrofit.create(MeasurementService.class);
     }
-
+    
     @Bean
     public ObjectMapper createObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();

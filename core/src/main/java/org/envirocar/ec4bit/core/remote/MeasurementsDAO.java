@@ -32,9 +32,9 @@ import retrofit2.Call;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class MeasurementsDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementsDAO.class);
@@ -56,8 +56,6 @@ public class MeasurementsDAO {
             timeParam = temp.string();
         }
 
-//        Call<ResponseBody> asMeasurements = measurementService
-//                .getAsRawResponse(bboxParam, timeBeforeParam);
         Call<ResponseBody> asMeasurements = measurementService
                 .getAsRawResponse(bboxParam, timeParam, filter.getPage());
 

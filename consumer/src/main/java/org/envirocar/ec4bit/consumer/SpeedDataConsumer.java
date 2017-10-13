@@ -41,7 +41,10 @@ import org.eclipse.bigiot.lib.offering.AccessParameters;
 import org.eclipse.bigiot.lib.offering.Offering;
 import org.eclipse.bigiot.lib.offering.SubscribableOfferingDescription;
 import org.eclipse.bigiot.lib.query.OfferingQuery;
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -49,8 +52,10 @@ import org.springframework.stereotype.Component;
  *
  * @author dewall
  */
-//@Component
+@Component
 public class SpeedDataConsumer {
+
+    private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
     public SpeedDataConsumer(
             @Value("${bigiot.consumer.id}") String consumerId,
@@ -86,12 +91,18 @@ public class SpeedDataConsumer {
             }
 
             // Prepare Access Parameters
+            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-22T06:06:44");
+            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-30T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
                     .addNameValue("bbox", AccessParameters.create()
                             .addNameValue("xMin", 50.22)
                             .addNameValue("yMin", 7.11)
                             .addNameValue("xMax", 52.22)
-                            .addNameValue("yMax", 8.11));
+                            .addNameValue("yMax", 8.0))
+                    .addNameValue("during", AccessParameters.create()
+                            .addNameValue("startDate", startDT)
+                            .addNameValue("endDate", endDT))
+                    .addNameValue("page", 1);
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

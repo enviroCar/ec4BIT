@@ -28,6 +28,7 @@ import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.remote.SpeedValuesDAO;
+import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
 
     @Autowired
     private SpeedValuesDAO speedValuesDao;
+    @Autowired
+    private MeasurementService measurementService;
 
     /**
      * Constructor.

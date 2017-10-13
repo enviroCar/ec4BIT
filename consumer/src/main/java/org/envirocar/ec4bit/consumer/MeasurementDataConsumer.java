@@ -45,13 +45,12 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
 public class MeasurementDataConsumer {
@@ -101,7 +100,8 @@ public class MeasurementDataConsumer {
                             .addNameValue("yMax", 8.00))
                     .addNameValue("during", AccessParameters.create()
                             .addNameValue("startDate", startDT)
-                            .addNameValue("endDate", endDT));
+                            .addNameValue("endDate", endDT))
+                    .addNameValue("page", 1);
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

@@ -34,9 +34,9 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author Arne de Wall <a.dewall@52north.org>
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class MeasurementProducer extends EC4BITProducer {
 
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
@@ -67,6 +67,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addInputData("during", new RDFType("schema:timeInterval"), IOData.createMembers()
                         .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                         .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                .addInputData("page", new RDFType("schema:page"), ValueType.NUMBER)
                 .addOutputData("measurement", new RDFType("schema:drivingMeasurement"), IOData.createMembers()
                         .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
                                 .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)

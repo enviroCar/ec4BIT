@@ -20,7 +20,7 @@ package org.envirocar.ec4bit.core.filter;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 public class MeasurementFilter {
 

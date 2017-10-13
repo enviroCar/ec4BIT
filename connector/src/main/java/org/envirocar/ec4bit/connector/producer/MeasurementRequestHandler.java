@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
 public class MeasurementRequestHandler extends AbstractRequestHandler<String> {

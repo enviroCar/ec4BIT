@@ -74,6 +74,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                         .addInputData(BBOX_YMAX, new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
                 .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
                         .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME));
+                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                .addInputData(PAGE, new RDFType("schema:page"), ValueType.NUMBER);
     }
 }
