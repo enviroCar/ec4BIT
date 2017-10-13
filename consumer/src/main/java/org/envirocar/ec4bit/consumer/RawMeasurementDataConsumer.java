@@ -53,11 +53,11 @@ import org.springframework.stereotype.Component;
  * @author Maurin Radtke <m.radtke@52north.org>
  */
 //@Component
-public class MeasurementDataConsumer {
+public class RawMeasurementDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public MeasurementDataConsumer(
+    public RawMeasurementDataConsumer(
             @Value("${bigiot.consumer.id}") String consumerId,
             @Value("${bigiot.marketplace.url}") String marketplaceUrl,
             @Value("${bigiot.consumer.secret}") String consumerSecret) throws IOException, IncompleteOfferingQueryException, InterruptedException, ExecutionException, AccessToNonActivatedOfferingException, AccessToNonSubscribedOfferingException {
@@ -65,7 +65,7 @@ public class MeasurementDataConsumer {
         consumer.authenticate(consumerSecret);
 
         OfferingQuery query = OfferingQuery.create("MeasurementsDataQuery")
-                .withInformation(new Information("MeasurementsDataQuery", "bigiot:DrivingMeasurements"))
+                .withInformation(new Information("MeasurementsDataQuery", "bigiot:RawMeasurements"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.003))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);

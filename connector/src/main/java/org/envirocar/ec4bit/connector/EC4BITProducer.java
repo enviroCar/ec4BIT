@@ -41,7 +41,6 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
 
     @Autowired
     protected Provider provider;
-
     protected RegistrableOfferingDescription offeringDescription;
 
     protected abstract RegistrableOfferingDescription getOfferingDescription();
@@ -75,6 +74,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
                         .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                         .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData(PAGE, new RDFType("schema:page"), ValueType.NUMBER);
+                .addInputData(PAGE, new RDFType(SCHEMA_PAGE), IOData.createMembers()
+                        .addInputData(PAGE_NUMBER, new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER));
     }
 }

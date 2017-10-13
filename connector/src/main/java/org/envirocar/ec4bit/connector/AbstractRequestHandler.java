@@ -27,6 +27,7 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.joda.time.format.DateTimeFormat;
@@ -104,6 +105,12 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
         return new double[]{xMin, yMin, xMax, yMax};
     }
+    
+    protected PaginationFilter getPaginationFilterParams(Map<String, Object> input) throws KeyNotFoundException {
+        Map<String, Object> page = checkAndGetValue(PAGE, input);
+        int pageNumber = Integer.valueOf(checkAndGetValue(PAGE_NUMBER, page));
+        return new PaginationFilter(pageNumber);
+    }
 
     protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         Map<String, Object> during = checkAndGetValue(DURING, input);
@@ -138,10 +145,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                 DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
 
         return new TemporalFilter(dt_start, dt_end);
-    }
-
-    protected int getPageParam(Map<String, Object> input) throws Exception {
-        return Integer.valueOf(checkAndGetValue(PAGE, input));
     }
 
     public abstract E processRequest(OfferingDescription od, Map<String, Object> map) throws RequestProcessingException;

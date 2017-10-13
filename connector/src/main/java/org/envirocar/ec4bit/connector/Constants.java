@@ -28,6 +28,10 @@ interface Constants {
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
 
     static final String PAGE = "page";
+    static final String PAGE_NUMBER = "pageNumber";
+    
+    static final String SCHEMA_PAGE = "schema:Pagination";
+    static final String SCHEMA_PAGE_NUMBER= "schema:pageNumber";
     
     static final String DURING = "during";
     static final String DURING_START = "startDate";

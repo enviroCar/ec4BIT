@@ -18,10 +18,64 @@
  */
 package org.envirocar.ec4bit.core.filter;
 
+import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author dewall
  */
 public class PaginationFilter {
     
+    private static final Logger LOG = LoggerFactory.getLogger(PaginationFilter.class);
+    
+    private final int page;
+    
+    /**
+     * Constructor
+     * 
+     * @param page
+     */
+    public PaginationFilter(int page) {
+        this.page = page;
+    }
+    
+    public int getPage() {
+        return this.page;
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.page);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final PaginationFilter other = (PaginationFilter) obj;
+        if (!Objects.equals(this.page, other.page)) {
+            return false;
+        }
+        return true;
+    }
+
+    public String string() {
+        return String.valueOf(page);
+    }
+
+    @Override
+    public String toString() {
+        return "PaginationFilter{" + "page=" + page + "}";
+    }
 }

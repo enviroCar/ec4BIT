@@ -19,10 +19,11 @@
 package org.envirocar.ec4bit.core.remote;
 
 import java.io.IOException;
-import okhttp3.ResponseBody;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
+import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +33,21 @@ import retrofit2.Call;
 
 /**
  *
- * @author Maurin Radtke <m.radtke@52north.org>
+ * @author dewall
  */
-//@Component
-public class MeasurementsDAO {
+@Component
+public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementsDAO.class);
 
     @Autowired
     private MeasurementService measurementService;
 
-//    @Override
-    public String get(MeasurementFilter filter) {
+    @Override
+    public Measurements get(MeasurementFilter filter) {
         String bboxParam = null;
         String timeParam = null;
+        String pageParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -55,13 +57,16 @@ public class MeasurementsDAO {
             TemporalFilter temp = filter.getTemporalFilter();
             timeParam = temp.string();
         }
+        if (filter.hasPaginationFilter()) {
+            PaginationFilter temp = filter.getPaginationFilter();
+            pageParam = temp.string();
+        }
 
-        Call<ResponseBody> asMeasurements = measurementService
-                .getAsRawResponse(bboxParam, timeParam, filter.getPage());
-
+        Call<Measurements> asMeasurements= measurementService
+                .getAsMeasurements(bboxParam, timeParam, pageParam);
         try {
-            ResponseBody body = asMeasurements.execute().body();
-            return body.string();
+            Measurements body = asMeasurements.execute().body();
+            return body;
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
         }

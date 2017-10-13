@@ -25,24 +25,24 @@ import java.util.List;
  *
  * @author dewall
  */
-public class SpeedValues implements BaseEntity {
+public class Measurements implements BaseEntity {
 
-    private List<SpeedValue> speedValues;
+    private List<Measurement> measurements;
 
-    public SpeedValues() {
-        this.speedValues = new ArrayList<>();
+    public Measurements() {
+        this.measurements = new ArrayList<>();
     }
 
-    public void addSpeedValue(SpeedValue speedValue) {
-        this.speedValues.add(speedValue);
+    public void addMeasurement(Measurement measurement) {
+        this.measurements.add(measurement);
     }
 
-    public List<SpeedValue> getSpeedValues() {
-        return speedValues;
+    public List<Measurement> getMeasurements() {
+        return measurements;
     }
 
-    public void setSpeedValues(List<SpeedValue> speedValues) {
-        this.speedValues = speedValues;
+    public void setMeasurements(List<Measurement> measurement) {
+        this.measurements = measurement;
     }
 
 }

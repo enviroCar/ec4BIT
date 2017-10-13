@@ -25,9 +25,10 @@ import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
+import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.remote.MeasurementsDAO;
+import org.envirocar.ec4bit.core.remote.RawMeasurementsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<String> {
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementRequestHandler.class);
 
     @Autowired
-    private MeasurementsDAO measurementsDao;
+    private RawMeasurementsDAO measurementsDao;
 
     /**
      * Constructor.
@@ -57,7 +58,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<String> {
         try {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
-            Integer page = null;
+            PaginationFilter paginationFilter = null;
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
@@ -66,10 +67,10 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<String> {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {
-                page = checkAndGetValue(PAGE, input);
+                paginationFilter = getPaginationFilterParams(input);
             }
 
-            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, page);
+            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, paginationFilter);
             return measurementsDao.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);

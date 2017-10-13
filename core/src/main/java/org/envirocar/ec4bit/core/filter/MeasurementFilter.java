@@ -26,7 +26,7 @@ public class MeasurementFilter {
 
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
-    private final Integer page;
+    private final PaginationFilter paginationFilter;
 
     /**
      * Constructor.
@@ -49,10 +49,10 @@ public class MeasurementFilter {
     /**
      * Constructor.
      *
-     * @param page
+     * @param paginationFilter
      */
-    public MeasurementFilter(Integer page) {
-        this(null, null, page);
+    public MeasurementFilter(PaginationFilter paginationFilter) {
+        this(null, null, paginationFilter);
     }
 
     /**
@@ -60,12 +60,12 @@ public class MeasurementFilter {
      *
      * @param spatialFilter
      * @param temporalFilter
-     * @param page
+     * @param paginationFilter
      */
-    public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, Integer page) {
+    public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
-        this.page = page;
+        this.paginationFilter = paginationFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -84,12 +84,12 @@ public class MeasurementFilter {
         return this.temporalFilter != null;
     }
 
-    public Integer getPage() {
-        return page;
+    public PaginationFilter getPaginationFilter() {
+        return paginationFilter;
     }
 
-    public boolean hasPage() {
-        return page != null;
+    public boolean hasPaginationFilter() {
+        return this.paginationFilter != null;
     }
 
 }

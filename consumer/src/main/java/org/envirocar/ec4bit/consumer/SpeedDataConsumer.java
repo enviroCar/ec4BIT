@@ -102,7 +102,8 @@ public class SpeedDataConsumer {
                     .addNameValue("during", AccessParameters.create()
                             .addNameValue("startDate", startDT)
                             .addNameValue("endDate", endDT))
-                    .addNameValue("page", 1);
+                    .addNameValue("page", AccessParameters.create()
+                            .addNameValue("pageNumber", 1));
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

@@ -16,33 +16,23 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.model;
+package org.envirocar.ec4bit.core.encoding;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
+import org.envirocar.ec4bit.core.model.Measurements;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class SpeedValues implements BaseEntity {
+public class MeasurementsEncoder extends BaseJSONEncoder<Measurements>{
 
-    private List<SpeedValue> speedValues;
-
-    public SpeedValues() {
-        this.speedValues = new ArrayList<>();
-    }
-
-    public void addSpeedValue(SpeedValue speedValue) {
-        this.speedValues.add(speedValue);
-    }
-
-    public List<SpeedValue> getSpeedValues() {
-        return speedValues;
-    }
-
-    public void setSpeedValues(List<SpeedValue> speedValues) {
-        this.speedValues = speedValues;
+    @Override
+    public void serialize(Measurements measurements, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+        writeArrayOfObjects(gen, measurements.getMeasurements());
     }
 
 }

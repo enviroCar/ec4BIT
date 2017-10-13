@@ -26,7 +26,7 @@ public class SpeedValueFilter {
 
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
-    private final Integer page;
+    private final PaginationFilter paginationFilter;
 
     /**
      * Constructor.
@@ -49,10 +49,10 @@ public class SpeedValueFilter {
     /**
      * Constructor.
      *
-     * @param page
+     * @param paginationFilter
      */
-    public SpeedValueFilter(Integer page) {
-        this(null, null, page);
+    public SpeedValueFilter(PaginationFilter paginationFilter) {
+        this(null, null, paginationFilter);
     }
 
     /**
@@ -60,12 +60,12 @@ public class SpeedValueFilter {
      *
      * @param spatialFilter
      * @param temporalFilter
-     * @param page
+     * @param paginationFilter
      */
-    public SpeedValueFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, Integer page) {
+    public SpeedValueFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
-        this.page = page;
+        this.paginationFilter = paginationFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -84,12 +84,12 @@ public class SpeedValueFilter {
         return this.temporalFilter != null;
     }
 
-    public Integer getPage() {
-        return page;
+    public PaginationFilter getPaginationFilter() {
+        return paginationFilter;
     }
 
-    public boolean hasPage() {
-        return page != null;
+    public boolean hasPaginationFilter() {
+        return this.paginationFilter != null;
     }
 
 }

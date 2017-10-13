@@ -23,6 +23,7 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
@@ -60,7 +61,7 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
         try {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
-            Integer page = null;
+            PaginationFilter paginationFilter = null;
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
@@ -69,10 +70,10 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {
-                page = checkAndGetValue(PAGE, input);
+                paginationFilter = getPaginationFilterParams(input);
             }
 
-            SpeedValueFilter filter = new SpeedValueFilter(spatialFilter, temporalFilter, page);
+            SpeedValueFilter filter = new SpeedValueFilter(spatialFilter, temporalFilter, paginationFilter);
             return speedValuesDao.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
