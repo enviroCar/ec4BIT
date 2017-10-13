@@ -19,6 +19,8 @@
 package org.envirocar.ec4bit.core.decoder;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import okhttp3.ResponseBody;
+//import org.envirocar.ec4bit.core.encoding.MeasurementEncoder;
 import org.envirocar.ec4bit.core.encoding.SpeedValueEncoder;
 import org.envirocar.ec4bit.core.encoding.SpeedValuesEncoder;
 import org.envirocar.ec4bit.core.model.SpeedValue;
@@ -34,6 +36,7 @@ public class ECModule extends SimpleModule {
         this.addSerializer(SpeedValue.class, new SpeedValueEncoder());
         this.addSerializer(SpeedValues.class, new SpeedValuesEncoder());
         this.addDeserializer(SpeedValues.class, new SpeedValuesDecoder());
+//        this.addSerializer(ResponseBody.class, new MeasurementEncoder());
     }
 
 }

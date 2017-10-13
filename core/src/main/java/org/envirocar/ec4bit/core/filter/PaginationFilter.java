@@ -23,5 +23,5 @@ package org.envirocar.ec4bit.core.filter;
  * @author dewall
  */
 public class PaginationFilter {
-
+    
 }

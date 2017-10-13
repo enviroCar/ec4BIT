@@ -36,20 +36,20 @@ import org.springframework.stereotype.Component;
  *
  * @author Arne de Wall <a.dewall@52north.org>
  */
-//@Component
-public class SpeedDataProducer extends EC4BITProducer {
+@Component
+public class MeasurementProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:trafficSpeed";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
 
-    @Value("${bigiot.applications.speeddata.local_id}")
+    @Value("${bigiot.applications.measurementdata.local_id}")
     private String localId;
-    @Value("${bigiot.applications.speeddata.name}") 
+    @Value("${bigiot.applications.measurementdata.name}")
     private String name;
-    @Value("${bigiot.applications.speeddata.route}")
+    @Value("${bigiot.applications.measurementdata.route}")
     private String route;
 
     @Autowired
-    private SpeedRequestHandler requestHandler;
+    private MeasurementRequestHandler requestHandler;
 
     /**
      *
@@ -64,10 +64,13 @@ public class SpeedDataProducer extends EC4BITProducer {
                         .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
                         .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
                         .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addOutputData("speed", new RDFType("schema:drivingSpeed"), ValueType.NUMBER)
-                .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
-                        .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)
-                        .addOutputData("latitude", new RDFType("schema:latitude"), ValueType.NUMBER))
+                .addInputData("during", new RDFType("schema:timeInterval"), IOData.createMembers()
+                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                .addOutputData("measurement", new RDFType("schema:drivingMeasurement"), IOData.createMembers()
+                        .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
+                                .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)
+                                .addOutputData("latitude", new RDFType("schema:latitude"), ValueType.NUMBER)))
                 .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)

@@ -20,6 +20,7 @@ package org.envirocar.ec4bit.connector;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.joda.time.DateTime;
 import java.util.Map;
 import org.eclipse.bigiot.lib.handlers.AccessRequestHandler;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
@@ -28,6 +29,7 @@ import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,8 +105,39 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return new double[]{xMin, yMin, xMax, yMax};
     }
 
-    protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) {
-        return null; // TODO 
+    protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {
+        Map<String, Object> during = checkAndGetValue(DURING, input);
+        Map<String, Object> st_date = checkAndGetValue(DURING_START, during);
+        Object year = checkAndGetValue("year", st_date);
+        String month = checkAndGetValue("monthOfYear", st_date);
+        month = ("00" + month).substring(month.length());
+        String day = checkAndGetValue("dayOfMonth", st_date);
+        day = ("00" + day).substring(day.length());
+        String hours = checkAndGetValue("hourOfDay", st_date);
+        hours = ("00" + hours).substring(hours.length());
+        String mins = checkAndGetValue("minuteOfHour", st_date);
+        mins = ("00" + mins).substring(mins.length());
+        String secs = checkAndGetValue("secondOfMinute", st_date);
+        secs = ("00" + secs).substring(secs.length());
+        DateTime dt_start = DateTime.parse(year + "-" + month + "-" + day + "T" + hours + ":" + mins + ":" + secs,
+                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
+
+        Map<String, Object> end_date = checkAndGetValue(DURING_END, during);
+        year = checkAndGetValue("year", end_date);
+        month = checkAndGetValue("monthOfYear", end_date);
+        month = ("00" + month).substring(month.length());
+        day = checkAndGetValue("dayOfMonth", end_date);
+        day = ("00" + day).substring(day.length());
+        hours = checkAndGetValue("hourOfDay", end_date);
+        hours = ("00" + hours).substring(hours.length());
+        mins = checkAndGetValue("minuteOfHour", end_date);
+        mins = ("00" + mins).substring(mins.length());
+        secs = checkAndGetValue("secondOfMinute", end_date);
+        secs = ("00" + secs).substring(secs.length());
+        DateTime dt_end = DateTime.parse(year + "-" + month + "-" + day + "T" + hours + ":" + mins + ":" + secs,
+                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
+
+        return new TemporalFilter(dt_start, dt_end);
     }
 
     protected int getPageParam(Map<String, Object> input) throws Exception {

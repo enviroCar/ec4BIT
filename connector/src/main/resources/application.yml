@@ -17,5 +17,9 @@ bigiot:
             local_id: speed-offering
             name: Traffic Speed Values
             route: speedvalues
+        measurementdata:
+            local_id: measurements-offering
+            name: Traffic Measurements
+            route: measurements
             
             

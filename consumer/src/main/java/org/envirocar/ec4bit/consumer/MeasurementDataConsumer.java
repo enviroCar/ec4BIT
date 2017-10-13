@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -41,7 +41,11 @@ import org.eclipse.bigiot.lib.offering.AccessParameters;
 import org.eclipse.bigiot.lib.offering.Offering;
 import org.eclipse.bigiot.lib.offering.SubscribableOfferingDescription;
 import org.eclipse.bigiot.lib.query.OfferingQuery;
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -49,22 +53,23 @@ import org.springframework.stereotype.Component;
  *
  * @author dewall
  */
-//@Component
-public class SpeedDataConsumer {
+@Component
+public class MeasurementDataConsumer {
 
-    public SpeedDataConsumer(
+    private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+
+    public MeasurementDataConsumer(
             @Value("${bigiot.consumer.id}") String consumerId,
             @Value("${bigiot.marketplace.url}") String marketplaceUrl,
             @Value("${bigiot.consumer.secret}") String consumerSecret) throws IOException, IncompleteOfferingQueryException, InterruptedException, ExecutionException, AccessToNonActivatedOfferingException, AccessToNonSubscribedOfferingException {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
 
-        OfferingQuery query = OfferingQuery.create("SpeedDataQuery")
-                .withInformation(new Information("SpeedDataQuery", "bigiot:trafficSpeed"))
+        OfferingQuery query = OfferingQuery.create("MeasurementsDataQuery")
+                .withInformation(new Information("MeasurementsDataQuery", "bigiot:RawMeasurements"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
-                .withMaxPrice(Euros.amount(0.002))
+                .withMaxPrice(Euros.amount(0.003))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
-
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
         listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);
         List<SubscribableOfferingDescription> list = listFuture.get();
@@ -84,14 +89,19 @@ public class SpeedDataConsumer {
                 Offering offering = offeringFuture.get();
                 offerings.add(offering);
             }
-
+            
             // Prepare Access Parameters
+            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-22T06:06:44");
+            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-30T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
                     .addNameValue("bbox", AccessParameters.create()
-                            .addNameValue("xMin", 50.22)
-                            .addNameValue("yMin", 7.11)
-                            .addNameValue("xMax", 52.22)
-                            .addNameValue("yMax", 8.11));
+                            .addNameValue("xMin", 50.076)
+                            .addNameValue("yMin", 7.5)
+                            .addNameValue("xMax", 52.08)
+                            .addNameValue("yMax", 8.00))
+                    .addNameValue("during", AccessParameters.create()
+                            .addNameValue("startDate", startDT)
+                            .addNameValue("endDate", endDT));
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

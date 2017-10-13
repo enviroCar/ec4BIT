@@ -19,10 +19,10 @@
 package org.envirocar.ec4bit.core.remote;
 
 import java.io.IOException;
+import okhttp3.ResponseBody;
+import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,15 +35,15 @@ import retrofit2.Call;
  * @author dewall
  */
 @Component
-public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter> {
+public class MeasurementsDAO {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SpeedValuesDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeasurementsDAO.class);
 
     @Autowired
     private MeasurementService measurementService;
 
-    @Override
-    public SpeedValues get(SpeedValueFilter filter) {
+//    @Override
+    public String get(MeasurementFilter filter) {
         String bboxParam = null;
         String timeParam = null;
 
@@ -56,11 +56,14 @@ public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter
             timeParam = temp.string();
         }
 
-        Call<SpeedValues> asSpeedValues = measurementService
-                .getAsSpeedValues(bboxParam, timeParam, filter.getPage());
+//        Call<ResponseBody> asMeasurements = measurementService
+//                .getAsRawResponse(bboxParam, timeBeforeParam);
+        Call<ResponseBody> asMeasurements = measurementService
+                .getAsRawResponse(bboxParam, timeParam, filter.getPage());
+
         try {
-            SpeedValues body = asSpeedValues.execute().body();
-            return body;
+            ResponseBody body = asMeasurements.execute().body();
+            return body.string();
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
         }

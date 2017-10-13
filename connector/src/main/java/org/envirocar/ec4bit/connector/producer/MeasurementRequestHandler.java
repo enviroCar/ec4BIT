@@ -19,15 +19,15 @@
 package org.envirocar.ec4bit.connector.producer;
 
 import java.util.Map;
+import okhttp3.ResponseBody;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.model.SpeedValues;
-import org.envirocar.ec4bit.core.remote.SpeedValuesDAO;
+import org.envirocar.ec4bit.core.remote.MeasurementsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,22 +38,22 @@ import org.springframework.stereotype.Component;
  * @author dewall
  */
 @Component
-public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
+public class MeasurementRequestHandler extends AbstractRequestHandler<String> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SpeedRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeasurementRequestHandler.class);
 
     @Autowired
-    private SpeedValuesDAO speedValuesDao;
+    private MeasurementsDAO measurementsDao;
 
     /**
      * Constructor.
      */
-    public SpeedRequestHandler() {
-        super(SpeedValues.class);
+    public MeasurementRequestHandler() {
+        super(String.class);
     }
 
     @Override
-    public SpeedValues processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+    public String processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
@@ -69,8 +69,8 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
                 page = checkAndGetValue(PAGE, input);
             }
 
-            SpeedValueFilter filter = new SpeedValueFilter(spatialFilter, temporalFilter, page);
-            return speedValuesDao.get(filter);
+            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, page);
+            return measurementsDao.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
         }

@@ -38,6 +38,10 @@ public interface MeasurementService {
 
     @GET("measurements/")
     Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
+    
+    @GET("measurements/")
+    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox, @Query("during") String during, 
+            @Query("page") Integer page);
 
     @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues();
@@ -47,11 +51,10 @@ public interface MeasurementService {
 
     @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox);
-
     @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("page") int page);
 
     @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("time") String time,
+    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("during") String during, 
             @Query("page") Integer page);
 }

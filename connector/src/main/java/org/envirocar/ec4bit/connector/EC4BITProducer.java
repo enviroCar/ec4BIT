@@ -51,7 +51,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
     @Override
     public void afterPropertiesSet() throws Exception {
         this.offeringDescription = getOfferingDescription();
-        this.provider.register(getOfferingDescription());
+        this.provider.register(offeringDescription);
 //        this.enableSwagger(offeringDescription);
     }
 
@@ -71,6 +71,9 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                         .addInputData(BBOX_XMIN, new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
                         .addInputData(BBOX_YMIN, new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
                         .addInputData(BBOX_XMAX, new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                        .addInputData(BBOX_YMAX, new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER));
+                        .addInputData(BBOX_YMAX, new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
+                .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
+                        .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME));
     }
 }

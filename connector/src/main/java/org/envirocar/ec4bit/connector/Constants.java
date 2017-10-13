@@ -28,7 +28,13 @@ interface Constants {
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
 
     static final String PAGE = "page";
-    static final String TIME = "time";
+    
+    static final String DURING = "during";
+    static final String DURING_START = "startDate";
+    static final String DURING_END = "endDate";
+    
+    static final String SCHEMA_DURING_START= "schema:startDate";
+    static final String SCHEMA_DURING_END = "schema:endDate";
 
     static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
