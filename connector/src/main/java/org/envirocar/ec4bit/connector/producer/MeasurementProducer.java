@@ -36,16 +36,17 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
+@Component
 public class MeasurementProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
+//    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingMeasurements";
 
-    @Value("${bigiot.applications.measurementdata.local_id}")
+    @Value("${bigiot.applications.driving_data.local_id}")
     private String localId;
-    @Value("${bigiot.applications.measurementdata.name}")
+    @Value("${bigiot.applications.driving_data.name}")
     private String name;
-    @Value("${bigiot.applications.measurementdata.route}")
+    @Value("${bigiot.applications.driving_data.route}")
     private String route;
 
     @Autowired
@@ -59,20 +60,22 @@ public class MeasurementProducer extends EC4BITProducer {
     protected RegistrableOfferingDescription getOfferingDescription() {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addInputData("during", new RDFType("schema:timeInterval"), IOData.createMembers()
-                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
-                .addOutputData("measurement", new RDFType("schema:drivingMeasurement"), IOData.createMembers()
-                        .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
-                                .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)
-                                .addOutputData("latitude", new RDFType("schema:latitude"), ValueType.NUMBER)))
+                .addInputData("placeName", new RDFType("bigiot:placeName"), ValueType.NUMBER)
+                .addOutputData("placeName", new RDFType("bigiot:placeName"), ValueType.NUMBER)
+//                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
+//                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
+//                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
+//                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
+//                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
+//                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
+//                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+//                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+//                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
+//                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
+//                .addOutputData("measurement", new RDFType("bigiot:DrivingMeasurement"), IOData.createMembers()
+//                        .addOutputData("geoCoordinates", new RDFType("bigiot:geoCoordinates"), IOData.createMembers()
+//                                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+//                                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)))
                 .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)

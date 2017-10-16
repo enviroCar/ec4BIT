@@ -28,7 +28,10 @@ import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.remote.RawMeasurementsDAO;
+import org.envirocar.ec4bit.core.model.Measurements;
+import org.envirocar.ec4bit.core.remote.MeasurementsDAO;
+import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+//import org.envirocar.ec4bit.core.remote.RawMeasurementsDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,22 +42,26 @@ import org.springframework.stereotype.Component;
  * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
-public class MeasurementRequestHandler extends AbstractRequestHandler<String> {
+public class MeasurementRequestHandler extends AbstractRequestHandler<Measurements> {
 
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementRequestHandler.class);
 
+//    @Autowired
+//    private RawMeasurementsDAO measurementsDao;
     @Autowired
-    private RawMeasurementsDAO measurementsDao;
+    private MeasurementsDAO measurementsDao;
+    @Autowired
+    private MeasurementService measurementService;
 
     /**
      * Constructor.
      */
     public MeasurementRequestHandler() {
-        super(String.class);
+        super(Measurements.class);
     }
 
     @Override
-    public String processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+    public Measurements processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;

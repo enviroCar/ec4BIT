@@ -17,9 +17,7 @@ bigiot:
             local_id: speed-offering
             name: Driving Speed Values
             route: speedvalues
-        measurementdata:
-            local_id: measurements-offering
-            name: Traffic Measurements
+        driving_data:
+            local_id: driving-offering
+            name: Traffic Driving Measurements
             route: measurements
-            
-            

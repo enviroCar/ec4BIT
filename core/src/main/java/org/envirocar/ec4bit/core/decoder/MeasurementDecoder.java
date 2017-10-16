@@ -42,12 +42,10 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_PROPERTIES = "properties";
     private static final String ELEMENT_PHENOMENONS = "phenomenons";
     private static final String ELEMENT_ID = "id";
-    private static final String ELEMENT_LONGITUDE = "longitude";
-    private static final String ELEMENT_LATITUDE = "latitude";
     private static final String ELEMENT_TIME = "time";
     private static final String ELEMENT_TRACK = "track";
     private static final String ELEMENT_SENSOR = "sensor";
-    
+
     private static final String ELEMENT_SPEED = "Speed";
     private static final String ELEMENT_CO2 = "CO2";
     private static final String ELEMENT_CONSUMPTION = "Consumption";
@@ -58,69 +56,163 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-
+    private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
+    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
+    private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
+    private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
+    private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
+    private static final String ELEMENT_SHORT_TERM_FUEL_TRIM_1 = "Short-Term Fuel Trim 1";
+    private static final String ELEMENT_THROTTLE_POSITION = "Throttle Position";
+    private static final String ELEMENT_GPS_HDOP = "GPS HDOP";
+    private static final String ELEMENT_GPS_VDOP = "GPS VDOP";
+    private static final String ELEMENT_GPS_PDOP = "GPS PDOP";
+    private static final String ELEMENT_CALCULATED_MAF = "Calculated MAF";
+    private static final String ELEMENT_O2_LAMBDA_CURRENT = "O2 Lambda Current";
+    private static final String ELEMENT_O2_LAMBDA_CURRENT_ER= "O2 Lambda Current ER";
+    private static final String ELEMENT_O2_LAMBDA_VOLTAGE = "O2 Lambda Voltage";
+    private static final String ELEMENT_O2_LAMBDA_VOLTAGE_ER = "O2 Lambda Voltage ER";
+    
+    private static final String ELEMENT_VALUE = "value";
+    
+    
     @Override
     public Measurement deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         JsonNode node = jp.readValueAsTree();
         Measurement result = new Measurement();
 
-        // TODO: PhenomenonDefinitions um Units erweitern
-        
         // parse the location
         ArrayNode geometry = (ArrayNode) node
                 .get(ELEMENT_GEOMETRY)
                 .get(ELEMENT_COORDINATES);
         Double longitude = geometry.get(0).asDouble();
         Double latitude = geometry.get(1).asDouble();
-        
+
         // parse id, time, track, and sensor
-        ArrayNode properties = (ArrayNode) node
-                .get(ELEMENT_PROPERTIES);
-        
+        JsonNode properties = node.get(ELEMENT_PROPERTIES);
+
         String id = properties.get(ELEMENT_ID).asText();
         String timeStr = properties.get(ELEMENT_TIME).asText();
+        timeStr = timeStr.substring(0, timeStr.length() - 1);
         DateTime time = TEMPORAL_TIME_PATTERN.parseDateTime(timeStr);
         String track = properties.get(ELEMENT_TRACK).asText();
-        String sensor = "https://envirocar.org/api/stable/sensors/" +
-                properties
-                .get(ELEMENT_SENSOR)
-                .get(ELEMENT_PROPERTIES)
-                .get(ELEMENT_ID)
-                .asText();
-        
+        String sensor = "https://envirocar.org/api/stable/sensors/"
+                + properties
+                        .get(ELEMENT_SENSOR)
+                        .get(ELEMENT_PROPERTIES)
+                        .get(ELEMENT_ID)
+                        .asText();
+
         // parse the phenomenons:
-         ArrayNode phenomenons = (ArrayNode) properties
+        JsonNode phenomenons = properties
                 .get(ELEMENT_PHENOMENONS);
-         
-        Double speed = phenomenons.get(ELEMENT_SPEED).asDouble();
-        Double co2 = phenomenons.get(ELEMENT_CO2).asDouble();
-        Double consumption = phenomenons.get(ELEMENT_CONSUMPTION).asDouble();
-        Double gps_speed = phenomenons.get(ELEMENT_GPS_SPEED).asDouble();
-        Double gps_alt = phenomenons.get(ELEMENT_GPS_ALTITUDE).asDouble();
-        Double maf = phenomenons.get(ELEMENT_MAF).asDouble();
-        Double intake_temp = phenomenons.get(ELEMENT_INTAKE_TEMP).asDouble();
-        Double intake_press = phenomenons.get(ELEMENT_INTAKE_PRESSURE).asDouble();
-        Integer rpm = phenomenons.get(ELEMENT_RPM).asInt();
-        Integer engine_load = phenomenons.get(ELEMENT_ENGINE_LOAD).asInt();
-        
+
+        Integer speed = phenomenons.get(ELEMENT_SPEED).get(ELEMENT_VALUE).asInt();
+        if (phenomenons.get(ELEMENT_CO2) != null) {
+            Double co2 = phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble();
+            result.setCo2(co2);
+        }
+        if (phenomenons.get(ELEMENT_CONSUMPTION) != null) {
+            Double consumption = phenomenons.get(ELEMENT_CONSUMPTION).get(ELEMENT_VALUE).asDouble();
+            result.setConsumption(consumption);
+        }
+        if (phenomenons.get(ELEMENT_GPS_SPEED) != null) {
+            Double gps_speed = phenomenons.get(ELEMENT_GPS_SPEED).get(ELEMENT_VALUE).asDouble();
+            result.setGps_speed(gps_speed);
+        }
+        if (phenomenons.get(ELEMENT_GPS_ALTITUDE) != null) {
+            Double gps_alt = phenomenons.get(ELEMENT_GPS_ALTITUDE).get(ELEMENT_VALUE).asDouble();
+            result.setGps_altitude(gps_alt);
+        }
+        if (phenomenons.get(ELEMENT_MAF) != null) {
+            Double maf = phenomenons.get(ELEMENT_MAF).get(ELEMENT_VALUE).asDouble();
+            result.setMaf(maf);
+        }
+        if (phenomenons.get(ELEMENT_INTAKE_TEMP) != null) {
+            Integer intake_temp = phenomenons.get(ELEMENT_INTAKE_TEMP).get(ELEMENT_VALUE).asInt();
+            result.setIntake_temp(intake_temp);
+        }
+        if (phenomenons.get(ELEMENT_INTAKE_PRESSURE) != null) {
+            Double intake_press = phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble();
+            result.setIntake_pressure(intake_press);
+        }
+        if (phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP) != null) {
+            Integer fuel_system_loop = phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP).get(ELEMENT_VALUE).asInt();
+            result.setFuel_system_loop(fuel_system_loop);
+        }
+        if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
+            Integer fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asInt();
+            result.setFuel_system_status_code(fuel_system_status_code);
+        }
+        if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
+            Integer gps_accuracy = phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asInt();
+            result.setGps_accuracy(gps_accuracy);
+        }
+        if (phenomenons.get(ELEMENT_GPS_BEARING) != null) {
+            Double gps_bearing = phenomenons.get(ELEMENT_GPS_BEARING).get(ELEMENT_VALUE).asDouble();
+            result.setGps_bearing(gps_bearing);
+        }
+        if (phenomenons.get(ELEMENT_LONG_TERM_FUEL_TRIM_1) != null) {
+            Integer long_term_fuel_trim = phenomenons.get(ELEMENT_LONG_TERM_FUEL_TRIM_1).get(ELEMENT_VALUE).asInt();
+            result.setLong_term_fuel_trim_1(long_term_fuel_trim);
+        }
+        if (phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1) != null) {
+            Integer short_term_fuel_trim = phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1).get(ELEMENT_VALUE).asInt();
+            result.setShort_term_fuel_trim_1(short_term_fuel_trim);
+        }
+        if (phenomenons.get(ELEMENT_THROTTLE_POSITION) != null) {
+            Integer throttle_position = phenomenons.get(ELEMENT_THROTTLE_POSITION).get(ELEMENT_VALUE).asInt();
+            result.setThrottle_position(throttle_position);
+        }
+        if (phenomenons.get(ELEMENT_RPM) != null) {
+            Integer rpm = phenomenons.get(ELEMENT_RPM).get(ELEMENT_VALUE).asInt();
+            result.setRpm(rpm);
+        }
+        if (phenomenons.get(ELEMENT_ENGINE_LOAD) != null) {
+            Integer engine_load = phenomenons.get(ELEMENT_ENGINE_LOAD).get(ELEMENT_VALUE).asInt();
+            result.setEngine_load(engine_load);
+        }
+        if (phenomenons.get(ELEMENT_GPS_HDOP) != null) {
+            Double gps_hdop = phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble();
+            result.setGps_hdop(gps_hdop);
+        }
+        if (phenomenons.get(ELEMENT_GPS_VDOP) != null) {
+            Double vdop = phenomenons.get(ELEMENT_GPS_VDOP).get(ELEMENT_VALUE).asDouble();
+            result.setGps_vdop(vdop);
+        }
+        if (phenomenons.get(ELEMENT_GPS_PDOP) != null) {
+            Double gps_pdop = phenomenons.get(ELEMENT_GPS_PDOP).get(ELEMENT_VALUE).asDouble();
+            result.setGps_pdop(gps_pdop);
+        }
+        if (phenomenons.get(ELEMENT_CALCULATED_MAF) != null) {
+            Double calculated_maf = phenomenons.get(ELEMENT_CALCULATED_MAF).get(ELEMENT_VALUE).asDouble();
+            result.setCalculated_maf(calculated_maf);
+        }
+        if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT) != null) {
+            Double o2_lambda_current = phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT).get(ELEMENT_VALUE).asDouble();
+            result.setO2_lambda_current(o2_lambda_current);
+        }
+        if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER) != null) {
+            Double o2_lambda_current_er = phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER).get(ELEMENT_VALUE).asDouble();
+            result.setO2_lambda_current_ER(o2_lambda_current_er);
+        }
+        if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE) != null) {
+            Double o2_lambda_voltage = phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE).get(ELEMENT_VALUE).asDouble();
+            result.setO2_lambda_voltage(o2_lambda_voltage);
+        }
+        if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER) != null) {
+            Double o2_lambda_voltage_er = phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble();
+            result.setO2_lambda_voltage_ER(o2_lambda_voltage_er);
+        }
+
         result.setMeasurementID(id);
         result.setSensor(sensor);
         result.setTrackID(track);
         result.setTime(time);
-        
+
         result.setLongitude(longitude);
         result.setLatitude(latitude);
-        
+
         result.setSpeed(speed);
-        result.setCo2(co2);
-        result.setConsumption(consumption);
-        result.setGps_speed(gps_speed);
-        result.setGps_altitude(gps_alt);
-        result.setMaf(maf);
-        result.setIntake_temp(intake_temp);
-        result.setIntake_pressure(intake_press);
-        result.setRpm(rpm);
-        result.setEngine_load(engine_load);
 
         return result;
     }

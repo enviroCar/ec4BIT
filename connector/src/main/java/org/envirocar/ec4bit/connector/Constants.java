@@ -30,15 +30,15 @@ interface Constants {
     static final String PAGE = "page";
     static final String PAGE_NUMBER = "pageNumber";
     
-    static final String SCHEMA_PAGE = "schema:Pagination";
-    static final String SCHEMA_PAGE_NUMBER= "schema:pageNumber";
+    static final String SCHEMA_PAGE = "bigiot:Pagination";
+    static final String SCHEMA_PAGE_NUMBER= "bigiot:pageNumber";
     
     static final String DURING = "during";
     static final String DURING_START = "startDate";
     static final String DURING_END = "endDate";
     
-    static final String SCHEMA_DURING_START= "schema:startDate";
-    static final String SCHEMA_DURING_END = "schema:endDate";
+    static final String SCHEMA_DURING_START= "bigiot:startDate";
+    static final String SCHEMA_DURING_END = "bigiot:endDate";
 
     static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
@@ -46,9 +46,9 @@ interface Constants {
     static final String BBOX_XMAX = "xMax";
     static final String BBOX_YMAX = "yMax";
 
-    static final String SCHEMA_BBOX = "schema:BBox";
-    static final String SCHEMA_BBOX_XMIN = "schema:xMin";
-    static final String SCHEMA_BBOX_YMIN = "schema:yMin";
-    static final String SCHEMA_BBOX_XMAX = "schema:xMax";
-    static final String SCHEMA_BBOX_YMAX = "schema:yMax";
+    static final String SCHEMA_BBOX = "bigiot:BoundingBox";
+    static final String SCHEMA_BBOX_XMIN = "bigiot:xMin";
+    static final String SCHEMA_BBOX_YMIN = "bigiot:yMin";
+    static final String SCHEMA_BBOX_XMAX = "bigiot:xMax";
+    static final String SCHEMA_BBOX_YMAX = "bigiot:yMax";
 }

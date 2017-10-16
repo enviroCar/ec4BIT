@@ -23,6 +23,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import org.envirocar.ec4bit.core.model.Measurement;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -30,13 +33,19 @@ import org.envirocar.ec4bit.core.model.Measurement;
  */
 public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
 
+    private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z");
+
     @Override
     public void serialize(Measurement value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+
         gen.writeStartObject();
         gen.writeObjectField("id", value.getMeasurementID());
         gen.writeObjectField("longitude", value.getLongitude());
         gen.writeObjectField("latitude", value.getLatitude());
-        gen.writeObjectField("time", value.getTime());
+        // get TimeStamp String:
+        String time = value.getTime().toString(TEMPORAL_TIME_PATTERN);
+
+        gen.writeObjectField("time", time);
         gen.writeObjectField("track", value.getTrackID());
         gen.writeObjectField("sensor", value.getSensor());
         if (value.getSpeed() != null) {
@@ -55,17 +64,63 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
             gen.writeObjectField("GPS Altitude", value.getGps_altitude());
         }
         if (value.getMaf() != null) {
-            gen.writeObjectField("MAF", value.getMaf() );
+            gen.writeObjectField("MAF", value.getMaf());
         }
         if (value.getIntake_pressure() != null) {
-            gen.writeObjectField("Intake Pressure", value.getIntake_pressure() );
+            gen.writeObjectField("Intake Pressure", value.getIntake_pressure());
         }
         if (value.getIntake_temp() != null) {
-            gen.writeObjectField("Intake Temperature", value.getIntake_temp() );
+            gen.writeObjectField("Intake Temperature", value.getIntake_temp());
         }
         if (value.getRpm() != null) {
-            gen.writeObjectField("Rpm", value.getRpm() );
+            gen.writeObjectField("Rpm", value.getRpm());
         }
+        if (value.getFuel_system_loop()!= null) {
+            gen.writeObjectField("Fuel System Loop", value.getFuel_system_loop());
+        }
+        if (value.getFuel_system_status_code() != null) {
+            gen.writeObjectField("Fuel System Status Code", value.getFuel_system_status_code());
+        }
+        if (value.getGps_accuracy()!= null) {
+            gen.writeObjectField("GPS Accuracy", value.getGps_accuracy());
+        }
+        if (value.getGps_bearing() != null) {
+            gen.writeObjectField("GPS Bearing", value.getGps_bearing());
+        }
+        if (value.getLong_term_fuel_trim_1()!= null) {
+            gen.writeObjectField("Long-Term Fuel Trim 1", value.getLong_term_fuel_trim_1());
+        }
+        if (value.getShort_term_fuel_trim_1()!= null) {
+            gen.writeObjectField("Short-Term Fuel Trim 1", value.getShort_term_fuel_trim_1());
+        }
+        if (value.getThrottle_position() != null) {
+            gen.writeObjectField("Throttle Position", value.getThrottle_position());
+        }
+        if (value.getGps_hdop() != null) {
+            gen.writeObjectField("GPS HDOP", value.getGps_hdop());
+        }
+        if (value.getGps_vdop()!= null) {
+            gen.writeObjectField("GPS VDOP", value.getGps_vdop());
+        }
+        if (value.getGps_pdop()!= null) {
+            gen.writeObjectField("GPS PDOP", value.getGps_pdop());
+        }
+        if (value.getCalculated_maf()!= null) {
+            gen.writeObjectField("Calculated MAF", value.getCalculated_maf());
+        }
+        if (value.getO2_lambda_current()!= null) {
+            gen.writeObjectField("O2 Lambda Current", value.getO2_lambda_current());
+        }
+        if (value.getO2_lambda_current_ER()!= null) {
+            gen.writeObjectField("O2 Lambda Current ER", value.getO2_lambda_current_ER());
+        }
+        if (value.getO2_lambda_voltage()!= null) {
+            gen.writeObjectField("O2 Lambda Voltage", value.getO2_lambda_voltage());
+        }
+        if (value.getO2_lambda_voltage_ER()!= null) {
+            gen.writeObjectField("O2 Lambda Voltage ER", value.getO2_lambda_voltage_ER());
+        }
+        
         gen.writeEndObject();
     }
 

@@ -32,32 +32,44 @@ public class Measurement implements BaseEntity {
     private String trackID;
     private Double longitude;
     private Double latitude;
-    private Double speed,
-            co2,
+    private Double co2,
             consumption,
-            gps_speed, gps_altitude,
-//            gps_vdop, gps_pdop, gps_hdop, gps_hood,
+            gps_speed, gps_altitude, gps_bearing,
             maf,
-//            calculated_maf,
-            Intake_temp, Intake_pressure;
-//            o2_lambda_current, o2_lambda_current_ER, o2_lambda_voltage, o2_lambda_voltage_ER;
-    private Integer rpm,
-            engine_load;
-//            fuel_system_loop,
-//            fuel_system_status_code,
-//            gps_accuracy,
-//            gps_bearing,
-//            long_term_fuel_trim_1,
-//            short_term_fuel_trim_1,
-//            throttle_position;
-            
+            Intake_pressure, 
+            gps_vdop, gps_pdop, gps_hdop,
+            calculated_maf,
+            o2_lambda_current, o2_lambda_current_ER, o2_lambda_voltage, o2_lambda_voltage_ER;
+
+    private Integer speed,
+            rpm,
+            engine_load,
+            Intake_temp,
+            fuel_system_loop,
+            fuel_system_status_code,
+            gps_accuracy,
+            long_term_fuel_trim_1,
+            short_term_fuel_trim_1,
+            throttle_position;
+
     public Measurement() {
-        this(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null,
+                null, null, null, null, null,
+                null);
     }
 
-    public Measurement(String measurementID, DateTime time, String sensor, String trackID, Double longitude, Double latitude, 
-            Double speed, Double co2, Double consumption, Double gps_speed, Double gps_altitude, Double maf,
-            Double Intake_temp, Double Intake_pressure, Integer rpm, Integer engine_load) {
+    public Measurement(String measurementID, DateTime time, String sensor, String trackID, Double longitude, Double latitude,
+            Double co2, Double consumption, Double gps_speed,  Double gps_bearing, Double gps_altitude, Double maf,
+            Double Intake_pressure, Integer rpm, Integer engine_load,
+            Double gps_vdop, Double gps_pdop, Double gps_hdop,
+            Double calculated_maf,
+            Double o2_lambda_current, Double o2_lambda_current_ER, Double o2_lambda_voltage, Double o2_lambda_voltage_ER,
+            Integer speed, Integer fuel_system_loop, Integer fuel_system_status_code, Integer gps_accuracy,
+            Integer Intake_temp, Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position) {
         this.measurementID = measurementID;
         this.time = time;
         this.sensor = sensor;
@@ -74,6 +86,21 @@ public class Measurement implements BaseEntity {
         this.Intake_pressure = Intake_pressure;
         this.rpm = rpm;
         this.engine_load = engine_load;
+        this.gps_vdop = gps_vdop;
+        this.gps_pdop = gps_pdop;
+        this.gps_hdop = gps_hdop;
+        this.calculated_maf = calculated_maf;
+        this.o2_lambda_current = o2_lambda_current;
+        this.o2_lambda_current_ER = o2_lambda_current_ER;
+        this.o2_lambda_voltage = o2_lambda_voltage;
+        this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
+        this.fuel_system_loop = fuel_system_loop;
+        this.fuel_system_status_code = fuel_system_status_code;
+        this.gps_accuracy = gps_accuracy;
+        this.gps_bearing = gps_bearing;
+        this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
+        this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
+        this.throttle_position = throttle_position;
     }
 
     public String getMeasurementID() {
@@ -82,6 +109,126 @@ public class Measurement implements BaseEntity {
 
     public void setMeasurementID(String measurementID) {
         this.measurementID = measurementID;
+    }
+
+    public Double getGps_vdop() {
+        return gps_vdop;
+    }
+
+    public void setGps_vdop(Double gps_vdop) {
+        this.gps_vdop = gps_vdop;
+    }
+
+    public Double getGps_pdop() {
+        return gps_pdop;
+    }
+
+    public void setGps_pdop(Double gps_pdop) {
+        this.gps_pdop = gps_pdop;
+    }
+
+    public Double getGps_hdop() {
+        return gps_hdop;
+    }
+
+    public void setGps_hdop(Double gps_hdop) {
+        this.gps_hdop = gps_hdop;
+    }
+
+    public Double getCalculated_maf() {
+        return calculated_maf;
+    }
+
+    public void setCalculated_maf(Double calculated_maf) {
+        this.calculated_maf = calculated_maf;
+    }
+
+    public Double getO2_lambda_current() {
+        return o2_lambda_current;
+    }
+
+    public void setO2_lambda_current(Double o2_lambda_current) {
+        this.o2_lambda_current = o2_lambda_current;
+    }
+
+    public Double getO2_lambda_current_ER() {
+        return o2_lambda_current_ER;
+    }
+
+    public void setO2_lambda_current_ER(Double o2_lambda_current_ER) {
+        this.o2_lambda_current_ER = o2_lambda_current_ER;
+    }
+
+    public Double getO2_lambda_voltage() {
+        return o2_lambda_voltage;
+    }
+
+    public void setO2_lambda_voltage(Double o2_lambda_voltage) {
+        this.o2_lambda_voltage = o2_lambda_voltage;
+    }
+
+    public Double getO2_lambda_voltage_ER() {
+        return o2_lambda_voltage_ER;
+    }
+
+    public void setO2_lambda_voltage_ER(Double o2_lambda_voltage_ER) {
+        this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
+    }
+
+    public Integer getFuel_system_loop() {
+        return fuel_system_loop;
+    }
+
+    public void setFuel_system_loop(Integer fuel_system_loop) {
+        this.fuel_system_loop = fuel_system_loop;
+    }
+
+    public Integer getFuel_system_status_code() {
+        return fuel_system_status_code;
+    }
+
+    public void setFuel_system_status_code(Integer fuel_system_status_code) {
+        this.fuel_system_status_code = fuel_system_status_code;
+    }
+
+    public Integer getGps_accuracy() {
+        return gps_accuracy;
+    }
+
+    public void setGps_accuracy(Integer gps_accuracy) {
+        this.gps_accuracy = gps_accuracy;
+    }
+
+    public Double getGps_bearing() {
+        return gps_bearing;
+    }
+
+    public void setGps_bearing(Double gps_bearing) {
+        this.gps_bearing = gps_bearing;
+    }
+
+    public Integer getLong_term_fuel_trim_1() {
+        return long_term_fuel_trim_1;
+    }
+
+    public void setLong_term_fuel_trim_1(Integer long_term_fuel_trim_1) {
+        this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
+    }
+
+    public Integer getShort_term_fuel_trim_1() {
+        return short_term_fuel_trim_1;
+    }
+
+    public void setShort_term_fuel_trim_1(Integer short_term_fuel_trim_1) {
+        this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
+    }
+
+    public Integer getThrottle_position() {
+        return throttle_position;
+    }
+
+    public void setThrottle_position(Integer throttle_position) {
+        this.throttle_position = throttle_position;
     }
 
     public DateTime getTime() {
@@ -148,11 +295,11 @@ public class Measurement implements BaseEntity {
         this.maf = maf;
     }
 
-    public Double getIntake_temp() {
+    public Integer getIntake_temp() {
         return Intake_temp;
     }
 
-    public void setIntake_temp(Double Intake_temp) {
+    public void setIntake_temp(Integer Intake_temp) {
         this.Intake_temp = Intake_temp;
     }
 
@@ -196,11 +343,11 @@ public class Measurement implements BaseEntity {
         this.latitude = latitude;
     }
 
-    public Double getSpeed() {
+    public Integer getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Double speed) {
+    public void setSpeed(Integer speed) {
         this.speed = speed;
     }
 

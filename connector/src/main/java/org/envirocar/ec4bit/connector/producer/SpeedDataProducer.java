@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Arne de Wall <a.dewall@52north.org>
  */
-@Component
+//@Component
 public class SpeedDataProducer extends EC4BITProducer {
 
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:trafficSpeed";
