@@ -66,15 +66,14 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
 
     protected RegistrableOfferingDescriptionChain addBboxInput(RegistrableOfferingDescriptionChain offering) {
         return offering
-                .addInputData(BBOX, new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                        .addInputData(BBOX_XMIN, new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                        .addInputData(BBOX_YMIN, new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                        .addInputData(BBOX_XMAX, new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                        .addInputData(BBOX_YMAX, new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
-                        .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData(PAGE, new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                        .addInputData(PAGE_NUMBER, new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER));
+                .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
+                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
+                .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER);
+//                .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
+//                        .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+//                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+//                .addInputData(PAGE, new RDFType(SCHEMA_PAGE), IOData.createMembers()
+//                        .addInputData(PAGE_NUMBER, new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER));
     }
 }

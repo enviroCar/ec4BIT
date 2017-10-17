@@ -23,22 +23,58 @@ package org.envirocar.ec4bit.connector;
  * @author hafenkran
  */
 interface Constants {
-
+    
+    // BoundingBoxFilter
+    static final String SCHEMA_BBOX = "http://schema.org/box";
+    
+    // TemporalFilter
+    static final String SCHEMA_DURING_START = "http://schema.org/startDate";
+    static final String SCHEMA_DURING_END = "http://schema.org/endDate";
+    
+    // PaginationFilter
+    static final String SCHEMA_PAGE_NUMBER= "bigiot:pageNumber";
+    
+    // measurement components and phenomenons
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
-
+    static final String SCHEMA_ID = "SCHEMA_ID";
+    static final String SCHEMA_TIMESTAMP = "http://schema.org/DateTime";
+    static final String SCHEMA_SENSOR = "SCHEMA_SENSOR";
+    static final String SCHEMA_TRACK = "SCHEMA_TRACK";
+    static final String SCHEMA_SPEED = "SCHEMA_SPEED"; // http://schema.org/QuantitativeValue für alle number phenomenons?
+    static final String SCHEMA_CO2 = "SCHEMA_CO2";
+    static final String SCHEMA_CONSUMPTION = "SCHEMA_CONSUMPTION";
+    static final String SCHEMA_MAF = "SCHEMA_MAF";
+    static final String SCHEMA_GPS_SPEED = "SCHEMA_GPS_SPEED";
+    static final String SCHEMA_GPS_ALTITUDE = "SCHEMA_GPS_ALTITUDE";
+    static final String SCHEMA_INTAKE_TEMPERATURE = "SCHEMA_INTAKE_TEMPERATURE";
+    static final String SCHEMA_INTAKE_PRESSURE = "SCHEMA_INTAKE_PRESSURE";
+    static final String SCHEMA_RPM = "SCHEMA_RPM";
+    static final String SCHEMA_ENGINE_LOAD = "SCHEMA_ENGINE_LOAD";
+    static final String SCHEMA_FUEL_SYSTEM_LOOP = "SCHEMA_FUEL_SYSTEM_LOOP";
+    static final String SCHEMA_FUEL_SYSTEM_STATUS_CODE = "SCHEMA_FUEL_SYSTEM_STATUS_CODE";
+    static final String SCHEMA_GPS_ACCURACY = "SCHEMA_GPS_ACCURACY";
+    static final String SCHEMA_GPS_BEARING = "SCHEMA_GPS_BEARING";
+    static final String SCHEMA_LONG_TERM_FUEL_TRIM_1 = "SCHEMA_LONG_TERM_FUEL_TRIM_1";
+    static final String SCHEMA_SHORT_TERM_FUEL_TRIM_1 = "SCHEMA_SHORT_TERM_FUEL_TRIM_1";
+    static final String SCHEMA_THROTTLE_POSITION = "SCHEMA_THROTTLE_POSITION";
+    static final String SCHEMA_GPS_HDOP = "SCHEMA_GPS_HDOP";
+    static final String SCHEMA_GPS_VDOP = "SCHEMA_GPS_VDOP";
+    static final String SCHEMA_GPS_PDOP = "SCHEMA_GPS_PDOP";
+    static final String SCHEMA_CALCULATED_MAF = "SCHEMA_CALCULATED_MAF";
+    static final String SCHEMA_O2_LAMBDA_CURRENT = "SCHEMA_O2_LAMBDA_CURRENT";
+    static final String SCHEMA_O2_LAMBDA_CURRENT_ER = "SCHEMA_O2_LAMBDA_CURRENT_ER";
+    static final String SCHEMA_O2_LAMBDA_VOLTAGE = "SCHEMA_O2_LAMBDA_VOLTAGE";
+    static final String SCHEMA_O2_LAMBDA_VOLTAGE_ER = "SCHEMA_O2_LAMBDA_VOLTAGE_ER";
+    
     static final String PAGE = "page";
     static final String PAGE_NUMBER = "pageNumber";
     
-    static final String SCHEMA_PAGE = "bigiot:Pagination";
-    static final String SCHEMA_PAGE_NUMBER= "bigiot:pageNumber";
+    static final String SCHEMA_PAGINATION_PAGENUMBER = "SCHEMA_PAGINATION_PAGENUMBER";
     
     static final String DURING = "during";
     static final String DURING_START = "startDate";
     static final String DURING_END = "endDate";
-    
-    static final String SCHEMA_DURING_START= "bigiot:startDate";
-    static final String SCHEMA_DURING_END = "bigiot:endDate";
 
     static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
@@ -46,5 +82,4 @@ interface Constants {
     static final String BBOX_XMAX = "xMax";
     static final String BBOX_YMAX = "yMax";
 
-    static final String SCHEMA_BBOX = "http://schema.org/box";
 }

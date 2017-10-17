@@ -89,32 +89,32 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     }
 
     protected SpatialFilter getSpatialFilterParams(Map<String, Object> input) throws KeyNotFoundException {
-        Map<String, Object> bbox = checkAndGetValue(BBOX, input);
-        double xMax = Double.valueOf(checkAndGetValue(BBOX_XMAX, bbox));
-        double yMax = Double.valueOf(checkAndGetValue(BBOX_YMAX, bbox));
-        double xMin = Double.valueOf(checkAndGetValue(BBOX_XMIN, bbox));
-        double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
+        String bbox = checkAndGetValue(BBOX, input);
+        String[] params = bbox.split(",");
+        double xMin = Double.valueOf(params[0]);
+        double yMin = Double.valueOf(params[1]);
+        double xMax = Double.valueOf(params[2]);
+        double yMax = Double.valueOf(params[3]);
         return new SpatialFilter(xMin, yMin, xMax, yMax);
     }
 
     protected double[] getBoundingBoxParams(Map<String, Object> input) throws KeyNotFoundException {
-        Map<String, Object> bbox = checkAndGetValue(BBOX, input);
-        double xMax = Double.valueOf(checkAndGetValue(BBOX_XMAX, bbox));
-        double yMax = Double.valueOf(checkAndGetValue(BBOX_YMAX, bbox));
-        double xMin = Double.valueOf(checkAndGetValue(BBOX_XMIN, bbox));
-        double yMin = Double.valueOf(checkAndGetValue(BBOX_YMIN, bbox));
+        String bbox = checkAndGetValue(BBOX, input);
+        String[] params = bbox.split(",");
+        double xMin = Double.valueOf(params[0]);
+        double yMin = Double.valueOf(params[1]);
+        double xMax = Double.valueOf(params[2]);
+        double yMax = Double.valueOf(params[3]);
         return new double[]{xMin, yMin, xMax, yMax};
     }
     
     protected PaginationFilter getPaginationFilterParams(Map<String, Object> input) throws KeyNotFoundException {
-        Map<String, Object> page = checkAndGetValue(PAGE, input);
-        int pageNumber = Integer.valueOf(checkAndGetValue(PAGE_NUMBER, page));
+        int pageNumber = Integer.valueOf(checkAndGetValue(PAGE_NUMBER, input));
         return new PaginationFilter(pageNumber);
     }
 
     protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {
-        Map<String, Object> during = checkAndGetValue(DURING, input);
-        Map<String, Object> st_date = checkAndGetValue(DURING_START, during);
+        Map<String, Object> st_date = checkAndGetValue(DURING_START, input);
         Object year = checkAndGetValue("year", st_date);
         String month = checkAndGetValue("monthOfYear", st_date);
         month = ("00" + month).substring(month.length());
@@ -129,7 +129,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         DateTime dt_start = DateTime.parse(year + "-" + month + "-" + day + "T" + hours + ":" + mins + ":" + secs,
                 DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
 
-        Map<String, Object> end_date = checkAndGetValue(DURING_END, during);
+        Map<String, Object> end_date = checkAndGetValue(DURING_END, input);
         year = checkAndGetValue("year", end_date);
         month = checkAndGetValue("monthOfYear", end_date);
         month = ("00" + month).substring(month.length());

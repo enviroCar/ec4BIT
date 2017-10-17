@@ -88,21 +88,15 @@ public class MeasurementDataConsumer {
                 Offering offering = offeringFuture.get();
                 offerings.add(offering);
             }
-            
+
             // Prepare Access Parameters
             DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-22T06:06:44");
             DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-30T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
-                    .addNameValue("bbox", AccessParameters.create()
-                            .addNameValue("xMin", 50.076)
-                            .addNameValue("yMin", 7.5)
-                            .addNameValue("xMax", 52.08)
-                            .addNameValue("yMax", 8.00))
-                    .addNameValue("during", AccessParameters.create()
-                            .addNameValue("startDate", startDT)
-                            .addNameValue("endDate", endDT))
-                    .addNameValue("page", AccessParameters.create()
-                            .addNameValue("pageNumber", 1));
+                    .addNameValue("bbox", "50.076,7.5 52.08,8.00")
+                    .addNameValue("startDate", startDT)
+                    .addNameValue("endDate", endDT)
+                    .addNameValue("pageNumber", 1);
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);
