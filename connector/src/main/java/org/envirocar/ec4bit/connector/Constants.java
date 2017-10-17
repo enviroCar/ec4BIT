@@ -46,9 +46,5 @@ interface Constants {
     static final String BBOX_XMAX = "xMax";
     static final String BBOX_YMAX = "yMax";
 
-    static final String SCHEMA_BBOX = "bigiot:BoundingBox";
-    static final String SCHEMA_BBOX_XMIN = "bigiot:xMin";
-    static final String SCHEMA_BBOX_YMIN = "bigiot:yMin";
-    static final String SCHEMA_BBOX_XMAX = "bigiot:xMax";
-    static final String SCHEMA_BBOX_YMAX = "bigiot:yMax";
+    static final String SCHEMA_BBOX = "http://schema.org/box";
 }
