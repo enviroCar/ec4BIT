@@ -46,7 +46,8 @@ public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter
     @Override
     public SpeedValues get(SpeedValueFilter filter) {
         String bboxParam = null;
-        String timeParam = null;
+        String timeBeforeParam = null;
+        String timeAfterParam = null;
         String pageParam = null;
 
         if (filter.hasSpatialFilter()) {
@@ -55,7 +56,8 @@ public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter
         }
         if (filter.hasTemporalFilter()) {
             TemporalFilter temp = filter.getTemporalFilter();
-            timeParam = temp.string();
+            timeBeforeParam = temp.stringBefore();
+            timeAfterParam = temp.stringAfter();
         }
         if (filter.hasPaginationFilter()) {
             PaginationFilter temp = filter.getPaginationFilter();
@@ -63,7 +65,7 @@ public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter
         }
 
         Call<SpeedValues> asSpeedValues = measurementService
-                .getAsSpeedValues(bboxParam, timeParam, pageParam);
+                .getAsSpeedValues(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
         try {
             SpeedValues body = asSpeedValues.execute().body();
             return body;

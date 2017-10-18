@@ -90,13 +90,13 @@ public class MeasurementDataConsumer {
             }
 
             // Prepare Access Parameters
-            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-22T06:06:44");
-            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-30T12:06:44");
+            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-15T06:06:44");
+            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-10-15T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
-                    .addNameValue("bbox", "50.076,7.5 52.08,8.00")
+                    .addNameValue("box", "50.076,7.5 52.08,8.00")
                     .addNameValue("startDate", startDT)
                     .addNameValue("endDate", endDT)
-                    .addNameValue("pageNumber", 1);
+                    .addNameValue("page", 1);
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

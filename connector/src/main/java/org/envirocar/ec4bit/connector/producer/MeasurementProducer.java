@@ -61,7 +61,7 @@ public class MeasurementProducer extends EC4BITProducer {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
                 // measurement filter options:
-                // not supported in the marketpalce, use simple inputdataelements instead.
+                // not supported in the marketpalce, use non-nested input data elements instead
                 //                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
                 //                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
                 //                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
@@ -73,7 +73,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 //                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
                 //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                 //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
+                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
                 //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
                 //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
                 
@@ -110,10 +110,6 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                //                .addOutputData("measurement", new RDFType("bigiot:DrivingMeasurement"), IOData.createMembers()
-                //                        .addOutputData("geoCoordinates", new RDFType("bigiot:geoCoordinates"), IOData.createMembers()
-                //                                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
-                //                                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)))
                
 
                 .inRegion(Region.city("Muenster"))

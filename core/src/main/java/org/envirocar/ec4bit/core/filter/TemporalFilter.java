@@ -87,13 +87,21 @@ public class TemporalFilter {
     }
 
     public String string() {
-        return String.join(",", String.valueOf(start.toString(TEMPORAL_TIME_PATTERN)),
-                            String.valueOf(end.toString(TEMPORAL_TIME_PATTERN)));
+        return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN))
+                + "&before=" + String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+    }
+    
+    public String stringBefore() {
+        return String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+    }
+    
+    public String stringAfter() {
+        return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN));
     }
 
     @Override
     public String toString() {
-        return "TemporalFilter{"+"start="+start.toString(TEMPORAL_TIME_PATTERN)+", end=" + end.toString(TEMPORAL_TIME_PATTERN) + "}";
+        return "TemporalFilter{"+"after="+start.toString(TEMPORAL_TIME_PATTERN)+", before=" + end.toString(TEMPORAL_TIME_PATTERN) + "}";
     }
     
 }

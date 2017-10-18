@@ -90,60 +90,46 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
 
     protected SpatialFilter getSpatialFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         String bbox = checkAndGetValue(BBOX, input);
-        String[] params = bbox.split(",");
-        double xMin = Double.valueOf(params[0]);
-        double yMin = Double.valueOf(params[1]);
-        double xMax = Double.valueOf(params[2]);
-        double yMax = Double.valueOf(params[3]);
+        String[] points = bbox.split(" ");
+        String[] coordsA = points[0].split(",");
+        String[] coordsB = points[1].split(",");
+        double xMin = Double.valueOf(coordsA[0]);
+        double yMin = Double.valueOf(coordsA[1]);
+        double xMax = Double.valueOf(coordsB[0]);
+        double yMax = Double.valueOf(coordsB[1]);
         return new SpatialFilter(xMin, yMin, xMax, yMax);
     }
 
     protected double[] getBoundingBoxParams(Map<String, Object> input) throws KeyNotFoundException {
         String bbox = checkAndGetValue(BBOX, input);
-        String[] params = bbox.split(",");
-        double xMin = Double.valueOf(params[0]);
-        double yMin = Double.valueOf(params[1]);
-        double xMax = Double.valueOf(params[2]);
-        double yMax = Double.valueOf(params[3]);
+        String[] points = bbox.split(" ");
+        String[] coordsA = points[0].split(",");
+        String[] coordsB = points[1].split(",");
+        double xMin = Double.valueOf(coordsA[0]);
+        double yMin = Double.valueOf(coordsA[1]);
+        double xMax = Double.valueOf(coordsB[0]);
+        double yMax = Double.valueOf(coordsB[1]);
         return new double[]{xMin, yMin, xMax, yMax};
     }
-    
+
     protected PaginationFilter getPaginationFilterParams(Map<String, Object> input) throws KeyNotFoundException {
-        int pageNumber = Integer.valueOf(checkAndGetValue(PAGE_NUMBER, input));
+        int pageNumber = Integer.valueOf(checkAndGetValue(PAGE, input));
         return new PaginationFilter(pageNumber);
     }
 
     protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {
-        Map<String, Object> st_date = checkAndGetValue(DURING_START, input);
-        Object year = checkAndGetValue("year", st_date);
-        String month = checkAndGetValue("monthOfYear", st_date);
-        month = ("00" + month).substring(month.length());
-        String day = checkAndGetValue("dayOfMonth", st_date);
-        day = ("00" + day).substring(day.length());
-        String hours = checkAndGetValue("hourOfDay", st_date);
-        hours = ("00" + hours).substring(hours.length());
-        String mins = checkAndGetValue("minuteOfHour", st_date);
-        mins = ("00" + mins).substring(mins.length());
-        String secs = checkAndGetValue("secondOfMinute", st_date);
-        secs = ("00" + secs).substring(secs.length());
-        DateTime dt_start = DateTime.parse(year + "-" + month + "-" + day + "T" + hours + ":" + mins + ":" + secs,
-                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
-
-        Map<String, Object> end_date = checkAndGetValue(DURING_END, input);
-        year = checkAndGetValue("year", end_date);
-        month = checkAndGetValue("monthOfYear", end_date);
-        month = ("00" + month).substring(month.length());
-        day = checkAndGetValue("dayOfMonth", end_date);
-        day = ("00" + day).substring(day.length());
-        hours = checkAndGetValue("hourOfDay", end_date);
-        hours = ("00" + hours).substring(hours.length());
-        mins = checkAndGetValue("minuteOfHour", end_date);
-        mins = ("00" + mins).substring(mins.length());
-        secs = checkAndGetValue("secondOfMinute", end_date);
-        secs = ("00" + secs).substring(secs.length());
-        DateTime dt_end = DateTime.parse(year + "-" + month + "-" + day + "T" + hours + ":" + mins + ":" + secs,
-                DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss"));
-
+        DateTime dt_start = null;
+        DateTime dt_end = null;
+        String after = checkAndGetValue(TIME_AFTER, input);
+        if (after != null) {
+            dt_start = DateTime.parse(after,
+                    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
+        }
+        String before = checkAndGetValue(TIME_BEFORE, input);
+        if (before != null) {
+            dt_end = DateTime.parse(before,
+                    DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
+        }
         return new TemporalFilter(dt_start, dt_end);
     }
 

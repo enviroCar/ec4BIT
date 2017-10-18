@@ -46,7 +46,8 @@ public class RawMeasurementsDAO {
 //    @Override
     public String get(MeasurementFilter filter) {
         String bboxParam = null;
-        String timeParam = null;
+        String timeBeforeParam = null;
+        String timeAfterParam = null;
         String pageParam = null;
 
         if (filter.hasSpatialFilter()) {
@@ -55,7 +56,8 @@ public class RawMeasurementsDAO {
         }
         if (filter.hasTemporalFilter()) {
             TemporalFilter temp = filter.getTemporalFilter();
-            timeParam = temp.string();
+            timeBeforeParam = temp.stringBefore();
+            timeAfterParam = temp.stringAfter();
         }
         if (filter.hasPaginationFilter()) {
             PaginationFilter temp = filter.getPaginationFilter();
@@ -63,7 +65,7 @@ public class RawMeasurementsDAO {
         }
 
         Call<ResponseBody> asMeasurements = measurementService
-                .getAsRawResponse(bboxParam, timeParam, pageParam);
+                .getAsRawResponse(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
 
         try {
             ResponseBody body = asMeasurements.execute().body();

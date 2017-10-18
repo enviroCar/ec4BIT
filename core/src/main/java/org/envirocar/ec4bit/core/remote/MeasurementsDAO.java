@@ -46,7 +46,8 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
     @Override
     public Measurements get(MeasurementFilter filter) {
         String bboxParam = null;
-        String timeParam = null;
+        String timeBeforeParam = null;
+        String timeAfterParam = null;
         String pageParam = null;
 
         if (filter.hasSpatialFilter()) {
@@ -55,7 +56,8 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         }
         if (filter.hasTemporalFilter()) {
             TemporalFilter temp = filter.getTemporalFilter();
-            timeParam = temp.string();
+            timeBeforeParam = temp.stringBefore();
+            timeAfterParam = temp.stringAfter();
         }
         if (filter.hasPaginationFilter()) {
             PaginationFilter temp = filter.getPaginationFilter();
@@ -63,7 +65,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         }
 
         Call<Measurements> asMeasurements= measurementService
-                .getAsMeasurements(bboxParam, timeParam, pageParam);
+                .getAsMeasurements(bboxParam, timeAfterParam, timeBeforeParam,  pageParam);
         try {
             Measurements body = asMeasurements.execute().body();
             return body;

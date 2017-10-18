@@ -66,7 +66,7 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
             }
-            if (input.containsKey(DURING)) {
+            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {

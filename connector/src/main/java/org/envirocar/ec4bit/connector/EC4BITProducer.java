@@ -19,11 +19,13 @@
 package org.envirocar.ec4bit.connector;
 
 import org.eclipse.bigiot.lib.Provider;
+import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.IOData;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescriptionChain;
+import org.eclipse.bigiot.lib.query.elements.Region;
 import org.eclipse.bigiot.lib.swagger.SwaggerGenerator;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -38,6 +40,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
 
     @Value("${ec4bit.contact}")
     private String contact;
+    @Value("${bigiot.applications.driving_data.route}")
+    private String route;
 
     @Autowired
     protected Provider provider;
@@ -69,11 +73,50 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
-                .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER);
-//                .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
-//                        .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-//                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-//                .addInputData(PAGE, new RDFType(SCHEMA_PAGE), IOData.createMembers()
-//                        .addInputData(PAGE_NUMBER, new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER));
+                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
+                //                .addInputData(DURING, new RDFType("schema:timeInterval"), IOData.createMembers()
+                //                        .addInputData(DURING_START, new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+                //                        .addInputData(DURING_END, new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                //                .addInputData(PAGE, new RDFType(SCHEMA_PAGE), IOData.createMembers()
+                //                        .addInputData(PAGE_NUMBER, new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER));
+                // measurement components:
+                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
+                .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("time", new RDFType(SCHEMA_TIMESTAMP), ValueType.TEXT)
+                .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
+                .addOutputData("track", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
+                // measurement phenomenons:
+                .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.TEXT)
+                .addOutputData("co2", new RDFType(SCHEMA_CO2), ValueType.TEXT)
+                .addOutputData("consumption", new RDFType(SCHEMA_CONSUMPTION), ValueType.TEXT)
+                .addOutputData("maf", new RDFType(SCHEMA_MAF), ValueType.TEXT)
+                .addOutputData("GPS speed", new RDFType(SCHEMA_GPS_SPEED), ValueType.TEXT)
+                .addOutputData("GPS altitude", new RDFType(SCHEMA_GPS_ALTITUDE), ValueType.TEXT)
+                .addOutputData("Intake Temperature", new RDFType(SCHEMA_INTAKE_TEMPERATURE), ValueType.TEXT)
+                .addOutputData("Intake Pressure", new RDFType(SCHEMA_INTAKE_PRESSURE), ValueType.TEXT)
+                .addOutputData("rpm", new RDFType(SCHEMA_RPM), ValueType.TEXT)
+                .addOutputData("engine load", new RDFType(SCHEMA_ENGINE_LOAD), ValueType.TEXT)
+                .addOutputData("fuel system loop", new RDFType(SCHEMA_FUEL_SYSTEM_LOOP), ValueType.NUMBER)
+                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.NUMBER)
+                .addOutputData("GPS accuracy", new RDFType(SCHEMA_GPS_ACCURACY), ValueType.TEXT)
+                .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
+                .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)
+                .addOutputData("short term fuel Trim 1", new RDFType(SCHEMA_SHORT_TERM_FUEL_TRIM_1), ValueType.NUMBER)
+                .addOutputData("throttle position", new RDFType(SCHEMA_THROTTLE_POSITION), ValueType.TEXT)
+                .addOutputData("GPS HDOP", new RDFType(SCHEMA_GPS_HDOP), ValueType.TEXT)
+                .addOutputData("GPS VDOP", new RDFType(SCHEMA_GPS_VDOP), ValueType.TEXT)
+                .addOutputData("GPS PDOP", new RDFType(SCHEMA_GPS_PDOP), ValueType.TEXT)
+                .addOutputData("calculated maf", new RDFType(SCHEMA_CALCULATED_MAF), ValueType.TEXT)
+                .addOutputData("o2 lambda current", new RDFType(SCHEMA_O2_LAMBDA_CURRENT), ValueType.TEXT)
+                .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
+                .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
+                .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
+                .inRegion(Region.city("Muenster"))
+                .withPricingModel(BigIotTypes.PricingModel.FREE)
+                .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
+                .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
+                .withRoute(route)
+                .withAccessRequestHandler(getRequestHandler());
     }
 }

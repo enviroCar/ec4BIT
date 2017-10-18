@@ -70,7 +70,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
             }
-            if (input.containsKey(DURING)) {
+            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {

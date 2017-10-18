@@ -23,30 +23,44 @@ package org.envirocar.ec4bit.connector;
  * @author hafenkran
  */
 interface Constants {
-    
+
     // BoundingBoxFilter
     static final String SCHEMA_BBOX = "http://schema.org/box";
-    
+
     // TemporalFilter
     static final String SCHEMA_DURING_START = "http://schema.org/startDate";
     static final String SCHEMA_DURING_END = "http://schema.org/endDate";
-    
+    static final String AFTER = "after";
+    static final String BEFORE = "before";
+    static final String TIME_AFTER = "startDate";
+    static final String TIME_BEFORE = "endDate";
+
+    static final String PAGE = "page";
+    static final String PAGE_NUMBER = "pageNumber";
+    static final String SCHEMA_PAGINATION_PAGENUMBER = "SCHEMA_PAGINATION_PAGENUMBER";
+
+    static final String BBOX = "box";
+    static final String BBOX_XMIN = "xMin";
+    static final String BBOX_YMIN = "yMin";
+    static final String BBOX_XMAX = "xMax";
+    static final String BBOX_YMAX = "yMax";
+
     // PaginationFilter
-    static final String SCHEMA_PAGE_NUMBER= "bigiot:pageNumber";
-    
+    static final String SCHEMA_PAGE_NUMBER = "bigiot:pageNumber";
+
     // measurement components and phenomenons
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
-    static final String SCHEMA_ID = "SCHEMA_ID";
+    static final String SCHEMA_ID = "http://schema.org/identifier";
     static final String SCHEMA_TIMESTAMP = "http://schema.org/DateTime";
-    static final String SCHEMA_SENSOR = "SCHEMA_SENSOR";
-    static final String SCHEMA_TRACK = "SCHEMA_TRACK";
-    static final String SCHEMA_SPEED = "SCHEMA_SPEED"; // http://schema.org/QuantitativeValue für alle number phenomenons?
-    static final String SCHEMA_CO2 = "SCHEMA_CO2";
-    static final String SCHEMA_CONSUMPTION = "SCHEMA_CONSUMPTION";
+    static final String SCHEMA_SENSOR = "http://schema.org/identifier";
+    static final String SCHEMA_TRACK = "http://schema.org/identifier";
+    static final String SCHEMA_SPEED = "http://auto.schema.org/speed"; // http://schema.org/QuantitativeValue für alle number phenomenons?
+    static final String SCHEMA_CO2 = "http://auto.schema.org/emissionsCO2";
+    static final String SCHEMA_CONSUMPTION = "http://schema.org/fuelConsumption";
     static final String SCHEMA_MAF = "SCHEMA_MAF";
-    static final String SCHEMA_GPS_SPEED = "SCHEMA_GPS_SPEED";
-    static final String SCHEMA_GPS_ALTITUDE = "SCHEMA_GPS_ALTITUDE";
+    static final String SCHEMA_GPS_SPEED = "http://auto.schema.org/speed";
+    static final String SCHEMA_GPS_ALTITUDE = "http://schema.org/elevation";
     static final String SCHEMA_INTAKE_TEMPERATURE = "SCHEMA_INTAKE_TEMPERATURE";
     static final String SCHEMA_INTAKE_PRESSURE = "SCHEMA_INTAKE_PRESSURE";
     static final String SCHEMA_RPM = "SCHEMA_RPM";
@@ -66,20 +80,5 @@ interface Constants {
     static final String SCHEMA_O2_LAMBDA_CURRENT_ER = "SCHEMA_O2_LAMBDA_CURRENT_ER";
     static final String SCHEMA_O2_LAMBDA_VOLTAGE = "SCHEMA_O2_LAMBDA_VOLTAGE";
     static final String SCHEMA_O2_LAMBDA_VOLTAGE_ER = "SCHEMA_O2_LAMBDA_VOLTAGE_ER";
-    
-    static final String PAGE = "page";
-    static final String PAGE_NUMBER = "pageNumber";
-    
-    static final String SCHEMA_PAGINATION_PAGENUMBER = "SCHEMA_PAGINATION_PAGENUMBER";
-    
-    static final String DURING = "during";
-    static final String DURING_START = "startDate";
-    static final String DURING_END = "endDate";
-
-    static final String BBOX = "bbox";
-    static final String BBOX_XMIN = "xMin";
-    static final String BBOX_YMIN = "yMin";
-    static final String BBOX_XMAX = "xMax";
-    static final String BBOX_YMAX = "yMax";
 
 }

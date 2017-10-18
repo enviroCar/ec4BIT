@@ -39,8 +39,8 @@ public interface MeasurementService {
     Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
     
     @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox, @Query("during") String during, 
-            @Query("page") String page);
+    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox, @Query("after") String after, 
+            @Query("before") String before, @Query("page") String page);
 
     @GET("measurements/")
     Call<Measurements> getAsMeasurements();
@@ -49,8 +49,8 @@ public interface MeasurementService {
     Call<Measurements> getAsMeasurements(@Query("limit") int limit);
     
     @GET("measurements/")
-    Call<Measurements> getAsMeasurements(@Query("bbox") String bbox, @Query("during") String during, 
-            @Query("page") String page);
+    Call<Measurements> getAsMeasurements(@Query("bbox") String bbox, @Query("after") String after, 
+            @Query("before") String before, @Query("page") String page);
 
     @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues();
@@ -59,6 +59,6 @@ public interface MeasurementService {
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
     @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("during") String during,
-            @Query("page") String page);
+    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("after") String after,
+            @Query("before") String before, @Query("page") String page);
 }
