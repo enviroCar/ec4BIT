@@ -55,6 +55,7 @@ interface Constants {
     static final String SCHEMA_TIMESTAMP = "http://schema.org/DateTime";
     static final String SCHEMA_SENSOR = "http://schema.org/identifier";
     static final String SCHEMA_TRACK = "http://schema.org/identifier";
+    static final String SCHEMA_LENGTH = "SCHEMA_LENGTH";
     static final String SCHEMA_SPEED = "http://auto.schema.org/speed"; // http://schema.org/QuantitativeValue für alle number phenomenons?
     static final String SCHEMA_CO2 = "http://auto.schema.org/emissionsCO2";
     static final String SCHEMA_CONSUMPTION = "http://schema.org/fuelConsumption";

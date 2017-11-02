@@ -52,22 +52,22 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
-public class MeasurementDataConsumer {
+@Component
+public class TrackDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public MeasurementDataConsumer(
+    public TrackDataConsumer(
             @Value("${bigiot.consumer.id}") String consumerId,
             @Value("${bigiot.marketplace.url}") String marketplaceUrl,
             @Value("${bigiot.consumer.secret}") String consumerSecret) throws IOException, IncompleteOfferingQueryException, InterruptedException, ExecutionException, AccessToNonActivatedOfferingException, AccessToNonSubscribedOfferingException {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
 
-        OfferingQuery query = OfferingQuery.create("MeasurementsDataQuery")
-                .withInformation(new Information("MeasurementsDataQuery", "bigiot:DrivingMeasurements"))
+        OfferingQuery query = OfferingQuery.create("TracksDataQuery")
+                .withInformation(new Information("TracksDataQuery", "bigiot:DrivingTracks"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
-                .withMaxPrice(Euros.amount(0.003))
+                .withMaxPrice(Euros.amount(0.002))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
         listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);

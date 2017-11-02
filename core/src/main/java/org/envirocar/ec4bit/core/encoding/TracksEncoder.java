@@ -16,32 +16,29 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.remote.services;
+package org.envirocar.ec4bit.core.encoding;
 
-import okhttp3.ResponseBody;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 /**
  *
- * @author hafenkran
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public interface TrackService {
+public class TracksEncoder extends BaseJSONEncoder<Tracks> {
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks();
+    @Override
+    public void serialize(Tracks tracks, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("limit") int limit);
+        gen.writeStartObject();
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("bbox") String bbox, @Query("after") String after,
-            @Query("before") String before, @Query("page") String page);
+        writeArrayOfObjects(gen, "Tracks", tracks.getTracks());
 
-    @GET("tracks/{track}/")
-    Call<Track> getTrack(@Path("track") String track);
+        gen.writeEndObject();
+    }
+
 }

@@ -21,3 +21,14 @@ bigiot:
             local_id: driving-offering
             name: Traffic Driving Measurements
             route: measurements
+        track_data:
+            local_id: track-offering
+            name: Driving Tracks
+            route: tracks
+#server:
+#    port: 8081
+    
+#logging:
+    # path: /var/lib/ec4BIT/logs
+#     path: logs
+    

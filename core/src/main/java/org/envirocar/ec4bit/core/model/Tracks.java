@@ -16,32 +16,33 @@
  * You should have received a copy of the GNU General Public License along
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
-package org.envirocar.ec4bit.core.remote.services;
+package org.envirocar.ec4bit.core.model;
 
-import okhttp3.ResponseBody;
-import org.envirocar.ec4bit.core.model.Track;
-import org.envirocar.ec4bit.core.model.Tracks;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
- * @author hafenkran
+ * @author dewall
  */
-public interface TrackService {
+public class Tracks implements BaseEntity {
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks();
+    private List<Track> tracks;
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("limit") int limit);
+    public Tracks() {
+        this.tracks = new ArrayList<>();
+    }
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("bbox") String bbox, @Query("after") String after,
-            @Query("before") String before, @Query("page") String page);
+    public void addTrack(Track track) {
+        this.tracks.add(track);
+    }
 
-    @GET("tracks/{track}/")
-    Call<Track> getTrack(@Path("track") String track);
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+
 }
