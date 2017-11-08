@@ -23,7 +23,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import org.envirocar.ec4bit.core.model.Measurement;
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -46,8 +45,13 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         String time = value.getTime().toString(TEMPORAL_TIME_PATTERN);
 
         gen.writeObjectField("time", time);
-        gen.writeObjectField("track", value.getTrackID());
-        gen.writeObjectField("sensor", value.getSensor());
+
+        if (value.getTrackID() != null) {
+            gen.writeObjectField("track", value.getTrackID());
+        }
+        if (value.getSensor() != null) {
+            gen.writeObjectField("sensor", value.getSensor());
+        }
         if (value.getSpeed() != null) {
             gen.writeObjectField("Speed", value.getSpeed());
         }
@@ -75,22 +79,22 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         if (value.getRpm() != null) {
             gen.writeObjectField("Rpm", value.getRpm());
         }
-        if (value.getFuel_system_loop()!= null) {
+        if (value.getFuel_system_loop() != null) {
             gen.writeObjectField("Fuel System Loop", value.getFuel_system_loop());
         }
         if (value.getFuel_system_status_code() != null) {
             gen.writeObjectField("Fuel System Status Code", value.getFuel_system_status_code());
         }
-        if (value.getGps_accuracy()!= null) {
+        if (value.getGps_accuracy() != null) {
             gen.writeObjectField("GPS Accuracy", value.getGps_accuracy());
         }
         if (value.getGps_bearing() != null) {
             gen.writeObjectField("GPS Bearing", value.getGps_bearing());
         }
-        if (value.getLong_term_fuel_trim_1()!= null) {
+        if (value.getLong_term_fuel_trim_1() != null) {
             gen.writeObjectField("Long-Term Fuel Trim 1", value.getLong_term_fuel_trim_1());
         }
-        if (value.getShort_term_fuel_trim_1()!= null) {
+        if (value.getShort_term_fuel_trim_1() != null) {
             gen.writeObjectField("Short-Term Fuel Trim 1", value.getShort_term_fuel_trim_1());
         }
         if (value.getThrottle_position() != null) {
@@ -99,28 +103,28 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         if (value.getGps_hdop() != null) {
             gen.writeObjectField("GPS HDOP", value.getGps_hdop());
         }
-        if (value.getGps_vdop()!= null) {
+        if (value.getGps_vdop() != null) {
             gen.writeObjectField("GPS VDOP", value.getGps_vdop());
         }
-        if (value.getGps_pdop()!= null) {
+        if (value.getGps_pdop() != null) {
             gen.writeObjectField("GPS PDOP", value.getGps_pdop());
         }
-        if (value.getCalculated_maf()!= null) {
+        if (value.getCalculated_maf() != null) {
             gen.writeObjectField("Calculated MAF", value.getCalculated_maf());
         }
-        if (value.getO2_lambda_current()!= null) {
+        if (value.getO2_lambda_current() != null) {
             gen.writeObjectField("O2 Lambda Current", value.getO2_lambda_current());
         }
-        if (value.getO2_lambda_current_ER()!= null) {
+        if (value.getO2_lambda_current_ER() != null) {
             gen.writeObjectField("O2 Lambda Current ER", value.getO2_lambda_current_ER());
         }
-        if (value.getO2_lambda_voltage()!= null) {
+        if (value.getO2_lambda_voltage() != null) {
             gen.writeObjectField("O2 Lambda Voltage", value.getO2_lambda_voltage());
         }
-        if (value.getO2_lambda_voltage_ER()!= null) {
+        if (value.getO2_lambda_voltage_ER() != null) {
             gen.writeObjectField("O2 Lambda Voltage ER", value.getO2_lambda_voltage_ER());
         }
-        
+
         gen.writeEndObject();
     }
 

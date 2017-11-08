@@ -22,6 +22,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
+import java.util.List;
+import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Track;
 
 /**
@@ -30,16 +32,21 @@ import org.envirocar.ec4bit.core.model.Track;
  */
 public class TrackEncoder extends BaseJSONEncoder<Track> {
 
-    
     @Override
     public void serialize(Track track, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
         gen.writeStartObject();
-        
+
         gen.writeObjectField("id", track.getTrackID());
         gen.writeObjectField("sensor", track.getSensor());
         gen.writeObjectField("length", track.getLength());
-        
+
+        // TODO: serialize measurements:
+        List<Measurement> measurements = track.getMeasurements();
+        if (!measurements.isEmpty()) {
+            writeArrayOfObjects(gen, "Measurements", measurements);
+        }
+
         gen.writeEndObject();
     }
 

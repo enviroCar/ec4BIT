@@ -70,10 +70,10 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
     private static final String ELEMENT_GPS_PDOP = "GPS PDOP";
     private static final String ELEMENT_CALCULATED_MAF = "Calculated MAF";
     private static final String ELEMENT_O2_LAMBDA_CURRENT = "O2 Lambda Current";
-    private static final String ELEMENT_O2_LAMBDA_CURRENT_ER= "O2 Lambda Current ER";
+    private static final String ELEMENT_O2_LAMBDA_CURRENT_ER = "O2 Lambda Current ER";
     private static final String ELEMENT_O2_LAMBDA_VOLTAGE = "O2 Lambda Voltage";
     private static final String ELEMENT_O2_LAMBDA_VOLTAGE_ER = "O2 Lambda Voltage ER";
-    
+
     private static final String ELEMENT_VALUE = "value";
 
     @Override
@@ -101,13 +101,19 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
             String timeStr = properties.get(ELEMENT_TIME).asText();
             timeStr = timeStr.substring(0, timeStr.length() - 1);
             DateTime time = TEMPORAL_TIME_PATTERN.parseDateTime(timeStr);
-            String track = properties.get(ELEMENT_TRACK).asText();
-            String sensor = "https://envirocar.org/api/stable/sensors/"
-                    + properties
-                            .get(ELEMENT_SENSOR)
-                            .get(ELEMENT_PROPERTIES)
-                            .get(ELEMENT_ID)
-                            .asText();
+            if (properties.get(ELEMENT_TRACK) != null) {
+                String track = properties.get(ELEMENT_TRACK).asText();
+                result.setTrackID(track);
+            }
+            if (properties.get(ELEMENT_SENSOR) != null) {
+                String sensor = "https://envirocar.org/api/stable/sensors/"
+                        + properties
+                                .get(ELEMENT_SENSOR)
+                                .get(ELEMENT_PROPERTIES)
+                                .get(ELEMENT_ID)
+                                .asText();
+                result.setSensor(sensor);
+            }
 
             // parse the phenomenons:
             JsonNode phenomenons = properties
@@ -214,16 +220,14 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
                 Double o2_lambda_voltage_er = phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble();
                 result.setO2_lambda_voltage_ER(o2_lambda_voltage_er);
             }
-            
+
             result.setMeasurementID(id);
-            result.setSensor(sensor);
-            result.setTrackID(track);
             result.setTime(time);
 
             result.setLongitude(longitude);
             result.setLatitude(latitude);
 
-            result.setSpeed(speed);      
+            result.setSpeed(speed);
 
             results.addMeasurement(result);
         });

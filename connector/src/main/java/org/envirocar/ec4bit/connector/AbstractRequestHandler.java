@@ -132,6 +132,11 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         }
         return new TemporalFilter(dt_start, dt_end);
     }
+    
+    protected String getTrackID(Map<String, Object> input) throws KeyNotFoundException {
+        String trackID = checkAndGetValue(SINGLE_TRACK, input);
+        return trackID;
+    }
 
     public abstract E processRequest(OfferingDescription od, Map<String, Object> map) throws RequestProcessingException;
 }

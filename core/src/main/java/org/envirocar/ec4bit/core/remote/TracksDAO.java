@@ -77,18 +77,18 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
         return null;
     }
     
-//    public Track get() {
-//
-//        Call<Track> asTrack = trackService
-//                .getTrack(bboxParam, timeAfterParam, timeBeforeParam,  pageParam);
-//        try {
-//            Tracks body = asTracks.execute().body();
-//            return body;
-//        } catch (IOException ex) {
-//            LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
-//        }
-//
-//        return null;
-//    }
+    public Track get(String trackID) {
+
+        Call<Track> asTrack = trackService
+                .getTrack(trackID);
+        try {
+            Track body = asTrack.execute().body();
+            return body;
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+        }
+
+        return null;
+    }
 
 }

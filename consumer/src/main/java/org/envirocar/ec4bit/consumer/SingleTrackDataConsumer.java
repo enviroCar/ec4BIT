@@ -52,20 +52,20 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
-public class TrackDataConsumer {
+@Component
+public class SingleTrackDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
 
-    public TrackDataConsumer(
+    public SingleTrackDataConsumer(
             @Value("${bigiot.consumer.id}") String consumerId,
             @Value("${bigiot.marketplace.url}") String marketplaceUrl,
             @Value("${bigiot.consumer.secret}") String consumerSecret) throws IOException, IncompleteOfferingQueryException, InterruptedException, ExecutionException, AccessToNonActivatedOfferingException, AccessToNonSubscribedOfferingException {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
 
-        OfferingQuery query = OfferingQuery.create("TracksDataQuery")
-                .withInformation(new Information("TracksDataQuery", "bigiot:DrivingTracks"))
+        OfferingQuery query = OfferingQuery.create("TrackDataQuery")
+                .withInformation(new Information("TrackDataQuery", "bigiot:DrivingTrack"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.002))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
@@ -90,13 +90,8 @@ public class TrackDataConsumer {
             }
 
             // Prepare Access Parameters
-            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-15T06:06:44");
-            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-10-15T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
-                    .addNameValue("box", "50.076,7.5 52.08,8.00")
-                    .addNameValue("startDate", startDT)
-                    .addNameValue("endDate", endDT)
-                    .addNameValue("page", 1);
+                    .addNameValue("track", "59fb1e3f268d1b082e738c2f");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

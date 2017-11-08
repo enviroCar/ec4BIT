@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class TrackProducer extends EC4BITProducer {
 
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingTracks";
@@ -80,7 +80,6 @@ public class TrackProducer extends EC4BITProducer {
                 .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
-                // TODO: track measurements
                 
                 .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)

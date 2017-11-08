@@ -30,7 +30,6 @@ public class Track {
     private String trackID;
     private String sensor;
     private Double length;
-    
     private List<Measurement> measurements;
     
     public Track() {
