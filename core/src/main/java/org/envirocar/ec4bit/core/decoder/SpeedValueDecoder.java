@@ -53,11 +53,11 @@ public class SpeedValueDecoder extends BaseDeserializer<SpeedValue> {
         double latitude = geometry.get(1).asDouble();
 
         // parse the speed phenomenon
-        double speed = node.get(ELEMENT_PROPERTIES)
+        int speed = node.get(ELEMENT_PROPERTIES)
                 .get(ELEMENT_PHENOMENONS)
                 .get(ELEMENT_SPEED)
                 .get(ELEMENT_VALUE)
-                .asDouble();
+                .asInt();
 
         result.setLongitude(longitude);
         result.setLatitude(latitude);

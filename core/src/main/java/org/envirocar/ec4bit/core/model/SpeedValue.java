@@ -26,13 +26,13 @@ public class SpeedValue implements BaseEntity {
 
     private double longitude;
     private double latitude;
-    private double speed;
+    private int speed;
 
     public SpeedValue() {
         this(0, 0, 0);
     }
 
-    public SpeedValue(double longitude, double latitude, double speed) {
+    public SpeedValue(double longitude, double latitude, int speed) {
         this.longitude = longitude;
         this.latitude = latitude;
         this.speed = speed;
@@ -54,11 +54,11 @@ public class SpeedValue implements BaseEntity {
         this.latitude = latitude;
     }
 
-    public double getSpeed() {
+    public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(double speed) {
+    public void setSpeed(int speed) {
         this.speed = speed;
     }
 

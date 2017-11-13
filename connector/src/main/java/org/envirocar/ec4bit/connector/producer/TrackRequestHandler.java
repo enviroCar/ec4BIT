@@ -41,13 +41,11 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
+@Component
 public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TrackRequestHandler.class);
 
-//    @Autowired
-//    private RawMeasurementsDAO measurementsDao;
     @Autowired
     private TracksDAO tracksDAO;
     @Autowired

@@ -26,6 +26,7 @@ import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
+import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.Measurements;
@@ -46,8 +47,6 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
 
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementRequestHandler.class);
 
-//    @Autowired
-//    private RawMeasurementsDAO measurementsDao;
     @Autowired
     private MeasurementsDAO measurementsDao;
     @Autowired
@@ -66,6 +65,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
             PaginationFilter paginationFilter = null;
+            PhenomenonFilter phenomenonFilter = null;
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
@@ -76,8 +76,11 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             if (input.containsKey(PAGE)) {
                 paginationFilter = getPaginationFilterParams(input);
             }
+            if (input.containsKey(PHENOMENONS)) {
+                phenomenonFilter = getPhenomenonFilterParams(input);
+            }
 
-            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, paginationFilter);
+            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, paginationFilter, phenomenonFilter);
             return measurementsDao.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);

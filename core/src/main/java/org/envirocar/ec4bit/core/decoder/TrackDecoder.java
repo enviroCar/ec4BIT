@@ -77,6 +77,13 @@ public class TrackDecoder extends BaseDeserializer<Track> {
     private static final String ELEMENT_O2_LAMBDA_VOLTAGE_ER = "O2 Lambda Voltage ER";
     
     private static final String ELEMENT_VALUE = "value";
+    
+    private static double round(double value, int places) {
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
     @Override
     public Track deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
@@ -86,18 +93,15 @@ public class TrackDecoder extends BaseDeserializer<Track> {
         // parse id, sensor, and length:
         JsonNode properties = node.get(ELEMENT_PROPERTIES);
 
-        String id = properties.get(ELEMENT_ID).asText();
+        String trackID = properties.get(ELEMENT_ID).asText();
         Double length = properties.get(ELEMENT_LENGTH).asDouble();
-        String sensor = "https://envirocar.org/api/stable/sensors/"
-                + properties
+        String sensorID = properties
                         .get(ELEMENT_SENSOR)
                         .get(ELEMENT_PROPERTIES)
                         .get(ELEMENT_ID)
                         .asText();
 
         // parse Measurements:
-//        MeasurementsDecoder md = new MeasurementsDecoder();
-//        Measurements measurements = md.deserialize(jp, dc);
         Measurements results = new Measurements();
         ArrayNode features = (ArrayNode) node.get(ELEMENT_FEATURES);
 
@@ -120,17 +124,16 @@ public class TrackDecoder extends BaseDeserializer<Track> {
             timeStr = timeStr.substring(0, timeStr.length() - 1);
             DateTime time = TEMPORAL_TIME_PATTERN.parseDateTime(timeStr);
             if (measurement_properties.get(ELEMENT_TRACK) != null) {
-                String track = measurement_properties.get(ELEMENT_TRACK).asText();
-                measurement.setTrackID(track);
+                String mTrackID = measurement_properties.get(ELEMENT_TRACK).asText();
+                measurement.setTrackID(mTrackID);
             }
             if (measurement_properties.get(ELEMENT_SENSOR) != null) {
-                String measurement_sensor = "https://envirocar.org/api/stable/sensors/"
-                        + measurement_properties
+                String mSensorID = measurement_properties
                                 .get(ELEMENT_SENSOR)
                                 .get(ELEMENT_PROPERTIES)
                                 .get(ELEMENT_ID)
                                 .asText();
-                measurement.setSensor(measurement_sensor);
+                measurement.setSensorID(mSensorID);
             }
 
             // parse the phenomenons:
@@ -139,31 +142,31 @@ public class TrackDecoder extends BaseDeserializer<Track> {
 
             Integer speed = phenomenons.get(ELEMENT_SPEED).get(ELEMENT_VALUE).asInt();
             if (phenomenons.get(ELEMENT_CO2) != null) {
-                Double co2 = phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble();
+                Double co2 = round( phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setCo2(co2);
             }
             if (phenomenons.get(ELEMENT_CONSUMPTION) != null) {
-                Double consumption = phenomenons.get(ELEMENT_CONSUMPTION).get(ELEMENT_VALUE).asDouble();
+                Double consumption = round( phenomenons.get(ELEMENT_CONSUMPTION).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setConsumption(consumption);
             }
             if (phenomenons.get(ELEMENT_GPS_SPEED) != null) {
-                Double gps_speed = phenomenons.get(ELEMENT_GPS_SPEED).get(ELEMENT_VALUE).asDouble();
+                Double gps_speed = round( phenomenons.get(ELEMENT_GPS_SPEED).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setGps_speed(gps_speed);
             }
             if (phenomenons.get(ELEMENT_GPS_ALTITUDE) != null) {
-                Double gps_alt = phenomenons.get(ELEMENT_GPS_ALTITUDE).get(ELEMENT_VALUE).asDouble();
+                Double gps_alt = round(  phenomenons.get(ELEMENT_GPS_ALTITUDE).get(ELEMENT_VALUE).asDouble(), 7);
                 measurement.setGps_altitude(gps_alt);
             }
             if (phenomenons.get(ELEMENT_MAF) != null) {
-                Double maf = phenomenons.get(ELEMENT_MAF).get(ELEMENT_VALUE).asDouble();
+                Double maf =round( phenomenons.get(ELEMENT_MAF).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setMaf(maf);
             }
             if (phenomenons.get(ELEMENT_INTAKE_TEMP) != null) {
-                Integer intake_temp = phenomenons.get(ELEMENT_INTAKE_TEMP).get(ELEMENT_VALUE).asInt();
+                Double intake_temp = phenomenons.get(ELEMENT_INTAKE_TEMP).get(ELEMENT_VALUE).asDouble();
                 measurement.setIntake_temp(intake_temp);
             }
             if (phenomenons.get(ELEMENT_INTAKE_PRESSURE) != null) {
-                Double intake_press = phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble();
+                Double intake_press = round( phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setIntake_pressure(intake_press);
             }
             if (phenomenons.get(ELEMENT_RPM) != null) {
@@ -183,11 +186,11 @@ public class TrackDecoder extends BaseDeserializer<Track> {
                 measurement.setFuel_system_status_code(fuel_system__status_code);
             }
             if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
-                Integer gps_accuracy = phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asInt();
+                Double gps_accuracy = round( phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);
                 measurement.setGps_accuracy(gps_accuracy);
             }
             if (phenomenons.get(ELEMENT_GPS_BEARING) != null) {
-                Double gps_bearing = phenomenons.get(ELEMENT_GPS_BEARING).get(ELEMENT_VALUE).asDouble();
+                Double gps_bearing = round( phenomenons.get(ELEMENT_GPS_BEARING).get(ELEMENT_VALUE).asDouble(), 2);
                 measurement.setGps_bearing(gps_bearing);
             }
             if (phenomenons.get(ELEMENT_LONG_TERM_FUEL_TRIM_1) != null) {
@@ -203,39 +206,39 @@ public class TrackDecoder extends BaseDeserializer<Track> {
                 measurement.setThrottle_position(throttle_position);
             }
             if (phenomenons.get(ELEMENT_GPS_HDOP) != null) {
-                Double gps_hdop = phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble();
+                Double gps_hdop = round( phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble(), 5);
                 measurement.setGps_hdop(gps_hdop);
             }
             if (phenomenons.get(ELEMENT_GPS_VDOP) != null) {
-                Double gps_vdop = phenomenons.get(ELEMENT_GPS_VDOP).get(ELEMENT_VALUE).asDouble();
+                Double gps_vdop = round( phenomenons.get(ELEMENT_GPS_VDOP).get(ELEMENT_VALUE).asDouble(), 5);
                 measurement.setGps_vdop(gps_vdop);
             }
             if (phenomenons.get(ELEMENT_GPS_PDOP) != null) {
-                Double gps_pdop = phenomenons.get(ELEMENT_GPS_PDOP).get(ELEMENT_VALUE).asDouble();
+                Double gps_pdop = round( phenomenons.get(ELEMENT_GPS_PDOP).get(ELEMENT_VALUE).asDouble(), 5);
                 measurement.setGps_pdop(gps_pdop);
             }
             if (phenomenons.get(ELEMENT_CALCULATED_MAF) != null) {
-                Double maf = phenomenons.get(ELEMENT_CALCULATED_MAF).get(ELEMENT_VALUE).asDouble();
+                Double maf = round( phenomenons.get(ELEMENT_CALCULATED_MAF).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setCalculated_maf(maf);
             }
             if (phenomenons.get(ELEMENT_GPS_HDOP) != null) {
-                Double gps_hdop = phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble();
+                Double gps_hdop = round( phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble(), 5);
                 measurement.setGps_hdop(gps_hdop);
             }
             if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER) != null) {
-                Double o2_lambda_current_er = phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER).get(ELEMENT_VALUE).asDouble();
+                Double o2_lambda_current_er = round( phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setO2_lambda_current_ER(o2_lambda_current_er);
             }
             if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT) != null) {
-                Double o2_lambda_current = phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT).get(ELEMENT_VALUE).asDouble();
+                Double o2_lambda_current = round( phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setO2_lambda_current(o2_lambda_current);
             }
             if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE) != null) {
-                Double o2_lambda_voltage = phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE).get(ELEMENT_VALUE).asDouble();
+                Double o2_lambda_voltage = round( phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE).get(ELEMENT_VALUE).asDouble(), 4);
                 measurement.setO2_lambda_voltage(o2_lambda_voltage);
             }
             if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER) != null) {
-                Double o2_lambda_voltage_er = phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble();
+                Double o2_lambda_voltage_er = round( phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble(), 5);
                 measurement.setO2_lambda_voltage_ER(o2_lambda_voltage_er);
             }
 
@@ -250,8 +253,8 @@ public class TrackDecoder extends BaseDeserializer<Track> {
             results.addMeasurement(measurement);
         });
 
-        result.setSensor(sensor);
-        result.setTrackID(id);
+        result.setSensor(sensorID);
+        result.setTrackID(trackID);
         result.setLength(length);
         result.setMeasurements(results.getMeasurements());
 

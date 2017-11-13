@@ -28,6 +28,7 @@ import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
+import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.joda.time.format.DateTimeFormat;
@@ -132,10 +133,35 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         }
         return new TemporalFilter(dt_start, dt_end);
     }
-    
+
     protected String getTrackID(Map<String, Object> input) throws KeyNotFoundException {
         String trackID = checkAndGetValue(SINGLE_TRACK, input);
         return trackID;
+    }
+
+    protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {
+        String phenomString = checkAndGetValue(PHENOMENONS, input);
+        PhenomenonFilter pf = new PhenomenonFilter(
+                    true, true, true, true, true, 
+                    true, true, true, true, true, 
+                    true, true, true, true, true, 
+                    true, true, true, true, true, 
+                    true, true, true, true, true);
+        if (phenomString != null) {
+            phenomString = phenomString.toLowerCase();
+            if (!phenomString.contains("speed")) {
+                pf.setSpeed(false);
+            }
+            if (!phenomString.contains("co2")) {
+                pf.setCo2(false);
+            }
+//                    speed, co2, consumption, gps_speed, gps_altitude,
+//                    maf, intake_temperature, intake_pressure, rpm, engine_load,
+//                    fuel_system_loop, fuel_system_status_code, gps_accuracy, gps_bearing, long_term_fuel_trim_1,
+//                    short_term_fuel_trim_1, throlle_position, gps_hdop, gps_vdop, gps_pdop,
+//                    calculated_maf, o2_lambda_current, o2_lambda_current_er, o2_lambda_voltage, o2_lambda_voltage_er
+        }
+        return pf;
     }
 
     public abstract E processRequest(OfferingDescription od, Map<String, Object> map) throws RequestProcessingException;

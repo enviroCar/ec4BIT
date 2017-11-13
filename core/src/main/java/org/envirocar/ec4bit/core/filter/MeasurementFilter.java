@@ -24,6 +24,7 @@ package org.envirocar.ec4bit.core.filter;
  */
 public class MeasurementFilter {
 
+    private final PhenomenonFilter phenomenonFilter;
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
     private final PaginationFilter paginationFilter;
@@ -34,7 +35,7 @@ public class MeasurementFilter {
      * @param spatialFilter
      */
     public MeasurementFilter(SpatialFilter spatialFilter) {
-        this(spatialFilter, null, null);
+        this(spatialFilter, null, null, null);
     }
 
     /**
@@ -43,7 +44,7 @@ public class MeasurementFilter {
      * @param temporalFilter
      */
     public MeasurementFilter(TemporalFilter temporalFilter) {
-        this(null, temporalFilter, null);
+        this(null, temporalFilter, null, null);
     }
 
     /**
@@ -52,7 +53,16 @@ public class MeasurementFilter {
      * @param paginationFilter
      */
     public MeasurementFilter(PaginationFilter paginationFilter) {
-        this(null, null, paginationFilter);
+        this(null, null, paginationFilter, null);
+    }
+    
+    /**
+     * Constructor.
+     *
+     * @param phenomenonFilter
+     */
+    public MeasurementFilter(PhenomenonFilter phenomenonFilter) {
+        this(null, null, null, phenomenonFilter);
     }
 
     /**
@@ -61,11 +71,14 @@ public class MeasurementFilter {
      * @param spatialFilter
      * @param temporalFilter
      * @param paginationFilter
+     * @param phenomenonFilter
      */
-    public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
+    public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, 
+            PaginationFilter paginationFilter, PhenomenonFilter phenomenonFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;
+        this.phenomenonFilter = phenomenonFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -74,6 +87,14 @@ public class MeasurementFilter {
 
     public boolean hasSpatialFilter() {
         return this.spatialFilter != null;
+    }
+
+    public PhenomenonFilter getPhenomenonFilter() {
+        return phenomenonFilter;
+    }
+
+    public boolean hasPhenomenonFilter() {
+        return this.phenomenonFilter != null;
     }
 
     public TemporalFilter getTemporalFilter() {

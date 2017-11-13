@@ -37,8 +37,10 @@ public class TrackEncoder extends BaseJSONEncoder<Track> {
 
         gen.writeStartObject();
 
-        gen.writeObjectField("id", track.getTrackID());
-        gen.writeObjectField("sensor", track.getSensor());
+        gen.writeObjectField("trackID", track.getTrackID());
+        gen.writeObjectField("trackRef", "http://www.envirocar.org/api/stable/tracks/" + track.getTrackID());
+        gen.writeObjectField("sensorID", track.getSensor());
+        gen.writeObjectField("sensorRef", "http://www.envirocar.org/api/stable/sensors/" + track.getSensor());
         gen.writeObjectField("length", track.getLength());
 
         // TODO: serialize measurements:

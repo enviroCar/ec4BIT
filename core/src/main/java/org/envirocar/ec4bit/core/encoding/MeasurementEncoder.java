@@ -38,7 +38,8 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
     public void serialize(Measurement value, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
         gen.writeStartObject();
-        gen.writeObjectField("id", value.getMeasurementID());
+        gen.writeObjectField("measurementID", value.getMeasurementID());
+        gen.writeObjectField("measurementRef", "http://www.envirocar.org/api/stable/measurements/" + value.getMeasurementID());
         gen.writeObjectField("longitude", value.getLongitude());
         gen.writeObjectField("latitude", value.getLatitude());
         // get TimeStamp String:
@@ -47,10 +48,12 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         gen.writeObjectField("time", time);
 
         if (value.getTrackID() != null) {
-            gen.writeObjectField("track", value.getTrackID());
+            gen.writeObjectField("trackID", value.getTrackID());
+            gen.writeObjectField("trackRef", "http://www.envirocar.org/api/stable/tracks/" + value.getTrackID());
         }
-        if (value.getSensor() != null) {
-            gen.writeObjectField("sensor", value.getSensor());
+        if (value.getSensorID() != null) {
+            gen.writeObjectField("sensorID", value.getSensorID());
+            gen.writeObjectField("sensorRef", "http://www.envirocar.org/api/stable/sensors/" + value.getSensorID());
         }
         if (value.getSpeed() != null) {
             gen.writeObjectField("Speed", value.getSpeed());

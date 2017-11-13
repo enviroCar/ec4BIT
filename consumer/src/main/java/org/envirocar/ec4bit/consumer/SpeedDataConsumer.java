@@ -52,7 +52,7 @@ import org.springframework.stereotype.Component;
  *
  * @author dewall
  */
-//@Component
+@Component
 public class SpeedDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -94,16 +94,10 @@ public class SpeedDataConsumer {
             DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-22T06:06:44");
             DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-30T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
-                    .addNameValue("bbox", AccessParameters.create()
-                            .addNameValue("xMin", 50.22)
-                            .addNameValue("yMin", 7.11)
-                            .addNameValue("xMax", 52.22)
-                            .addNameValue("yMax", 8.0))
-                    .addNameValue("during", AccessParameters.create()
-                            .addNameValue("startDate", startDT)
-                            .addNameValue("endDate", endDT))
-                    .addNameValue("page", AccessParameters.create()
-                            .addNameValue("pageNumber", 1));
+                    .addNameValue("box", "50.076,7.5 52.08,8.00")
+                    .addNameValue("startDate", startDT)
+                    .addNameValue("endDate", endDT)
+                    .addNameValue("page", 1);
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

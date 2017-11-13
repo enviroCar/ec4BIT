@@ -52,7 +52,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
+@Component
 public class MeasurementDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -96,7 +96,8 @@ public class MeasurementDataConsumer {
                     .addNameValue("box", "50.076,7.5 52.08,8.00")
                     .addNameValue("startDate", startDT)
                     .addNameValue("endDate", endDT)
-                    .addNameValue("page", 1);
+                    .addNameValue("page", 1)
+                    .addNameValue("phenomenons", "co2");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

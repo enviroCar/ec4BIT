@@ -42,8 +42,6 @@ public class SingleTrackRequestHandler extends AbstractRequestHandler<Track> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SingleTrackRequestHandler.class);
 
-//    @Autowired
-//    private RawMeasurementsDAO measurementsDao;
     @Autowired
     private TracksDAO tracksDAO;
     @Autowired

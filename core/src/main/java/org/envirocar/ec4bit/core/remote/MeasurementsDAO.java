@@ -21,8 +21,10 @@ package org.envirocar.ec4bit.core.remote;
 import java.io.IOException;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
+import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import org.slf4j.Logger;
@@ -49,6 +51,8 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
+        PhenomenonFilter phenomenonFilter = new PhenomenonFilter();
+        Boolean PhenomenonFilterFilters = false;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -63,11 +67,45 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
             PaginationFilter temp = filter.getPaginationFilter();
             pageParam = temp.string();
         }
+        if (filter.hasPhenomenonFilter()) {
+            phenomenonFilter = filter.getPhenomenonFilter();
+            PhenomenonFilterFilters = phenomenonFilter.hasPhenomenonsFiltered();
+        }
 
-        Call<Measurements> asMeasurements= measurementService
-                .getAsMeasurements(bboxParam, timeAfterParam, timeBeforeParam,  pageParam);
+        Call<Measurements> asMeasurements = measurementService
+                .getAsMeasurements(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
+
         try {
             Measurements body = asMeasurements.execute().body();
+
+            if (PhenomenonFilterFilters) {
+                Measurements filteredMeasurements = new Measurements();
+                // process Measurements and set false-filtered phenomenons to null:
+                if (body.getMeasurements() != null) {
+                    for (Measurement m : body.getMeasurements()) {
+                        // == REPLACE CODE WITH == //
+                        if (phenomenonFilter.getSpeed() && m.hasSpeed()) {
+                            filteredMeasurements.addMeasurement(m);
+                            continue;
+                        }
+                        if (phenomenonFilter.getCo2() && m.hasCo2()) {
+                            filteredMeasurements.addMeasurement(m);
+                            continue;
+                        }
+                        // === WITH: === //
+                        // for each phenomenon p in m do:
+                            // bool isRelevant = false;
+                            // if phenomenonFilter.get(p) = true
+                                // isRelevant = true;
+                            // else 
+                                // m.setP(null);
+                            // if isRelevant 
+                                // filteredMeasurements.addMeasurement(m);
+                    }
+                }
+                return filteredMeasurements;
+            }
+
             return body;
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
