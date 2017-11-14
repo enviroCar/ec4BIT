@@ -37,20 +37,19 @@ import org.springframework.stereotype.Component;
  * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
-public class MeasurementProducer extends EC4BITProducer {
+public class SingleTrackProducer extends EC4BITProducer {
 
-//    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingMeasurements";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingTrack";
 
-    @Value("${bigiot.applications.driving_data.local_id}")
+    @Value("${bigiot.applications.single_track_data.local_id}")
     private String localId;
-    @Value("${bigiot.applications.driving_data.name}")
+    @Value("${bigiot.applications.single_track_data.name}")
     private String name;
-    @Value("${bigiot.applications.driving_data.route}")
+    @Value("${bigiot.applications.single_track_data.route}")
     private String route;
 
     @Autowired
-    private MeasurementRequestHandler requestHandler;
+    private SingleTrackRequestHandler requestHandler;
 
     /**
      *
@@ -60,33 +59,22 @@ public class MeasurementProducer extends EC4BITProducer {
     protected RegistrableOfferingDescription getOfferingDescription() {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                // measurement filter options:
-                // not supported in the marketpalce, use non-nested input data elements instead
-                //                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                //                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                //                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                //                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                //                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
-                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
-                //                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
-                //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
-                //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
-                
+                .addInputData("track", new RDFType(SCHEMA_SINGLE_TRACK_ID), ValueType.TEXT)
+                // track components:
+                .addOutputData("trackID", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("trackRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
+                .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
                 // measurement components:
                 .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
                 .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
                 .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("measurementRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
                 .addOutputData("time", new RDFType(SCHEMA_TIMESTAMP), ValueType.TEXT)
-                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
+                .addOutputData("trackID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("trackRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
                 // measurement phenomenons:
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.TEXT)
@@ -114,7 +102,6 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-               
                 .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)

@@ -80,7 +80,6 @@ public class TrackProducer extends EC4BITProducer {
                 .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
-                // TODO: track measurements
                 
                 .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)

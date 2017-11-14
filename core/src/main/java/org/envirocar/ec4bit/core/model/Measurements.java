@@ -19,7 +19,9 @@
 package org.envirocar.ec4bit.core.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -28,8 +30,11 @@ import java.util.List;
 public class Measurements implements BaseEntity {
 
     private List<Measurement> measurements;
+    
+    private Set<String> phenomDefinitions;
 
     public Measurements() {
+        this.phenomDefinitions = new HashSet<String>();
         this.measurements = new ArrayList<>();
     }
 
@@ -43,6 +48,14 @@ public class Measurements implements BaseEntity {
 
     public void setMeasurements(List<Measurement> measurement) {
         this.measurements = measurement;
+    }
+    
+    public void addPhenomDefinition(String phenomDef) {
+        this.phenomDefinitions.add(phenomDef);
+    }
+    
+    public boolean containsPhenomDefinition(String phenomDef) {
+        return this.phenomDefinitions.contains(phenomDef);
     }
 
 }

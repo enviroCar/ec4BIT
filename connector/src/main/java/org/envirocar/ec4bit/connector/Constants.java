@@ -35,18 +35,28 @@ interface Constants {
     static final String TIME_AFTER = "startDate";
     static final String TIME_BEFORE = "endDate";
 
+    // PaginationFilter
     static final String PAGE = "page";
     static final String PAGE_NUMBER = "pageNumber";
     static final String SCHEMA_PAGINATION_PAGENUMBER = "SCHEMA_PAGINATION_PAGENUMBER";
+    static final String SCHEMA_PAGE_NUMBER = "bigiot:pageNumber";
 
+    // BoundingBoxFilter
     static final String BBOX = "box";
     static final String BBOX_XMIN = "xMin";
     static final String BBOX_YMIN = "yMin";
     static final String BBOX_XMAX = "xMax";
     static final String BBOX_YMAX = "yMax";
-
-    // PaginationFilter
-    static final String SCHEMA_PAGE_NUMBER = "bigiot:pageNumber";
+    
+    // PhenomenonFilter
+    static final String SCHEMA_PHENOMENONS = "SCHEMA_PHENOMENONS";
+    static final String PHENOMENONS = "phenomenons";
+    
+    // single track components
+    static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";
+    static final String SCHEMA_REF = "SCHEMA_TRACK_REFERENCE";
+    static final String SINGLE_TRACK = "track";
+    static final String SCHEMA_MEASUREMENTS = "SCHEMA_MEASUREMENTS";
 
     // measurement components and phenomenons
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";

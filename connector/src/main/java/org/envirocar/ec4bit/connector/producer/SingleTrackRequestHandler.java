@@ -24,11 +24,7 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
-import org.envirocar.ec4bit.core.filter.PaginationFilter;
-import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.filter.TrackFilter;
-import org.envirocar.ec4bit.core.model.Tracks;
+import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.remote.TracksDAO;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
 
@@ -42,9 +38,9 @@ import org.springframework.stereotype.Component;
  * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
-public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
+public class SingleTrackRequestHandler extends AbstractRequestHandler<Track> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TrackRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SingleTrackRequestHandler.class);
 
     @Autowired
     private TracksDAO tracksDAO;
@@ -54,29 +50,20 @@ public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
     /**
      * Constructor.
      */
-    public TrackRequestHandler() {
-        super(Tracks.class);
+    public SingleTrackRequestHandler() {
+        super(Track.class);
     }
 
     @Override
-    public Tracks processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+    public Track processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
-            SpatialFilter spatialFilter = null;
-            TemporalFilter temporalFilter = null;
-            PaginationFilter paginationFilter = null;
-
-            if (input.containsKey(BBOX)) {
-                spatialFilter = getSpatialFilterParams(input);
-            }
-            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
-                temporalFilter = getTemporalFilterParams(input);
-            }
-            if (input.containsKey(PAGE)) {
-                paginationFilter = getPaginationFilterParams(input);
+            String trackId = "";
+            
+            if (input.containsKey(SINGLE_TRACK)) {
+                trackId = getTrackID(input);
             }
 
-            TrackFilter filter = new TrackFilter(spatialFilter, temporalFilter, paginationFilter);
-            return tracksDAO.get(filter);
+            return tracksDAO.get(trackId);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
         }

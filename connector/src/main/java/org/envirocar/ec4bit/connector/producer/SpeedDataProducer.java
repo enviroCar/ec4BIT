@@ -36,14 +36,14 @@ import org.springframework.stereotype.Component;
  *
  * @author Arne de Wall <a.dewall@52north.org>
  */
-//@Component
+@Component
 public class SpeedDataProducer extends EC4BITProducer {
 
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:trafficSpeed";
 
     @Value("${bigiot.applications.speed_data.local_id}")
     private String localId;
-    @Value("${bigiot.applications.speed_data.name}") 
+    @Value("${bigiot.applications.speed_data.name}")
     private String name;
     @Value("${bigiot.applications.speed_data.route}")
     private String route;
@@ -60,11 +60,9 @@ public class SpeedDataProducer extends EC4BITProducer {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
-                .addInputData("during", new RDFType("schema:timeInterval"), IOData.createMembers()
-                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), IOData.createMembers()
-                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
+                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
+                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
+                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
                 .addOutputData("speed", new RDFType("schema:trafficSpeed"), ValueType.NUMBER)
                 .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
                         .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)

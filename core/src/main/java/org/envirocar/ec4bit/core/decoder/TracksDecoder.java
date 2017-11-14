@@ -48,12 +48,10 @@ public class TracksDecoder extends BaseDeserializer<Tracks> {
         features.forEach((m) -> {
             Track track = new Track();
 
-            String id = "https://envirocar.org/api/stable/tracks/"
-                    + m.get(ELEMENT_ID).asText();
+            String id = m.get(ELEMENT_ID).asText();
             
             Double length = m.get(ELEMENT_LENGTH).asDouble();
-            String sensor = "https://envirocar.org/api/stable/sensors/"
-                    + m
+            String sensor = m
                             .get(ELEMENT_SENSOR)
                             .get(ELEMENT_PROPERTIES)
                             .get(ELEMENT_ID)
