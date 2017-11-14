@@ -93,7 +93,7 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         Double longitude = round(geometry.get(0).asDouble(), 7);
         Double latitude = round(geometry.get(1).asDouble(), 7);
 
-        // parse id, time, track, and sensor
+        // parse id, time, track, and sensor:
         JsonNode properties = node.get(ELEMENT_PROPERTIES);
 
         String id = properties.get(ELEMENT_ID).asText();

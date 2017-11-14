@@ -141,25 +141,125 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
 
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         String phenomString = checkAndGetValue(PHENOMENONS, input);
-        PhenomenonFilter pf = new PhenomenonFilter(
-                    true, true, true, true, true, 
-                    true, true, true, true, true, 
-                    true, true, true, true, true, 
-                    true, true, true, true, true, 
-                    true, true, true, true, true);
+        PhenomenonFilter pf;
         if (phenomString != null) {
-            phenomString = phenomString.toLowerCase();
-            if (!phenomString.contains("speed")) {
-                pf.setSpeed(false);
+            pf = new PhenomenonFilter(
+                    false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false, false,
+                    false, false, false, false, false);
+            phenomString = phenomString.toLowerCase();            
+            String[] phenomenons = phenomString.split(",");
+            for (int i = 0; i < phenomenons.length; i++) {
+                if (phenomenons[i].equals("co2")) {
+                    pf.setCo2(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("engine load")) {
+                    pf.setEngine_load(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("calculated maf")) {
+                    pf.setCalculated_maf(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("consumption")) {
+                    pf.setConsumption(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("fuel system loop")) {
+                    pf.setFuel_system_loop(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("fuel system status code")) {
+                    pf.setFuel_system_status_code(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps accuracy")) {
+                    pf.setGps_accuracy(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps alitude")) {
+                    pf.setGps_altitude(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps bearing")) {
+                    pf.setGps_bearing(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps hdop")) {
+                    pf.setGps_hdop(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps pdop")) {
+                    pf.setGps_pdop(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps speed")) {
+                    pf.setGps_speed(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("gps vdop")) {
+                    pf.setGps_vdop(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("intake pressure")) {
+                    pf.setIntake_pressure(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("intake temperature")) {
+                    pf.setIntake_temperature(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("long-term fuel trim 1")) {
+                    pf.setLong_term_fuel_trim_1(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("maf")) {
+                    pf.setMaf(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("o2 lambda current")) {
+                    pf.setO2_lambda_current(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("o2 lambda current er")) {
+                    pf.setO2_lambda_current_er(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("o2 lambda voltage")) {
+                    pf.setO2_lambda_voltage(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("o2 lambda voltage er")) {
+                    pf.setO2_lambda_voltage_er(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("rpm")) {
+                    pf.setRpm(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("short-term fuel trim 1")) {
+                    pf.setShort_term_fuel_trim_1(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("speed")) {
+                    pf.setSpeed(true);
+                    continue;
+                }
+                if (phenomenons[i].equals("throttle position")) {
+                    pf.setThrolle_position(true);
+                }
             }
-            if (!phenomString.contains("co2")) {
-                pf.setCo2(false);
-            }
-//                    speed, co2, consumption, gps_speed, gps_altitude,
-//                    maf, intake_temperature, intake_pressure, rpm, engine_load,
-//                    fuel_system_loop, fuel_system_status_code, gps_accuracy, gps_bearing, long_term_fuel_trim_1,
-//                    short_term_fuel_trim_1, throlle_position, gps_hdop, gps_vdop, gps_pdop,
-//                    calculated_maf, o2_lambda_current, o2_lambda_current_er, o2_lambda_voltage, o2_lambda_voltage_er
+
+        } else {
+            pf = new PhenomenonFilter(
+                    true, true, true, true, true,
+                    true, true, true, true, true,
+                    true, true, true, true, true,
+                    true, true, true, true, true,
+                    true, true, true, true, true);
         }
         return pf;
     }

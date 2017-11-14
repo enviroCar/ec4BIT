@@ -52,7 +52,7 @@ import org.springframework.stereotype.Component;
  *
  * @author dewall
  */
-@Component
+//@Component
 public class SpeedDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
