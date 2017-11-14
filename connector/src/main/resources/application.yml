@@ -13,9 +13,25 @@ bigiot:
         address: localhost
         port: 7777
     applications:
-        speeddata:
+        speed_data:
             local_id: speed-offering
-            name: Traffic Speed Values
+            name: Driving Speed Values
             route: speedvalues
-            
-            
+        driving_data:
+            local_id: driving-offering
+            name: Traffic Driving Measurements
+            route: measurements
+        track_data:
+            local_id: track-offering
+            name: Driving Tracks
+            route: tracks
+        single_track_data:
+            local_id: single-track-offering
+            name: Driving Track
+            route: track
+#server:
+#    port: 8081
+    
+#logging:
+    # path: /var/lib/ec4BIT/logs
+#     path: logs

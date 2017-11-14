@@ -20,6 +20,10 @@ package org.envirocar.ec4bit.core.filter;
 
 import java.util.Objects;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -27,22 +31,26 @@ import org.joda.time.DateTime;
  */
 public class TemporalFilter {
 
-    private final DateTime begin;
-    private final DateTime end;
+    private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss'Z");
 
+    private static final Logger LOG = LoggerFactory.getLogger(TemporalFilter.class);
+
+    private final DateTime start;
+    private final DateTime end;
+    
     /**
      * Constructor.
      *
-     * @param begin
-     * @param end
+     * @param startDate
+     * @param endDate
      */
-    public TemporalFilter(DateTime begin, DateTime end) {
-        this.begin = begin;
-        this.end = end;
+    public TemporalFilter(DateTime startDate, DateTime endDate) {
+        this.start = startDate;
+        this.end = endDate;
     }
 
-    public DateTime getBegin() {
-        return begin;
+    public DateTime getStart() {
+        return start;
     }
 
     public DateTime getEnd() {
@@ -52,7 +60,7 @@ public class TemporalFilter {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.begin);
+        hash = 53 * hash + Objects.hashCode(this.start);
         hash = 53 * hash + Objects.hashCode(this.end);
         return hash;
     }
@@ -69,7 +77,7 @@ public class TemporalFilter {
             return false;
         }
         final TemporalFilter other = (TemporalFilter) obj;
-        if (!Objects.equals(this.begin, other.begin)) {
+        if (!Objects.equals(this.start, other.start)) {
             return false;
         }
         if (!Objects.equals(this.end, other.end)) {
@@ -78,4 +86,22 @@ public class TemporalFilter {
         return true;
     }
 
+    public String string() {
+        return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN))
+                + "&before=" + String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+    }
+    
+    public String stringBefore() {
+        return String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+    }
+    
+    public String stringAfter() {
+        return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN));
+    }
+
+    @Override
+    public String toString() {
+        return "TemporalFilter{"+"after="+start.toString(TEMPORAL_TIME_PATTERN)+", before=" + end.toString(TEMPORAL_TIME_PATTERN) + "}";
+    }
+    
 }

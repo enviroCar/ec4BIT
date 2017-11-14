@@ -20,10 +20,11 @@ package org.envirocar.ec4bit.core.filter;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class SpeedValueFilter {
+public class MeasurementFilter {
 
+    private final PhenomenonFilter phenomenonFilter;
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
     private final PaginationFilter paginationFilter;
@@ -33,8 +34,8 @@ public class SpeedValueFilter {
      *
      * @param spatialFilter
      */
-    public SpeedValueFilter(SpatialFilter spatialFilter) {
-        this(spatialFilter, null, null);
+    public MeasurementFilter(SpatialFilter spatialFilter) {
+        this(spatialFilter, null, null, null);
     }
 
     /**
@@ -42,8 +43,8 @@ public class SpeedValueFilter {
      *
      * @param temporalFilter
      */
-    public SpeedValueFilter(TemporalFilter temporalFilter) {
-        this(null, temporalFilter, null);
+    public MeasurementFilter(TemporalFilter temporalFilter) {
+        this(null, temporalFilter, null, null);
     }
 
     /**
@@ -51,8 +52,17 @@ public class SpeedValueFilter {
      *
      * @param paginationFilter
      */
-    public SpeedValueFilter(PaginationFilter paginationFilter) {
-        this(null, null, paginationFilter);
+    public MeasurementFilter(PaginationFilter paginationFilter) {
+        this(null, null, paginationFilter, null);
+    }
+    
+    /**
+     * Constructor.
+     *
+     * @param phenomenonFilter
+     */
+    public MeasurementFilter(PhenomenonFilter phenomenonFilter) {
+        this(null, null, null, phenomenonFilter);
     }
 
     /**
@@ -61,11 +71,14 @@ public class SpeedValueFilter {
      * @param spatialFilter
      * @param temporalFilter
      * @param paginationFilter
+     * @param phenomenonFilter
      */
-    public SpeedValueFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
+    public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, 
+            PaginationFilter paginationFilter, PhenomenonFilter phenomenonFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;
+        this.phenomenonFilter = phenomenonFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -74,6 +87,14 @@ public class SpeedValueFilter {
 
     public boolean hasSpatialFilter() {
         return this.spatialFilter != null;
+    }
+
+    public PhenomenonFilter getPhenomenonFilter() {
+        return phenomenonFilter;
+    }
+
+    public boolean hasPhenomenonFilter() {
+        return this.phenomenonFilter != null;
     }
 
     public TemporalFilter getTemporalFilter() {

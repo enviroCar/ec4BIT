@@ -18,10 +18,61 @@
  */
 package org.envirocar.ec4bit.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author hafenkran
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 public class Track {
+    
+    private String trackID;
+    private String sensor;
+    private Double length;
+    private List<Measurement> measurements;
+    
+    public Track() {
+        this(null, null, null);
+    }
+    
+    public Track(String trackID, String sensor, Double length) {
+        this.trackID = trackID;
+        this.sensor = sensor;
+        this.length = length;
+        this.measurements = new ArrayList<>();
+    }
+    
+    public void setTrackID(String trackID) {
+        this.trackID = trackID;
+    }
+    
+    public String getTrackID() {
+        return this.trackID;
+    }
 
+    public void setSensor(String sensor) {
+        this.sensor = sensor;
+    }
+
+    public String getSensor() {
+        return sensor;
+    }
+
+    public void setLength(Double length) {
+        this.length = length;
+    }
+
+    public Double getLength() {
+        return length;
+    }
+
+    public void setMeasurements(List<Measurement> measurements) {
+        this.measurements = measurements;
+    }
+
+    public List<Measurement> getMeasurements() {
+        return measurements;
+    }
+    
 }

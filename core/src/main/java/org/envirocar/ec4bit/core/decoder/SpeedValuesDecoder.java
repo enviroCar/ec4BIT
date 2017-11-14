@@ -24,8 +24,6 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import org.envirocar.ec4bit.core.model.SpeedValue;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 
@@ -60,10 +58,10 @@ public class SpeedValuesDecoder extends BaseDeserializer<SpeedValues> {
             double latitude = geometry.get(1).asDouble();
 
             // parse the speed phenomenon
-            double speed = m.get(ELEMENT_PROPERTIES)
+            int speed = m.get(ELEMENT_PROPERTIES)
                     .get(ELEMENT_PHENOMENONS)
                     .get(ELEMENT_SPEED)
-                    .asDouble();
+                    .asInt();
 
             result.setLongitude(longitude);
             result.setLatitude(latitude);

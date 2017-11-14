@@ -19,17 +19,19 @@
 package org.envirocar.ec4bit.connector.producer;
 
 import java.util.Map;
+import okhttp3.ResponseBody;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.model.SpeedValues;
-import org.envirocar.ec4bit.core.remote.SpeedValuesDAO;
-import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+import org.envirocar.ec4bit.core.filter.TrackFilter;
+import org.envirocar.ec4bit.core.model.Tracks;
+import org.envirocar.ec4bit.core.remote.TracksDAO;
+import org.envirocar.ec4bit.core.remote.services.TrackService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,27 +39,27 @@ import org.springframework.stereotype.Component;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
-public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
+public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SpeedRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TrackRequestHandler.class);
 
     @Autowired
-    private SpeedValuesDAO speedValuesDao;
+    private TracksDAO tracksDAO;
     @Autowired
-    private MeasurementService measurementService;
+    private TrackService trackService;
 
     /**
      * Constructor.
      */
-    public SpeedRequestHandler() {
-        super(SpeedValues.class);
+    public TrackRequestHandler() {
+        super(Tracks.class);
     }
 
     @Override
-    public SpeedValues processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+    public Tracks processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
@@ -73,8 +75,8 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
                 paginationFilter = getPaginationFilterParams(input);
             }
 
-            SpeedValueFilter filter = new SpeedValueFilter(spatialFilter, temporalFilter, paginationFilter);
-            return speedValuesDao.get(filter);
+            TrackFilter filter = new TrackFilter(spatialFilter, temporalFilter, paginationFilter);
+            return tracksDAO.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
         }

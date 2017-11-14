@@ -19,30 +19,43 @@
 package org.envirocar.ec4bit.core.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author dewall
  */
-public class SpeedValues implements BaseEntity {
+public class Measurements implements BaseEntity {
 
-    private List<SpeedValue> speedValues;
+    private List<Measurement> measurements;
+    
+    private Set<String> phenomDefinitions;
 
-    public SpeedValues() {
-        this.speedValues = new ArrayList<>();
+    public Measurements() {
+        this.phenomDefinitions = new HashSet<String>();
+        this.measurements = new ArrayList<>();
     }
 
-    public void addSpeedValue(SpeedValue speedValue) {
-        this.speedValues.add(speedValue);
+    public void addMeasurement(Measurement measurement) {
+        this.measurements.add(measurement);
     }
 
-    public List<SpeedValue> getSpeedValues() {
-        return speedValues;
+    public List<Measurement> getMeasurements() {
+        return measurements;
     }
 
-    public void setSpeedValues(List<SpeedValue> speedValues) {
-        this.speedValues = speedValues;
+    public void setMeasurements(List<Measurement> measurement) {
+        this.measurements = measurement;
+    }
+    
+    public void addPhenomDefinition(String phenomDef) {
+        this.phenomDefinitions.add(phenomDef);
+    }
+    
+    public boolean containsPhenomDefinition(String phenomDef) {
+        return this.phenomDefinitions.contains(phenomDef);
     }
 
 }

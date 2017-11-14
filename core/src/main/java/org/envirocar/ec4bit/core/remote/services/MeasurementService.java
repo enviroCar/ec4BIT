@@ -19,6 +19,7 @@
 package org.envirocar.ec4bit.core.remote.services;
 
 import okhttp3.ResponseBody;
+import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -27,6 +28,7 @@ import retrofit2.http.Query;
 /**
  *
  * @author Arne de Wall <a.dewall@52north.org>
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 public interface MeasurementService {
 
@@ -34,10 +36,21 @@ public interface MeasurementService {
     Call<ResponseBody> getAsRawResponse();
 
     @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox);
+    Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
+    
+    @GET("measurements/")
+    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox, @Query("after") String after, 
+            @Query("before") String before, @Query("page") String page);
 
     @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
+    Call<Measurements> getAsMeasurements();
+
+    @GET("measurements/")
+    Call<Measurements> getAsMeasurements(@Query("limit") int limit);
+    
+    @GET("measurements/")
+    Call<Measurements> getAsMeasurements(@Query("bbox") String bbox, @Query("after") String after, 
+            @Query("before") String before, @Query("page") String page);
 
     @GET("measurements/")
     Call<SpeedValues> getAsSpeedValues();
@@ -46,6 +59,6 @@ public interface MeasurementService {
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
     @GET("measurements/")
-    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("time") String time,
-            @Query("page") Integer page);
+    Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("after") String after,
+            @Query("before") String before, @Query("page") String page);
 }

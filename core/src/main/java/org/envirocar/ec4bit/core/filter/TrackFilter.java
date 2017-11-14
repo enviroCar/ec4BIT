@@ -20,9 +20,9 @@ package org.envirocar.ec4bit.core.filter;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class SpeedValueFilter {
+public class TrackFilter {
 
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
@@ -33,7 +33,7 @@ public class SpeedValueFilter {
      *
      * @param spatialFilter
      */
-    public SpeedValueFilter(SpatialFilter spatialFilter) {
+    public TrackFilter(SpatialFilter spatialFilter) {
         this(spatialFilter, null, null);
     }
 
@@ -42,7 +42,7 @@ public class SpeedValueFilter {
      *
      * @param temporalFilter
      */
-    public SpeedValueFilter(TemporalFilter temporalFilter) {
+    public TrackFilter(TemporalFilter temporalFilter) {
         this(null, temporalFilter, null);
     }
 
@@ -51,7 +51,7 @@ public class SpeedValueFilter {
      *
      * @param paginationFilter
      */
-    public SpeedValueFilter(PaginationFilter paginationFilter) {
+    public TrackFilter(PaginationFilter paginationFilter) {
         this(null, null, paginationFilter);
     }
 
@@ -62,7 +62,7 @@ public class SpeedValueFilter {
      * @param temporalFilter
      * @param paginationFilter
      */
-    public SpeedValueFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
+    public TrackFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;

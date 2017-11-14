@@ -1,0 +1,55 @@
+/*
+ * Copyright (C) 2013 - 2017 the enviroCar community
+ *
+ * This file is part of the enviroCar 4 BIG IoT Connector.
+ *
+ * The ec4BIT connector is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
+ */
+package org.envirocar.ec4bit.core.encoding;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import java.io.IOException;
+import java.util.List;
+import org.envirocar.ec4bit.core.model.Measurement;
+import org.envirocar.ec4bit.core.model.Track;
+
+/**
+ *
+ * @author Maurin Radtke <m.radtke@52north.org>
+ */
+public class TrackEncoder extends BaseJSONEncoder<Track> {
+
+    @Override
+    public void serialize(Track track, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+
+        gen.writeStartObject();
+
+        gen.writeObjectField("trackID", track.getTrackID());
+        gen.writeObjectField("trackRef", "http://www.envirocar.org/api/stable/tracks/" + track.getTrackID());
+        gen.writeObjectField("sensorID", track.getSensor());
+        gen.writeObjectField("sensorRef", "http://www.envirocar.org/api/stable/sensors/" + track.getSensor());
+        gen.writeObjectField("length", track.getLength());
+
+        // TODO: serialize measurements:
+        List<Measurement> measurements = track.getMeasurements();
+        if (!measurements.isEmpty()) {
+            writeArrayOfObjects(gen, "Measurements", measurements);
+        }
+
+        gen.writeEndObject();
+    }
+
+}

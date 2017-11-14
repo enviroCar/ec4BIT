@@ -18,48 +18,31 @@
  */
 package org.envirocar.ec4bit.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author hafenkran
+ * @author dewall
  */
-public class SpeedValue implements BaseEntity {
+public class Tracks implements BaseEntity {
 
-    private double longitude;
-    private double latitude;
-    private int speed;
+    private List<Track> tracks;
 
-    public SpeedValue() {
-        this(0, 0, 0);
+    public Tracks() {
+        this.tracks = new ArrayList<>();
     }
 
-    public SpeedValue(double longitude, double latitude, int speed) {
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.speed = speed;
+    public void addTrack(Track track) {
+        this.tracks.add(track);
     }
 
-    public double getLongitude() {
-        return longitude;
+    public List<Track> getTracks() {
+        return tracks;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
     }
 
 }

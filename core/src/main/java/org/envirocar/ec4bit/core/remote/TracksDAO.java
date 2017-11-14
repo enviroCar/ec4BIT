@@ -21,10 +21,11 @@ package org.envirocar.ec4bit.core.remote;
 import java.io.IOException;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.SpeedValueFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.model.SpeedValues;
-import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+import org.envirocar.ec4bit.core.filter.TrackFilter;
+import org.envirocar.ec4bit.core.model.Track;
+import org.envirocar.ec4bit.core.model.Tracks;
+import org.envirocar.ec4bit.core.remote.services.TrackService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,18 @@ import retrofit2.Call;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
-public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter> {
+public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SpeedValuesDAO.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TracksDAO.class);
 
     @Autowired
-    private MeasurementService measurementService;
+    private TrackService trackService;
 
     @Override
-    public SpeedValues get(SpeedValueFilter filter) {
+    public Tracks get(TrackFilter filter) {
         String bboxParam = null;
         String timeBeforeParam = null;
         String timeAfterParam = null;
@@ -64,10 +65,24 @@ public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter
             pageParam = temp.string();
         }
 
-        Call<SpeedValues> asSpeedValues = measurementService
-                .getAsSpeedValues(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
+        Call<Tracks> asTracks = trackService
+                .getAsTracks(bboxParam, timeAfterParam, timeBeforeParam,  pageParam);
         try {
-            SpeedValues body = asSpeedValues.execute().body();
+            Tracks body = asTracks.execute().body();
+            return body;
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+        }
+
+        return null;
+    }
+    
+    public Track get(String trackID) {
+
+        Call<Track> asTrack = trackService
+                .getTrack(trackID);
+        try {
+            Track body = asTrack.execute().body();
             return body;
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
