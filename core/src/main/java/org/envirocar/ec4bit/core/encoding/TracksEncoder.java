@@ -22,6 +22,8 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
+import java.util.List;
+import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
 
@@ -36,7 +38,21 @@ public class TracksEncoder extends BaseJSONEncoder<Tracks> {
 
         gen.writeStartObject();
 
-        writeArrayOfObjects(gen, "Tracks", tracks.getTracks());
+        if (tracks.getTracks().size() != 1) {
+            writeArrayOfObjects(gen, "Tracks", tracks.getTracks());
+        } else {
+            Track track = tracks.getTracks().get(0);
+            gen.writeObjectField("trackID", track.getTrackID());
+            gen.writeObjectField("trackRef", "http://envirocar.org/api/stable/tracks/" + track.getTrackID());
+            gen.writeObjectField("sensorID", track.getSensor());
+            gen.writeObjectField("sensorRef", "http://envirocar.org/api/stable/sensors/" + track.getSensor());
+            gen.writeObjectField("length", track.getLength());
+
+            List<Measurement> measurements = track.getMeasurements();
+            if (!measurements.isEmpty()) {
+                writeArrayOfObjects(gen, "Measurements", measurements);
+            }
+        }
 
         gen.writeEndObject();
     }

@@ -39,11 +39,12 @@ public class SpeedValuesDecoder extends BaseDeserializer<SpeedValues> {
     private static final String ELEMENT_PROPERTIES = "properties";
     private static final String ELEMENT_PHENOMENONS = "phenomenons";
     private static final String ELEMENT_SPEED = "Speed";
+    private static final String ELEMENT_VALUE = "value";
 
     @Override
     public SpeedValues deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         SpeedValues results = new SpeedValues();
-        
+
         JsonNode node = jp.readValueAsTree();
         ArrayNode features = (ArrayNode) node.get(ELEMENT_FEATURES);
 
@@ -61,6 +62,7 @@ public class SpeedValuesDecoder extends BaseDeserializer<SpeedValues> {
             int speed = m.get(ELEMENT_PROPERTIES)
                     .get(ELEMENT_PHENOMENONS)
                     .get(ELEMENT_SPEED)
+                    .get(ELEMENT_VALUE)
                     .asInt();
 
             result.setLongitude(longitude);
