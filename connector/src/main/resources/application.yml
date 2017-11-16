@@ -28,7 +28,7 @@ bigiot:
         single_track_data:
             local_id: single-track-offering
             name: Driving Track
-            route: tracks/{track}
+            route: track
 #server:
 #    port: 8081
     
