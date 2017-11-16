@@ -24,13 +24,15 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
-import org.envirocar.ec4bit.core.filter.PaginationFilter;
+import org.envirocar.ec4bit.core.filter.DWithinFilter;
+import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
+import org.envirocar.ec4bit.core.filter.IntersectsFilter;
+import org.envirocar.ec4bit.core.filter.SegmentFilter;
+import org.envirocar.ec4bit.core.filter.SortingFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
-import org.envirocar.ec4bit.core.filter.TemporalFilter;
-import org.envirocar.ec4bit.core.filter.TrackFilter;
-import org.envirocar.ec4bit.core.model.Tracks;
-import org.envirocar.ec4bit.core.remote.TracksDAO;
-import org.envirocar.ec4bit.core.remote.services.TrackService;
+import org.envirocar.ec4bit.core.model.Segments;
+import org.envirocar.ec4bit.core.remote.SegmentsDAO;
+import org.envirocar.ec4bit.core.remote.services.SegmentService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,42 +43,54 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
-public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
+@Component
+public class SegmentRequestHandler extends AbstractRequestHandler<Segments> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TrackRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(SegmentRequestHandler.class);
 
     @Autowired
-    private TracksDAO tracksDAO;
+    private SegmentsDAO segmentDAO;
     @Autowired
-    private TrackService trackService;
+    private SegmentService segmentService;
 
     /**
      * Constructor.
      */
-    public TrackRequestHandler() {
-        super(Tracks.class);
+    public SegmentRequestHandler() {
+        super(Segments.class);
     }
 
     @Override
-    public Tracks processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
+    public Segments processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
+            FeatureIDFilter featureIDFilter = null;
             SpatialFilter spatialFilter = null;
-            TemporalFilter temporalFilter = null;
-            PaginationFilter paginationFilter = null;
+            SortingFilter sortingFilter = null;
+            IntersectsFilter intersectFilter = null;
+            DWithinFilter dwithinFilter = null;
+            
+            if (input.containsKey(FEATUREID)) {
+                featureIDFilter = getFeatureIDFilter(input);
+            }
+            
+            if (input.containsKey(SORT_BY)) {
+                sortingFilter = getSortingFilterParams(input);
+            }
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
             }
-            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
-                temporalFilter = getTemporalFilterParams(input);
+            
+            if (input.containsKey(INTERSECT)) {
+                intersectFilter = getIntersectsFilter(input);
             }
-            if (input.containsKey(PAGE)) {
-                paginationFilter = getPaginationFilterParams(input);
+            
+            if (input.containsKey(DWITHIN)) {
+                dwithinFilter = getDWithinFilter(input);
             }
 
-            TrackFilter filter = new TrackFilter(spatialFilter, temporalFilter, paginationFilter);
-            return tracksDAO.get(filter);
+            SegmentFilter filter = new SegmentFilter(featureIDFilter, sortingFilter, spatialFilter, intersectFilter, dwithinFilter);
+            return segmentDAO.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
         }

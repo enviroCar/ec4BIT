@@ -39,7 +39,7 @@ import org.springframework.stereotype.Component;
  *
  * @author dewall
  */
-@Component
+//@Component
 public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpeedRequestHandler.class);

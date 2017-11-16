@@ -19,8 +19,8 @@
 package org.envirocar.ec4bit.core.remote.services;
 
 import okhttp3.ResponseBody;
-import org.envirocar.ec4bit.core.model.Track;
-import org.envirocar.ec4bit.core.model.Tracks;
+import org.envirocar.ec4bit.core.model.Segment;
+import org.envirocar.ec4bit.core.model.Segments;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -30,18 +30,15 @@ import retrofit2.http.Query;
  *
  * @author hafenkran
  */
-public interface TrackService {
+public interface SegmentService {
 
-    @GET("tracks/")
-    Call<Tracks> getAsTracks();
-
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("limit") int limit);
-
-    @GET("tracks/")
-    Call<Tracks> getAsTracks(@Query("bbox") String bbox, @Query("after") String after,
-            @Query("before") String before, @Query("page") String page);
-
-    @GET("tracks/{track}")
-    Call<Track> getTrack(@Path("track") String track);
+    @GET("geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:osmSegments&maxFeatures=1000&outputFormat=application%2Fjson")
+    Call<Segments> getAsSegments();
+    
+    @GET("geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:osmSegments&maxFeatures=1000&outputFormat=application%2Fjson")
+    Call<Segments> getAsSegments(@Query("featureID") String featureID, @Query("bbox") String bbox, @Query("Filter") String intersects, @Query("Filter") String dwithin, @Query("sortBy") String sortBy);
+    
+//    @GET("geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:osmSegments&maxFeatures=1000&outputFormat=application%2Fjson")
+//    Call<Segment> getSegment(@Query("featureID") String featureID);
+    
 }

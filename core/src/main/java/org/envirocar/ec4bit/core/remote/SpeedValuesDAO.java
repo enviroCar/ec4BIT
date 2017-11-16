@@ -35,7 +35,7 @@ import retrofit2.Call;
  *
  * @author dewall
  */
-@Component
+//@Component
 public class SpeedValuesDAO implements AbstractDAO<SpeedValues, SpeedValueFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SpeedValuesDAO.class);

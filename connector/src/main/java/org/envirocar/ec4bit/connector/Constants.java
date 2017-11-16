@@ -52,6 +52,17 @@ interface Constants {
     static final String SCHEMA_PHENOMENONS = "SCHEMA_PHENOMENONS";
     static final String PHENOMENONS = "phenomenons";
     
+    // SegmentFilter
+    static final String SCHEMA_SORT_BY = "SCHEMA_SORT_BY";
+    static final String SCHEMA_ATTRIBUTE = "SCHEMA_ATTRIBUTE";
+    static final String SCHEMA_DESCENDING = "SCHEMA_DESCENDING";
+    static final String SORT_BY = "sortBy";
+    static final String FEATUREID = "featureID";
+    static final String SCHEMA_INTERSECT = "SCHEMA_INTERSECT";
+    static final String INTERSECT = "intersects";
+    static final String SCHEMA_DWITHIN = "SCHEMA_DWITHIN";
+    static final String DWITHIN = "dwithin";
+    
     // single track components
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";
     static final String SCHEMA_REF = "SCHEMA_TRACK_REFERENCE";
@@ -92,4 +103,8 @@ interface Constants {
     static final String SCHEMA_O2_LAMBDA_VOLTAGE = "SCHEMA_O2_LAMBDA_VOLTAGE";
     static final String SCHEMA_O2_LAMBDA_VOLTAGE_ER = "SCHEMA_O2_LAMBDA_VOLTAGE_ER";
 
+    // segment components
+    static final String SCHEMA_COORDINATES = "SCHEMA_COORDINATES";
+    static final String SCHEMA_GEOMETRY = "SCHEMA_GEOMETRY";
+    static final String SCHEMA_AMOUNT = "http://schema.org/amount";
 }

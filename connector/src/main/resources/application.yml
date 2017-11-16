@@ -29,6 +29,10 @@ bigiot:
             local_id: single-track-offering
             name: Driving Track
             route: track
+        segments_data:
+            local_id: segments-offering
+            name: Traffic Driving Segments
+            route: segments
 #server:
 #    port: 8081
     

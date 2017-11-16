@@ -19,7 +19,6 @@
 package org.envirocar.ec4bit.connector.producer;
 
 import org.eclipse.bigiot.lib.model.BigIotTypes;
-import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
 import org.eclipse.bigiot.lib.model.IOData;
 import org.eclipse.bigiot.lib.model.Information;
 import org.eclipse.bigiot.lib.model.RDFType;
@@ -36,20 +35,20 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
-public class TrackProducer extends EC4BITProducer {
+@Component
+public class SegmentProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingTracks";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:TrafficSegments";
 
-    @Value("${bigiot.applications.track_data.local_id}")
+    @Value("${bigiot.applications.segments_data.local_id}")
     private String localId;
-    @Value("${bigiot.applications.track_data.name}")
+    @Value("${bigiot.applications.segments_data.name}")
     private String name;
-    @Value("${bigiot.applications.track_data.route}")
+    @Value("${bigiot.applications.segments_data.route}")
     private String route;
 
     @Autowired
-    private TrackRequestHandler requestHandler;
+    private SegmentRequestHandler requestHandler;
 
     /**
      *
@@ -59,30 +58,20 @@ public class TrackProducer extends EC4BITProducer {
     protected RegistrableOfferingDescription getOfferingDescription() {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                // measurement filter options:
-                // not supported in the marketpalce, use non-nested input data elements instead
-                //                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                //                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                //                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                //                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                //                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
+                .addInputData("featureID", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addInputData("sortBy", new RDFType(SCHEMA_SORT_BY), ValueType.TEXT)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
-                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
-                //                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
-                //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
-
-                // track components:
-                .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
-                
+                .addInputData("intersects", new RDFType(SCHEMA_INTERSECT), ValueType.TEXT)
+                .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
+                // segment components:
+                .addOutputData("OSMID", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("geometry", new RDFType(SCHEMA_GEOMETRY), IOData.createMembers()
+                        .addOutputData("LineString", new RDFType(SCHEMA_COORDINATES), ValueType.TEXT))
+                // segment measurements:
+                .addOutputData("AvgSpeed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
+                .addOutputData("NumSpeed", new RDFType(SCHEMA_AMOUNT), ValueType.NUMBER)
                 .inRegion(Region.city("Muenster"))
-                .withPricingModel(PricingModel.FREE)
+                .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
                 .withRoute(route)

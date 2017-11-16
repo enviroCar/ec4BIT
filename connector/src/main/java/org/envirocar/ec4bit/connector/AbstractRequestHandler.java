@@ -27,8 +27,12 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.DWithinFilter;
+import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
+import org.envirocar.ec4bit.core.filter.IntersectsFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
+import org.envirocar.ec4bit.core.filter.SortingFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.joda.time.format.DateTimeFormat;
@@ -139,6 +143,29 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return trackID;
     }
 
+    protected SortingFilter getSortingFilterParams(Map<String, Object> input) throws KeyNotFoundException {
+        String attribute = checkAndGetValue(SORT_BY, input);
+        if (attribute != null) {
+            return new SortingFilter(attribute);
+        }
+        return new SortingFilter(null);
+    }
+
+    protected FeatureIDFilter getFeatureIDFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String featureID = checkAndGetValue(FEATUREID, input);
+        return new FeatureIDFilter(featureID);
+    }
+
+    protected IntersectsFilter getIntersectsFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String intersection = checkAndGetValue(INTERSECT, input);
+        return new IntersectsFilter(intersection);
+    }
+
+    protected DWithinFilter getDWithinFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String dwithin = checkAndGetValue(DWITHIN, input);
+        return new DWithinFilter(dwithin, 10000);
+    }
+
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         String phenomString = checkAndGetValue(PHENOMENONS, input);
         PhenomenonFilter pf;
@@ -149,106 +176,106 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false, false);
-            phenomString = phenomString.toLowerCase();            
+            phenomString = phenomString.toLowerCase();
             String[] phenomenons = phenomString.split(",");
-            for (int i = 0; i < phenomenons.length; i++) {
-                if (phenomenons[i].equals("co2")) {
+            for (String phenomenon : phenomenons) {
+                if (phenomenon.equals("co2")) {
                     pf.setCo2(true);
                     continue;
                 }
-                if (phenomenons[i].equals("engine load")) {
+                if (phenomenon.equals("engine load")) {
                     pf.setEngine_load(true);
                     continue;
                 }
-                if (phenomenons[i].equals("calculated maf")) {
+                if (phenomenon.equals("calculated maf")) {
                     pf.setCalculated_maf(true);
                     continue;
                 }
-                if (phenomenons[i].equals("consumption")) {
+                if (phenomenon.equals("consumption")) {
                     pf.setConsumption(true);
                     continue;
                 }
-                if (phenomenons[i].equals("fuel system loop")) {
+                if (phenomenon.equals("fuel system loop")) {
                     pf.setFuel_system_loop(true);
                     continue;
                 }
-                if (phenomenons[i].equals("fuel system status code")) {
+                if (phenomenon.equals("fuel system status code")) {
                     pf.setFuel_system_status_code(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps accuracy")) {
+                if (phenomenon.equals("gps accuracy")) {
                     pf.setGps_accuracy(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps alitude")) {
+                if (phenomenon.equals("gps alitude")) {
                     pf.setGps_altitude(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps bearing")) {
+                if (phenomenon.equals("gps bearing")) {
                     pf.setGps_bearing(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps hdop")) {
+                if (phenomenon.equals("gps hdop")) {
                     pf.setGps_hdop(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps pdop")) {
+                if (phenomenon.equals("gps pdop")) {
                     pf.setGps_pdop(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps speed")) {
+                if (phenomenon.equals("gps speed")) {
                     pf.setGps_speed(true);
                     continue;
                 }
-                if (phenomenons[i].equals("gps vdop")) {
+                if (phenomenon.equals("gps vdop")) {
                     pf.setGps_vdop(true);
                     continue;
                 }
-                if (phenomenons[i].equals("intake pressure")) {
+                if (phenomenon.equals("intake pressure")) {
                     pf.setIntake_pressure(true);
                     continue;
                 }
-                if (phenomenons[i].equals("intake temperature")) {
+                if (phenomenon.equals("intake temperature")) {
                     pf.setIntake_temperature(true);
                     continue;
                 }
-                if (phenomenons[i].equals("long-term fuel trim 1")) {
+                if (phenomenon.equals("long-term fuel trim 1")) {
                     pf.setLong_term_fuel_trim_1(true);
                     continue;
                 }
-                if (phenomenons[i].equals("maf")) {
+                if (phenomenon.equals("maf")) {
                     pf.setMaf(true);
                     continue;
                 }
-                if (phenomenons[i].equals("o2 lambda current")) {
+                if (phenomenon.equals("o2 lambda current")) {
                     pf.setO2_lambda_current(true);
                     continue;
                 }
-                if (phenomenons[i].equals("o2 lambda current er")) {
+                if (phenomenon.equals("o2 lambda current er")) {
                     pf.setO2_lambda_current_er(true);
                     continue;
                 }
-                if (phenomenons[i].equals("o2 lambda voltage")) {
+                if (phenomenon.equals("o2 lambda voltage")) {
                     pf.setO2_lambda_voltage(true);
                     continue;
                 }
-                if (phenomenons[i].equals("o2 lambda voltage er")) {
+                if (phenomenon.equals("o2 lambda voltage er")) {
                     pf.setO2_lambda_voltage_er(true);
                     continue;
                 }
-                if (phenomenons[i].equals("rpm")) {
+                if (phenomenon.equals("rpm")) {
                     pf.setRpm(true);
                     continue;
                 }
-                if (phenomenons[i].equals("short-term fuel trim 1")) {
+                if (phenomenon.equals("short-term fuel trim 1")) {
                     pf.setShort_term_fuel_trim_1(true);
                     continue;
                 }
-                if (phenomenons[i].equals("speed")) {
+                if (phenomenon.equals("speed")) {
                     pf.setSpeed(true);
                     continue;
                 }
-                if (phenomenons[i].equals("throttle position")) {
+                if (phenomenon.equals("throttle position")) {
                     pf.setThrolle_position(true);
                 }
             }

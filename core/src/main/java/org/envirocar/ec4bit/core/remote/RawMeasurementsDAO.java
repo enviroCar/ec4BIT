@@ -35,7 +35,7 @@ import retrofit2.Call;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class RawMeasurementsDAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(RawMeasurementsDAO.class);

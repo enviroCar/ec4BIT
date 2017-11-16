@@ -36,7 +36,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class MeasurementProducer extends EC4BITProducer {
 
 //    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";

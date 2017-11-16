@@ -25,6 +25,7 @@ import org.envirocar.ec4bit.core.remote.services.MeasurementService;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import org.envirocar.ec4bit.core.decoder.ECModule;
+import org.envirocar.ec4bit.core.remote.services.SegmentService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
@@ -37,21 +38,27 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 @Configuration
 public class RemoteConfiguration {
 
-    private static HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://envirocar.org/api/stable/");
+//    private static HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://envirocar.org/api/stable/");
+    private static HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://192.168.52.146:9090/");
 
     @Bean
     protected HttpUrl createBaseUrl() {
         return URL_ENVIROCAR_BASE;
     }
 
-    @Bean
+//    @Bean
     public TrackService createTrackService(Retrofit retrofit) {
         return retrofit.create(TrackService.class);
     }
 
-    @Bean
+//    @Bean
     public MeasurementService createMeasurementService(Retrofit retrofit) {
         return retrofit.create(MeasurementService.class);
+    }
+    
+    @Bean 
+    public SegmentService createSegmentService(Retrofit retrofit) {
+        return retrofit.create(SegmentService.class);
     }
     
     @Bean

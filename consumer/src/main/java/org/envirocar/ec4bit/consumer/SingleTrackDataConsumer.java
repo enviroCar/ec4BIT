@@ -91,7 +91,7 @@ public class SingleTrackDataConsumer {
 
             // Prepare Access Parameters
             AccessParameters accessParameters = AccessParameters.create()
-                    .addNameValue("track", "59fb1e3f268d1b082e738c2f");
+                    .addNameValue("track", "5a056a7a268d1b082e8e7234");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);
@@ -106,7 +106,6 @@ public class SingleTrackDataConsumer {
                             if (r == null) {
                                 System.out.println("yea");
                             }
-
                             System.out.println("Received data: " + r.asJsonNode().toString());
                         },
                         (f, r) -> {

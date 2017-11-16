@@ -37,7 +37,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class SingleTrackRequestHandler extends AbstractRequestHandler<Track> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SingleTrackRequestHandler.class);

@@ -39,8 +39,8 @@ import retrofit2.Response;
  *
  * @author dewall
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@Import(RemoteConfiguration.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@Import(RemoteConfiguration.class)
 public class SpeedValuesDecoderTest {
 
     @Autowired
@@ -48,7 +48,7 @@ public class SpeedValuesDecoderTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Test
+//    @Test
     public void testSpeedValuesDecoding() throws IOException {
         Call<ResponseBody> measurements = this.measurementService.getAsRawResponse(1);
         String measurementsString = measurements.execute().body().string();
@@ -59,7 +59,7 @@ public class SpeedValuesDecoderTest {
         Assert.assertNotNull(speedValues);
     }
 
-    @Test
+//    @Test
     public void testSpeedValueResponse() throws IOException {
         Response<SpeedValues> execute = this.measurementService.getAsSpeedValues(1).execute();
         SpeedValues result = execute.body();

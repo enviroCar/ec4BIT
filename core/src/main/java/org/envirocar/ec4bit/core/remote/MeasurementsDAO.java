@@ -37,7 +37,7 @@ import retrofit2.Call;
  *
  * @author dewall
  */
-@Component
+//@Component
 public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(MeasurementsDAO.class);

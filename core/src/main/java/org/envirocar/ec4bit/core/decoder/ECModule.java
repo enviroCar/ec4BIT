@@ -20,14 +20,20 @@ package org.envirocar.ec4bit.core.decoder;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import okhttp3.ResponseBody;
+import org.envirocar.ec4bit.core.encoding.CoordinatePairEncoder;
 import org.envirocar.ec4bit.core.encoding.MeasurementEncoder;
 import org.envirocar.ec4bit.core.encoding.MeasurementsEncoder;
+import org.envirocar.ec4bit.core.encoding.SegmentEncoder;
+import org.envirocar.ec4bit.core.encoding.SegmentsEncoder;
 import org.envirocar.ec4bit.core.encoding.SpeedValueEncoder;
 import org.envirocar.ec4bit.core.encoding.SpeedValuesEncoder;
 import org.envirocar.ec4bit.core.encoding.TrackEncoder;
 import org.envirocar.ec4bit.core.encoding.TracksEncoder;
+import org.envirocar.ec4bit.core.model.CoordinatePair;
 import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Measurements;
+import org.envirocar.ec4bit.core.model.Segment;
+import org.envirocar.ec4bit.core.model.Segments;
 import org.envirocar.ec4bit.core.model.SpeedValue;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.model.Track;
@@ -51,6 +57,10 @@ public class ECModule extends SimpleModule {
         this.addSerializer(Tracks.class, new TracksEncoder());
         this.addDeserializer(Track.class, new TrackDecoder());
         this.addDeserializer(Tracks.class, new TracksDecoder());
+        this.addSerializer(Segment.class, new SegmentEncoder());
+        this.addSerializer(CoordinatePair.class, new CoordinatePairEncoder());
+        this.addSerializer(Segments.class, new SegmentsEncoder());
+        this.addDeserializer(Segments.class, new SegmentsDecoder());
     }
 
 }

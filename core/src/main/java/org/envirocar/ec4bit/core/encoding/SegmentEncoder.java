@@ -23,29 +23,29 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.util.List;
+import org.envirocar.ec4bit.core.model.CoordinatePair;
 import org.envirocar.ec4bit.core.model.Measurement;
+import org.envirocar.ec4bit.core.model.Segment;
 import org.envirocar.ec4bit.core.model.Track;
 
 /**
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class TrackEncoder extends BaseJSONEncoder<Track> {
+public class SegmentEncoder extends BaseJSONEncoder<Segment> {
 
     @Override
-    public void serialize(Track track, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
+    public void serialize(Segment segment, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
         gen.writeStartObject();
+        gen.writeObjectField("segmentID", segment.getSegmentID());
+        gen.writeObjectField("AvgSpeed", segment.getAvgSpeed());
+        gen.writeObjectField("NumSpeed", segment.getNumSpeed());
+        gen.writeObjectField("OSMID", segment.getOsmID());
 
-        gen.writeObjectField("trackID", track.getTrackID());
-        gen.writeObjectField("trackRef", "http://www.envirocar.org/api/stable/tracks/" + track.getTrackID());
-        gen.writeObjectField("sensorID", track.getSensor());
-        gen.writeObjectField("sensorRef", "http://www.envirocar.org/api/stable/sensors/" + track.getSensor());
-        gen.writeObjectField("length", track.getLength());
-
-        List<Measurement> measurements = track.getMeasurements();
-        if (!measurements.isEmpty()) {
-            writeArrayOfObjects(gen, "Measurements", measurements);
+        List<CoordinatePair> points = segment.getPoints();
+        if (!points.isEmpty()) {
+            writeArrayOfObjects(gen, "Coordinates", points);
         }
 
         gen.writeEndObject();

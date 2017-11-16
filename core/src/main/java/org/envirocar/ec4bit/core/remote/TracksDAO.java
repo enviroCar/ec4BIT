@@ -36,7 +36,7 @@ import retrofit2.Call;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-@Component
+//@Component
 public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
 
     private static final Logger LOG = LoggerFactory.getLogger(TracksDAO.class);
