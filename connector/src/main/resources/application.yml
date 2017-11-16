@@ -15,23 +15,23 @@ bigiot:
     applications:
         speed_data:
             local_id: speed-offering
-            name: Driving Speed Values
+            name: TEST Driving Speed Values
             route: speedvalues
         driving_data:
             local_id: driving-offering
-            name: Traffic Driving Measurements
+            name: TEST Traffic Driving Measurements
             route: measurements
         track_data:
             local_id: track-offering
-            name: Driving Tracks
+            name: TEST Driving Tracks
             route: tracks
         single_track_data:
             local_id: single-track-offering
-            name: Driving Track
+            name: TEST Driving Track
             route: track
         segments_data:
             local_id: segments-offering
-            name: Traffic Driving Segments
+            name: TEST Traffic Driving Segments
             route: segments
 #server:
 #    port: 8081

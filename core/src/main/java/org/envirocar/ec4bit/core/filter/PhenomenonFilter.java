@@ -52,7 +52,6 @@ public class PhenomenonFilter {
 
     public PhenomenonFilter() {
     }
-
     ;
 
     public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean fuel_system_loop, boolean fuel_system_status_code, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
