@@ -90,7 +90,6 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
         JsonNode node = jp.readValueAsTree();
         ArrayNode features = (ArrayNode) node.get(ELEMENT_FEATURES);
 
-        // TODO: PhenomenonDefinitions um Units erweitern
         features.forEach((m) -> {
             Measurement result = new Measurement();
 

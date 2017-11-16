@@ -85,7 +85,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                     for (Measurement m : body.getMeasurements()) {
                         Measurement filtered = new Measurement();
                         boolean hasPhenomenons = false;
-                        
+
                         if (m.hasCo2() && phenomenonFilter.getCo2()) {
                             filtered.setCo2(m.getCo2());
                             hasPhenomenons = true;
@@ -102,67 +102,67 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setEngine_load(m.getEngine_load());
                             hasPhenomenons = true;
                         }
-                        if (m.hasFuel_system_loop()&& phenomenonFilter.getFuel_system_loop()) {
+                        if (m.hasFuel_system_loop() && phenomenonFilter.getFuel_system_loop()) {
                             filtered.setFuel_system_loop(m.getFuel_system_loop());
                             hasPhenomenons = true;
                         }
-                        if (m.hasFuel_system_status_code()&& phenomenonFilter.getFuel_system_status_code()) {
+                        if (m.hasFuel_system_status_code() && phenomenonFilter.getFuel_system_status_code()) {
                             filtered.setFuel_system_status_code(m.getFuel_system_status_code());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_accuracy()&& phenomenonFilter.getGps_accuracy()) {
+                        if (m.hasGps_accuracy() && phenomenonFilter.getGps_accuracy()) {
                             filtered.setGps_accuracy(m.getGps_accuracy());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_altitude()&& phenomenonFilter.getGps_altitude()) {
+                        if (m.hasGps_altitude() && phenomenonFilter.getGps_altitude()) {
                             filtered.setGps_altitude(m.getGps_altitude());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_bearing()&& phenomenonFilter.getGps_bearing()) {
+                        if (m.hasGps_bearing() && phenomenonFilter.getGps_bearing()) {
                             filtered.setGps_bearing(m.getGps_bearing());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_hdop()&& phenomenonFilter.getGps_hdop()) {
+                        if (m.hasGps_hdop() && phenomenonFilter.getGps_hdop()) {
                             filtered.setGps_hdop(m.getGps_hdop());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_pdop()&& phenomenonFilter.getGps_pdop()) {
+                        if (m.hasGps_pdop() && phenomenonFilter.getGps_pdop()) {
                             filtered.setGps_pdop(m.getGps_pdop());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_speed()&& phenomenonFilter.getGps_speed()) {
+                        if (m.hasGps_speed() && phenomenonFilter.getGps_speed()) {
                             filtered.setGps_speed(m.getGps_speed());
                             hasPhenomenons = true;
                         }
-                        if (m.hasGps_vdop()&& phenomenonFilter.getGps_vdop()) {
+                        if (m.hasGps_vdop() && phenomenonFilter.getGps_vdop()) {
                             filtered.setGps_vdop(m.getGps_vdop());
                             hasPhenomenons = true;
                         }
-                        if (m.hasIntake_pressure()&& phenomenonFilter.getIntake_pressure()) {
+                        if (m.hasIntake_pressure() && phenomenonFilter.getIntake_pressure()) {
                             filtered.setIntake_pressure(m.getIntake_pressure());
                             hasPhenomenons = true;
                         }
-                        if (m.hasLong_term_fuel_trim_1()&& phenomenonFilter.getLong_term_fuel_trim_1()) {
+                        if (m.hasLong_term_fuel_trim_1() && phenomenonFilter.getLong_term_fuel_trim_1()) {
                             filtered.setLong_term_fuel_trim_1(m.getLong_term_fuel_trim_1());
                             hasPhenomenons = true;
                         }
-                        if (m.hasMaf()&& phenomenonFilter.getMaf()) {
+                        if (m.hasMaf() && phenomenonFilter.getMaf()) {
                             filtered.setMaf(m.getMaf());
                             hasPhenomenons = true;
                         }
-                        if (m.hasO2_lambda_current()&& phenomenonFilter.getO2_lambda_current()) {
+                        if (m.hasO2_lambda_current() && phenomenonFilter.getO2_lambda_current()) {
                             filtered.setO2_lambda_current(m.getO2_lambda_current());
                             hasPhenomenons = true;
                         }
-                        if (m.hasO2_lambda_current_ER()&& phenomenonFilter.getO2_lambda_current_er()) {
+                        if (m.hasO2_lambda_current_ER() && phenomenonFilter.getO2_lambda_current_er()) {
                             filtered.setO2_lambda_current_ER(m.getO2_lambda_current_ER());
                             hasPhenomenons = true;
                         }
-                        if (m.hasO2_lambda_voltage()&& phenomenonFilter.getO2_lambda_voltage()) {
+                        if (m.hasO2_lambda_voltage() && phenomenonFilter.getO2_lambda_voltage()) {
                             filtered.setO2_lambda_voltage(m.getO2_lambda_voltage());
                             hasPhenomenons = true;
                         }
-                        if (m.hasO2_lambda_voltage_ER()&& phenomenonFilter.getO2_lambda_voltage_er()) {
+                        if (m.hasO2_lambda_voltage_ER() && phenomenonFilter.getO2_lambda_voltage_er()) {
                             filtered.setO2_lambda_voltage_ER(m.getO2_lambda_voltage_ER());
                             hasPhenomenons = true;
                         }
@@ -170,19 +170,19 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setRpm(m.getRpm());
                             hasPhenomenons = true;
                         }
-                        if (m.hasShort_term_fuel_trim_1()&& phenomenonFilter.getShort_term_fuel_trim_1()) {
+                        if (m.hasShort_term_fuel_trim_1() && phenomenonFilter.getShort_term_fuel_trim_1()) {
                             filtered.setShort_term_fuel_trim_1(m.getShort_term_fuel_trim_1());
                             hasPhenomenons = true;
                         }
-                        if (m.hasSpeed()&& phenomenonFilter.getSpeed()) {
+                        if (m.hasSpeed() && phenomenonFilter.getSpeed()) {
                             filtered.setSpeed(m.getSpeed());
                             hasPhenomenons = true;
                         }
-                        if (m.hasThrottle_position()&& phenomenonFilter.getThrolle_position()) {
+                        if (m.hasThrottle_position() && phenomenonFilter.getThrolle_position()) {
                             filtered.setThrottle_position(m.getThrottle_position());
                             hasPhenomenons = true;
                         }
-                        
+
                         if (hasPhenomenons) {
                             // add default items of meaasurement:
                             filtered.setLatitude(m.getLatitude());
@@ -190,7 +190,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setTime(m.getTime());
                             filtered.setMeasurementID(m.getMeasurementID());
                             filtered.setSensorID(m.getSensorID());
-                            
+
                             filteredMeasurements.addMeasurement(filtered);
                         }
                     }
@@ -272,6 +272,31 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                 }
                 return filteredMeasurements;
             } else {
+                body.addPhenomDefinition("Speed");
+                body.addPhenomDefinition("CO2");
+                body.addPhenomDefinition("Consumption");
+                body.addPhenomDefinition("GPS Speed");
+                body.addPhenomDefinition("GPS Altitude");
+                body.addPhenomDefinition("MAF");
+                body.addPhenomDefinition("Intake Temperature");
+                body.addPhenomDefinition("Intake Pressure");
+                body.addPhenomDefinition("Rpm");
+                body.addPhenomDefinition("Engine Load");
+                body.addPhenomDefinition("Fuel System Loop");
+                body.addPhenomDefinition("Fuel System Status Code");
+                body.addPhenomDefinition("GPS Accuracy");
+                body.addPhenomDefinition("GPS Bearing");
+                body.addPhenomDefinition("Long-Term Fuel Trim 1");
+                body.addPhenomDefinition("Short-Term Fuel Trim 1");
+                body.addPhenomDefinition("Throttle Position");
+                body.addPhenomDefinition("GPS HDOP");
+                body.addPhenomDefinition("GPS PDOP");
+                body.addPhenomDefinition("GPS VDOP");
+                body.addPhenomDefinition("Calculated MAF");
+                body.addPhenomDefinition("O2 Lambda Current");
+                body.addPhenomDefinition("O2 Lambda Current ER");
+                body.addPhenomDefinition("O2 Lambda Voltage");
+                body.addPhenomDefinition("O2 Lambda Voltage ER");
                 return body;
             }
         } catch (IOException ex) {
