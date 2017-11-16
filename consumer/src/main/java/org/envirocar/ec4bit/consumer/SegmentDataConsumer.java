@@ -90,10 +90,11 @@ public class SegmentDataConsumer {
 
             // Prepare Access Parameters
             AccessParameters accessParameters = AccessParameters.create()
+//                    .addNameValue("sortBy", "NumSpeed")
 //                    .addNameValue("box", "50.076,7.5 52.08,8.00")
 //                    .addNameValue("featureID", "10fc17c0-6223-46bc-9606-1bbfb3df42ce");
-//                    .addNameValue("sortBy", "NumSpeed")
-                    .addNameValue("intersects", "7.65,50 7.65,52 7.65,52 8,52 8,52 8,50 8,5 7.65,50");
+//                    .addNameValue("intersects", "7.65,50 7.65,52 7.65,52 8,52 8,52 8,50 8,5 7.65,50")
+                    .addNameValue("dwithin", "7.65,51.3 10000");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

@@ -163,7 +163,10 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
 
     protected DWithinFilter getDWithinFilter(Map<String, Object> input) throws KeyNotFoundException {
         String dwithin = checkAndGetValue(DWITHIN, input);
-        return new DWithinFilter(dwithin, 10000);
+        String[] dwparts = dwithin.split(" ");
+        String point = dwparts[0];
+        Integer distance = Integer.valueOf(dwparts[1]);
+        return new DWithinFilter(point, distance);
     }
 
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {

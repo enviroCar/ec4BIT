@@ -24,9 +24,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.util.List;
 import org.envirocar.ec4bit.core.model.CoordinatePair;
-import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Segment;
-import org.envirocar.ec4bit.core.model.Track;
 
 /**
  *

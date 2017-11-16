@@ -58,10 +58,11 @@ public class SegmentProducer extends EC4BITProducer {
     protected RegistrableOfferingDescription getOfferingDescription() {
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                .addInputData("featureID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addInputData("sortBy", new RDFType(SCHEMA_SORT_BY), ValueType.TEXT)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
+                .addInputData("featureID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addInputData("intersects", new RDFType(SCHEMA_INTERSECT), ValueType.TEXT)
+                .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
                 .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
                 // segment components:
                 .addOutputData("OSMID", new RDFType(SCHEMA_ID), ValueType.TEXT)

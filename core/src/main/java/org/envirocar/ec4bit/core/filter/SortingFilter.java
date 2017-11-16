@@ -73,7 +73,7 @@ public class SortingFilter {
     public String string() {
         String sortBy = "";
         if (attribute != null) {
-            sortBy = attribute+"D";
+            sortBy = attribute+"+D";
         } 
         return sortBy;
     }
