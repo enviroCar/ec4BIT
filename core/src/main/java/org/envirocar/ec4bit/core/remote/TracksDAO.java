@@ -66,7 +66,7 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
         }
 
         Call<Tracks> asTracks = trackService
-                .getAsTracks(bboxParam, timeAfterParam, timeBeforeParam,  pageParam);
+                .getAsTracks(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
         try {
             Tracks body = asTracks.execute().body();
             return body;
@@ -76,18 +76,30 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
 
         return null;
     }
-    
-    public Track get(String trackID) {
 
-        Call<Track> asTrack = trackService
-                .getTrack(trackID);
-        try {
-            Track body = asTrack.execute().body();
-            return body;
-        } catch (IOException ex) {
-            LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+    public Tracks get(String trackID) {
+
+        if (trackID != null && trackID.length() > 0) {
+            Call<Track> asTrack = trackService
+                    .getTrack(trackID);
+            try {
+                Track body = asTrack.execute().body();
+                Tracks tracks = new Tracks();
+                tracks.addTrack(body);
+                return tracks;
+            } catch (IOException ex) {
+                LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+            }
+        } else {
+            Call<Tracks> asTracks = trackService
+                    .getAsTracks();
+            try {
+                Tracks body = asTracks.execute().body();
+                return body;
+            } catch (IOException ex) {
+                LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+            }
         }
-
         return null;
     }
 

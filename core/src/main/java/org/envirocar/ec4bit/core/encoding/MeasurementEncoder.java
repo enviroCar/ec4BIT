@@ -39,7 +39,7 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
 
         gen.writeStartObject();
         gen.writeObjectField("measurementID", value.getMeasurementID());
-        gen.writeObjectField("measurementRef", "http://www.envirocar.org/api/stable/measurements/" + value.getMeasurementID());
+        gen.writeObjectField("measurementRef", "http://envirocar.org/api/stable/measurements/" + value.getMeasurementID());
         gen.writeObjectField("longitude", value.getLongitude());
         gen.writeObjectField("latitude", value.getLatitude());
         // get TimeStamp String:
@@ -49,11 +49,11 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
 
         if (value.getTrackID() != null) {
             gen.writeObjectField("trackID", value.getTrackID());
-            gen.writeObjectField("trackRef", "http://www.envirocar.org/api/stable/tracks/" + value.getTrackID());
+            gen.writeObjectField("trackRef", "http://envirocar.org/api/stable/tracks/" + value.getTrackID());
         }
         if (value.getSensorID() != null) {
             gen.writeObjectField("sensorID", value.getSensorID());
-            gen.writeObjectField("sensorRef", "http://www.envirocar.org/api/stable/sensors/" + value.getSensorID());
+            gen.writeObjectField("sensorRef", "http://envirocar.org/api/stable/sensors/" + value.getSensorID());
         }
         if (value.getSpeed() != null) {
             gen.writeObjectField("Speed", value.getSpeed());
