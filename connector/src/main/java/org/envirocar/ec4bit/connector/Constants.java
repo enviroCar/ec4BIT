@@ -60,6 +60,8 @@ interface Constants {
     static final String FEATUREID = "featureID";
     static final String SCHEMA_INTERSECT = "SCHEMA_INTERSECT";
     static final String INTERSECT = "intersects";
+    static final String SCHEMA_WITHIN = "SCHEMA_WITHIN";
+    static final String WITHIN = "within";
     static final String SCHEMA_DWITHIN = "SCHEMA_DWITHIN";
     static final String DWITHIN = "dwithin";
     

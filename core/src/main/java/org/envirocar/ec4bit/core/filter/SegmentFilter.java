@@ -28,6 +28,7 @@ public class SegmentFilter {
     private final SortingFilter sortingFilter;
     private final FeatureIDFilter featureFilter;
     private final IntersectsFilter intersectFilter;
+    private final WithinFilter withinFilter;
     private final DWithinFilter dwithinFilter;
 
     /**
@@ -37,13 +38,15 @@ public class SegmentFilter {
      * @param sortingFilter
      * @param featureFilter
      * @param intersectFilter
+     * @param withinFilter
      * @param dwithinFilter
      */
-    public SegmentFilter(FeatureIDFilter featureFilter, SortingFilter sortingFilter, SpatialFilter spatialFilter, IntersectsFilter intersectFilter, DWithinFilter dwithinFilter) {
+    public SegmentFilter(FeatureIDFilter featureFilter, SortingFilter sortingFilter, SpatialFilter spatialFilter, IntersectsFilter intersectFilter, WithinFilter withinFilter, DWithinFilter dwithinFilter) {
         this.spatialFilter = spatialFilter;
         this.sortingFilter = sortingFilter;
         this.featureFilter = featureFilter;
         this.intersectFilter = intersectFilter;
+        this.withinFilter = withinFilter;
         this.dwithinFilter = dwithinFilter;
     }
 
@@ -77,6 +80,14 @@ public class SegmentFilter {
 
     public boolean hasIntersectsFilter() {
         return (this.intersectFilter != null);
+    }
+
+    public WithinFilter getWithinFilter() {
+        return this.withinFilter;
+    }
+
+    public boolean hasWithinFilter() {
+        return (this.withinFilter != null);
     }
 
     public DWithinFilter getDWithinFilter() {

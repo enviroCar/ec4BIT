@@ -35,6 +35,7 @@ import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.envirocar.ec4bit.core.filter.WithinFilter;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -161,6 +162,11 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return new IntersectsFilter(intersection);
     }
 
+    protected WithinFilter getWithinFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String within = checkAndGetValue(WITHIN, input);
+        return new WithinFilter(within);
+    }
+    
     protected DWithinFilter getDWithinFilter(Map<String, Object> input) throws KeyNotFoundException {
         String dwithin = checkAndGetValue(DWITHIN, input);
         String[] dwparts = dwithin.split(" ");
