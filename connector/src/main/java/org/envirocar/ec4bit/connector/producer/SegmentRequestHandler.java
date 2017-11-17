@@ -26,6 +26,7 @@ import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
+import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
 import org.envirocar.ec4bit.core.filter.SegmentFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
@@ -70,6 +71,7 @@ public class SegmentRequestHandler extends AbstractRequestHandler<Segments> {
             IntersectsFilter intersectFilter = null;
             DWithinFilter dwithinFilter = null;
             WithinFilter withinFilter = null;
+            GreaterThanFilter greaterThanFilter = null;
             
             if (input.containsKey(FEATUREID)) {
                 featureIDFilter = getFeatureIDFilter(input);
@@ -94,8 +96,12 @@ public class SegmentRequestHandler extends AbstractRequestHandler<Segments> {
             if (input.containsKey(DWITHIN)) {
                 dwithinFilter = getDWithinFilter(input);
             }
+            
+            if (input.containsKey(GREATERTHAN)) {
+                greaterThanFilter = getGreaterThanFilter(input);
+            }
 
-            SegmentFilter filter = new SegmentFilter(featureIDFilter, sortingFilter, spatialFilter, intersectFilter, withinFilter, dwithinFilter);
+            SegmentFilter filter = new SegmentFilter(featureIDFilter, sortingFilter, spatialFilter, intersectFilter, withinFilter, dwithinFilter, greaterThanFilter);
             return segmentDAO.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);

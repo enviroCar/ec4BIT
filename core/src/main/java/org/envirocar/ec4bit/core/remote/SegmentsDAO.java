@@ -21,6 +21,7 @@ package org.envirocar.ec4bit.core.remote;
 import java.io.IOException;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
+import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
 import org.envirocar.ec4bit.core.filter.SegmentFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
@@ -55,6 +56,7 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
         String intersectsParam = null;
         String withinParam = null;
         String dwithinParam = null;
+        String greaterThanParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -80,9 +82,13 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
             FeatureIDFilter feature = filter.getFeatureIDFilter();
             featureIDParam = feature.string();
         }
+        if (filter.hasGreaterThanFilter()) {
+            GreaterThanFilter greaterThan = filter.getGreaterThanFilter();
+            greaterThanParam = greaterThan.string();
+        }
 
         Call<Segments> asSegments = segmentService
-                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam);
+                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam, greaterThanParam);
         try {
             Segments body = asSegments.execute().body();
             return body;

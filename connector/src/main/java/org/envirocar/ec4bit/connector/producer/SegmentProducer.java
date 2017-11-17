@@ -64,6 +64,7 @@ public class SegmentProducer extends EC4BITProducer {
                 .addInputData("intersects", new RDFType(SCHEMA_INTERSECT), ValueType.TEXT)
                 .addInputData("within", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
                 .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
+                .addInputData("greaterThan", new RDFType(SCHEMA_GREATER_THAN), ValueType.TEXT)
                 // segment components:
                 .addOutputData("OSMID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("geometry", new RDFType(SCHEMA_GEOMETRY), IOData.createMembers()

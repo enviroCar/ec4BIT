@@ -64,6 +64,8 @@ interface Constants {
     static final String WITHIN = "within";
     static final String SCHEMA_DWITHIN = "SCHEMA_DWITHIN";
     static final String DWITHIN = "dwithin";
+    static final String SCHEMA_GREATER_THAN = "SCHEMA_GREATER_THAN";
+    static final String GREATERTHAN = "greaterthan";
     
     // single track components
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";

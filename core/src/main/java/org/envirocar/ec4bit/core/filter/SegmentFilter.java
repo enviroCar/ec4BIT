@@ -30,6 +30,7 @@ public class SegmentFilter {
     private final IntersectsFilter intersectFilter;
     private final WithinFilter withinFilter;
     private final DWithinFilter dwithinFilter;
+    private final GreaterThanFilter greaterThanFilter;
 
     /**
      * Constructor.
@@ -40,14 +41,17 @@ public class SegmentFilter {
      * @param intersectFilter
      * @param withinFilter
      * @param dwithinFilter
+     * @param greaterThanFilter
      */
-    public SegmentFilter(FeatureIDFilter featureFilter, SortingFilter sortingFilter, SpatialFilter spatialFilter, IntersectsFilter intersectFilter, WithinFilter withinFilter, DWithinFilter dwithinFilter) {
+    public SegmentFilter(FeatureIDFilter featureFilter, SortingFilter sortingFilter, SpatialFilter spatialFilter, IntersectsFilter intersectFilter, WithinFilter withinFilter, DWithinFilter dwithinFilter, 
+            GreaterThanFilter greaterThanFilter) {
         this.spatialFilter = spatialFilter;
         this.sortingFilter = sortingFilter;
         this.featureFilter = featureFilter;
         this.intersectFilter = intersectFilter;
         this.withinFilter = withinFilter;
         this.dwithinFilter = dwithinFilter;
+        this.greaterThanFilter = greaterThanFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -96,6 +100,14 @@ public class SegmentFilter {
 
     public boolean hasDWithinFilter() {
         return (this.dwithinFilter != null);
+    }
+
+    public GreaterThanFilter getGreaterThanFilter() {
+        return this.greaterThanFilter;
+    }
+
+    public boolean hasGreaterThanFilter() {
+        return (this.greaterThanFilter != null);
     }
 
 }

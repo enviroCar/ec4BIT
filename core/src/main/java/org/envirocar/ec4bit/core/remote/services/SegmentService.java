@@ -36,7 +36,8 @@ public interface SegmentService {
     Call<Segments> getAsSegments();
     
     @GET("geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:osmSegments&maxFeatures=1000&outputFormat=application%2Fjson")
-    Call<Segments> getAsSegments(@Query("featureID") String featureID, @Query("bbox") String bbox, @Query("Filter") String intersects, @Query("Filter") String within, @Query("Filter") String dwithin, @Query("sortBy") String sortBy);
+    Call<Segments> getAsSegments(@Query("featureID") String featureID, @Query("bbox") String bbox, @Query("Filter") String intersects, @Query("Filter") String within, @Query("Filter") String dwithin, @Query("sortBy") String sortBy, 
+            @Query("Filter") String greaterThan);
     
 //    @GET("geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:osmSegments&maxFeatures=1000&outputFormat=application%2Fjson")
 //    Call<Segment> getSegment(@Query("featureID") String featureID);

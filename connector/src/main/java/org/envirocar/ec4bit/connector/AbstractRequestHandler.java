@@ -29,6 +29,7 @@ import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
+import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
@@ -175,6 +176,14 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return new DWithinFilter(point, distance);
     }
 
+    protected GreaterThanFilter getGreaterThanFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String greater = checkAndGetValue(GREATERTHAN, input);
+        String[] gtparts = greater.split(" ");
+        String attribute = gtparts[0];
+        String value = gtparts[1];
+        return new GreaterThanFilter(attribute, value);
+    }
+    
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         String phenomString = checkAndGetValue(PHENOMENONS, input);
         PhenomenonFilter pf;
