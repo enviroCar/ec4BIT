@@ -1,4 +1,8 @@
-spring.application.name: Connector
+spring:
+    application:
+        name: ec4BIT - Connector
+    profiles:
+        active: development
 
 ec4bit:
     contact: envirocar@52north.org
@@ -12,6 +16,41 @@ bigiot:
     provider:
         address: localhost
         port: 7777
+
+---
+
+spring:
+    profiles: development
+bigiot:
+    provider:
+        address: localhost
+        port: 7777
+    applications: 
+        speed_data:
+            local_id: speed-offering
+            name: (enviroCar Testing) / Driving Speed Values
+            route: speedvalues
+        driving_data:
+            local_id: driving-offering
+            name: (enviroCar Testing) / Traffic Driving Measurements
+            route: measurements
+        track_data:
+            local_id: track-offering
+            name: (enviroCar Testing) / Driving Tracks
+            route: tracks
+        single_track_data:
+            local_id: single-track-offering
+            name: (enviroCar Testing) / Driving Track
+            route: track
+
+---
+
+spring:
+    profiles: productive
+bigiot:
+    provider:
+        address: processing.envirocar.org
+        port: 8081
     applications:
         speed_data:
             local_id: speed-offering
@@ -29,9 +68,3 @@ bigiot:
             local_id: single-track-offering
             name: Driving Track
             route: track
-#server:
-#    port: 8081
-    
-#logging:
-    # path: /var/lib/ec4BIT/logs
-#     path: logs
