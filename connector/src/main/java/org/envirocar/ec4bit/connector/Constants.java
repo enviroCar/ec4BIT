@@ -68,8 +68,10 @@ interface Constants {
     static final String GREATERTHAN = "greaterthan";
     static final String SCHEMA_LESS_THAN = "SCHEMA_LESS_THAN";
     static final String LESSTHAN = "lessthan";
-    static final String SCHEMA_BETWEEN_IN = "SCHEMA_BETWEEN_IN";
-    static final String BETWEENIN = "betweenIn";
+    static final String SCHEMA_BETWEEN = "SCHEMA_BETWEEN";
+    static final String BETWEEN = "between";
+    static final String SCHEMA_CUSTOM_WFS_FILTER = "SCHEMA_CUSTOM_FILTER";
+    static final String CUSTOM_WFS_FILTER = "customfilter";
     
     // single track components
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";

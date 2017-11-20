@@ -67,7 +67,6 @@ public class SpeedDataProducer extends EC4BITProducer {
                 .addOutputData("geoCoordinates", new RDFType("schema:geoCoordinates"), IOData.createMembers()
                         .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)
                         .addOutputData("latitude", new RDFType("schema:latitude"), ValueType.NUMBER))
-                .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

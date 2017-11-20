@@ -64,9 +64,10 @@ public class SegmentProducer extends EC4BITProducer {
                 .addInputData("intersects", new RDFType(SCHEMA_INTERSECT), ValueType.TEXT)
                 .addInputData("within", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
                 .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
-                .addInputData("greaterThan", new RDFType(SCHEMA_GREATER_THAN), ValueType.TEXT)
-                .addInputData("lessThan", new RDFType(SCHEMA_LESS_THAN), ValueType.TEXT)
+                .addInputData("greaterthan", new RDFType(SCHEMA_GREATER_THAN), ValueType.TEXT)
+                .addInputData("lessthan", new RDFType(SCHEMA_LESS_THAN), ValueType.TEXT)
                 .addInputData("betweenIn", new RDFType(SCHEMA_LESS_THAN), ValueType.TEXT)
+                .addInputData("customfilter", new RDFType(SCHEMA_CUSTOM_WFS_FILTER), ValueType.TEXT)
                 // segment components:
                 .addOutputData("OSMID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("geometry", new RDFType(SCHEMA_GEOMETRY), IOData.createMembers()
@@ -74,7 +75,6 @@ public class SegmentProducer extends EC4BITProducer {
                 // segment measurements:
                 .addOutputData("AvgSpeed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
                 .addOutputData("NumSpeed", new RDFType(SCHEMA_AMOUNT), ValueType.NUMBER)
-                .inRegion(Region.city("Muenster"))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

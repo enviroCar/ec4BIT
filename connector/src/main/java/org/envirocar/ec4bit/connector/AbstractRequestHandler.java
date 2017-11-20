@@ -27,7 +27,8 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
-import org.envirocar.ec4bit.core.filter.BetweenInFilter;
+import org.envirocar.ec4bit.core.filter.BetweenFilter;
+import org.envirocar.ec4bit.core.filter.CustomWFSFilter;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
 import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
@@ -67,7 +68,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     }
 
     @Override
-    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map) {
+    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map, String subscriberId, String consumerInfo) {
         try {
             E responseEntity = processRequest(od, map);
             String body = mapper.writeValueAsString(responseEntity);
@@ -194,14 +195,22 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return new LessThanFilter(attribute, value);
     }
 
-    protected BetweenInFilter getBetweenFilter(Map<String, Object> input) throws KeyNotFoundException {
-        String less = checkAndGetValue(BETWEENIN, input);
+    protected BetweenFilter getBetweenFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String less = checkAndGetValue(BETWEEN, input);
         String[] biparts = less.split(" ");
         String attribute = biparts[0];
         String[] values = biparts[1].split(",");
         String greaterThan = values[0];
         String lessThan = values[1];
-        return new BetweenInFilter(attribute, greaterThan, lessThan);
+        return new BetweenFilter(attribute, greaterThan, lessThan);
+    }
+    
+    protected CustomWFSFilter getCustomWFSFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String customFilter = checkAndGetValue(CUSTOM_WFS_FILTER, input);
+        if (customFilter != null) {
+            return new CustomWFSFilter(customFilter);
+        }
+        return new CustomWFSFilter(null);
     }
     
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {

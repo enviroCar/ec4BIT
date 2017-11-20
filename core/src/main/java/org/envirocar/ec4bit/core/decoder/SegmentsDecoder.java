@@ -62,7 +62,7 @@ public class SegmentsDecoder extends BaseDeserializer<Segments> {
 
             ArrayList<CoordinatePair> coords = new ArrayList<>();
             
-            coordinates.forEach((coord) -> {
+            coordinates.get(0).forEach((coord) -> {
                 CoordinatePair cp = new CoordinatePair(
                         coord.get(0).asDouble(),
                         coord.get(1).asDouble()

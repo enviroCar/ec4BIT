@@ -19,11 +19,13 @@
 package org.envirocar.ec4bit.core.remote;
 
 import java.io.IOException;
-import org.envirocar.ec4bit.core.filter.BetweenInFilter;
+import org.envirocar.ec4bit.core.filter.BetweenFilter;
+import org.envirocar.ec4bit.core.filter.CustomWFSFilter;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
 import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
+import org.envirocar.ec4bit.core.filter.LessThanFilter;
 import org.envirocar.ec4bit.core.filter.SegmentFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
@@ -59,7 +61,8 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
         String dwithinParam = null;
         String greaterThanParam = null;
         String lessThanParam = null;
-        String betweenInParam = null;
+        String betweenParam = null;
+        String customWFSFilterParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -90,16 +93,20 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
             greaterThanParam = greaterThan.string();
         }
         if (filter.hasLessThanFilter()) {
-            GreaterThanFilter greaterThan = filter.getGreaterThanFilter();
-            greaterThanParam = greaterThan.string();
+            LessThanFilter lessThan = filter.getLessThanFilter();
+            lessThanParam = lessThan.string();
         }
-        if (filter.hasBetweenInFilter()) {
-            BetweenInFilter betweenIn = filter.getBetweenInFilter();
-            betweenInParam = betweenIn.string();
+        if (filter.hasBetweenFilter()) {
+            BetweenFilter between = filter.getBetweenFilter();
+            betweenParam = between.string();
+        }
+        if (filter.hasCustomWFSFilter()) {
+            CustomWFSFilter customWFSFilter = filter.getCustomWFSFilter();
+            customWFSFilterParam = customWFSFilter.string();
         }
 
         Call<Segments> asSegments = segmentService
-                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam, greaterThanParam, lessThanParam, betweenInParam);
+                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam, greaterThanParam, lessThanParam, betweenParam, customWFSFilterParam);
         try {
             Segments body = asSegments.execute().body();
             return body;

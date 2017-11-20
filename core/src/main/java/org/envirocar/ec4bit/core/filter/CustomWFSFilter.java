@@ -24,31 +24,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class SortingFilter {
+public class CustomWFSFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SortingFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(CustomWFSFilter.class);
 
-    private final String attribute;
+    private final String customFilter;
     
     /**
      * Constructor.
      *
-     * @param attribute
+     * @param customFilter
      */
-    public SortingFilter(String attribute) {
-        this.attribute = attribute;
+    public CustomWFSFilter(String customFilter) {
+        this.customFilter = customFilter;
     }
 
-    public String getAttribute() {
-        return attribute;
+    public String getCustomWFSFitler() {
+        return customFilter;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.attribute);
+        hash = 47 * hash + Objects.hashCode(this.customFilter);
         return hash;
     }
 
@@ -63,25 +63,24 @@ public class SortingFilter {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final SortingFilter other = (SortingFilter) obj;
-        if (!Objects.equals(this.attribute, other.attribute)) {
+        final CustomWFSFilter other = (CustomWFSFilter) obj;
+        if (!Objects.equals(this.customFilter, other.customFilter)) {
             return false;
         }
         return true;
     }
 
     public String string() {
-        String sortBy = "";
-        if (attribute != null) {
-            sortBy = String.join("",attribute,"%2BD");
-//                    +D;
+        String customFilterText = "";
+        if (customFilter != null) {
+            customFilterText = customFilter;
         } 
-        return sortBy;
+        return customFilterText;
     }
 
     @Override
     public String toString() {
-        return "SortingFilter{"+"attribute=" + attribute + "}";
+        return "CustomWFSFilter{"+"Filter=" + customFilter + "}";
     }
     
 }

@@ -73,7 +73,7 @@ public class IntersectsFilter {
     public String string() {
         String intersects = "";
         if (intersection != null) {
-            intersects = "<Filter><Intersects><PropertyName>geom</PropertyName><Polygon><outerBoundaryIs><LinearRing><coordinates>" + intersection + "</coordinates></LinearRing></outerBoundaryIs></Polygon></Intersects></Filter>";
+            intersects = "<Filter><Intersects><PropertyName>the_geom</PropertyName><Polygon><outerBoundaryIs><LinearRing><coordinates>" + intersection + "</coordinates></LinearRing></outerBoundaryIs></Polygon></Intersects></Filter>";
         } 
         return intersects;
     }

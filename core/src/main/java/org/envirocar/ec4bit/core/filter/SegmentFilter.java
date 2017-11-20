@@ -32,7 +32,8 @@ public class SegmentFilter {
     private final DWithinFilter dwithinFilter;
     private final GreaterThanFilter greaterThanFilter;
     private final LessThanFilter lessThanFilter;
-    private final BetweenInFilter betweenInFilter;
+    private final BetweenFilter betweenFilter;
+    private final CustomWFSFilter customWFSFilter;
 
     /**
      * Constructor.
@@ -45,10 +46,11 @@ public class SegmentFilter {
      * @param dwithinFilter
      * @param greaterThanFilter
      * @param lessThanFilter
-     * @param betweenInFilter
+     * @param betweenFilter
+     * @param customWFSFilter;
      */
     public SegmentFilter(FeatureIDFilter featureFilter, SortingFilter sortingFilter, SpatialFilter spatialFilter, IntersectsFilter intersectFilter, WithinFilter withinFilter, DWithinFilter dwithinFilter, 
-            GreaterThanFilter greaterThanFilter, LessThanFilter lessThanFilter, BetweenInFilter betweenInFilter) {
+            GreaterThanFilter greaterThanFilter, LessThanFilter lessThanFilter, BetweenFilter betweenFilter, CustomWFSFilter customWFSFilter) {
         this.spatialFilter = spatialFilter;
         this.sortingFilter = sortingFilter;
         this.featureFilter = featureFilter;
@@ -57,7 +59,8 @@ public class SegmentFilter {
         this.dwithinFilter = dwithinFilter;
         this.greaterThanFilter = greaterThanFilter;
         this.lessThanFilter = lessThanFilter;
-        this.betweenInFilter = betweenInFilter;
+        this.betweenFilter = betweenFilter;
+        this.customWFSFilter = customWFSFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -124,11 +127,19 @@ public class SegmentFilter {
         return (this.lessThanFilter != null);
     }
 
-    public BetweenInFilter getBetweenInFilter() {
-        return this.betweenInFilter;
+    public BetweenFilter getBetweenFilter() {
+        return this.betweenFilter;
     }
 
-    public boolean hasBetweenInFilter() {
-        return (this.betweenInFilter != null);
+    public boolean hasBetweenFilter() {
+        return (this.betweenFilter != null);
+    }
+
+    public CustomWFSFilter getCustomWFSFilter() {
+        return customWFSFilter;
+    }
+
+    public boolean hasCustomWFSFilter() {
+        return (this.customWFSFilter != null);
     }
 }

@@ -84,7 +84,7 @@ public class DWithinFilter {
     public String string() {
         String dwith = "";
         if (dwithin != null && meters != null) {
-            dwith = "<Filter><DWithin><PropertyName>geom</PropertyName><Point><coordinates>" + dwithin + "</coordinates></Point><Distance units='m'>" + String.valueOf(meters) + "</Distance></DWithin></Filter>";
+            dwith = "<Filter><DWithin><PropertyName>the_geom</PropertyName><Point><coordinates>" + dwithin + "</coordinates></Point><Distance units='m'>" + String.valueOf(meters) + "</Distance></DWithin></Filter>";
         } 
         return dwith;
     }

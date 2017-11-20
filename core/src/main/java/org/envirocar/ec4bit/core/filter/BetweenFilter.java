@@ -26,9 +26,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author dewall
  */
-public class BetweenInFilter {
+public class BetweenFilter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BetweenInFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(BetweenFilter.class);
 
     private final String greaterThan;
     private final String lessThan;
@@ -41,7 +41,7 @@ public class BetweenInFilter {
      * @param lessThan
      * @param attribute
      */
-    public BetweenInFilter(String attribute, String greaterThan, String lessThan) {
+    public BetweenFilter(String attribute, String greaterThan, String lessThan) {
         this.greaterThan = greaterThan;
         this.lessThan = lessThan;
         this.attribute = attribute;
@@ -79,7 +79,7 @@ public class BetweenInFilter {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final BetweenInFilter other = (BetweenInFilter) obj;
+        final BetweenFilter other = (BetweenFilter) obj;
         if (!Objects.equals(this.greaterThan, other.greaterThan)) {
             return false;
         }
@@ -95,14 +95,14 @@ public class BetweenInFilter {
     public String string() {
         String isBetweenIn = "";
         if (lessThan != null && greaterThan != null && attribute != null) {
-            isBetweenIn = "<Filter><PropertyIsBetween><PropertyName>" + attribute + "</PropertyName><LowerBoundary>" + greaterThan + "</LowerBoundary><UpperBoundary>" + lessThan + "</UpperBoundary></PropertyIsBetween></Filter>";
+            isBetweenIn = "<Filter><PropertyIsBetween><PropertyName>" + attribute + "</PropertyName><LowerBoundary><Literal>" + greaterThan + "</Literal></LowerBoundary><UpperBoundary><Literal>" + lessThan + "</Literal></UpperBoundary></PropertyIsBetween></Filter>";
         } 
         return isBetweenIn;
     }
 
     @Override
     public String toString() {
-        return "PropertyIsBetweenFilter{"+"Attribute=" + attribute + ", greaterThan=" + greaterThan + ", lessThan=" + lessThan + "}";
+        return "PropertyIsBetweenFilter{"+"Attribute=" + attribute + ", between=[" + greaterThan + ", " + lessThan + "]}";
     }
     
 }

@@ -73,7 +73,7 @@ public class WithinFilter {
     public String string() {
         String withinGeom = "";
         if (within != null) {
-            withinGeom = "<Filter><Within><PropertyName>geom</PropertyName><Polygon><outerBoundaryIs><LinearRing><coordinates>" + within + "</coordinates></LinearRing></outerBoundaryIs></Polygon></Within></Filter>";
+            withinGeom = "<Filter><Within><PropertyName>the_geom</PropertyName><Polygon><outerBoundaryIs><LinearRing><coordinates>" + within + "</coordinates></LinearRing></outerBoundaryIs></Polygon></Within></Filter>";
         } 
         return withinGeom;
     }
