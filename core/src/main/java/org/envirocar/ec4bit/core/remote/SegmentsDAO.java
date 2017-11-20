@@ -19,6 +19,7 @@
 package org.envirocar.ec4bit.core.remote;
 
 import java.io.IOException;
+import org.envirocar.ec4bit.core.filter.BetweenInFilter;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
 import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
@@ -57,6 +58,8 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
         String withinParam = null;
         String dwithinParam = null;
         String greaterThanParam = null;
+        String lessThanParam = null;
+        String betweenInParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -86,9 +89,17 @@ public class SegmentsDAO implements AbstractDAO<Segments, SegmentFilter> {
             GreaterThanFilter greaterThan = filter.getGreaterThanFilter();
             greaterThanParam = greaterThan.string();
         }
+        if (filter.hasLessThanFilter()) {
+            GreaterThanFilter greaterThan = filter.getGreaterThanFilter();
+            greaterThanParam = greaterThan.string();
+        }
+        if (filter.hasBetweenInFilter()) {
+            BetweenInFilter betweenIn = filter.getBetweenInFilter();
+            betweenInParam = betweenIn.string();
+        }
 
         Call<Segments> asSegments = segmentService
-                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam, greaterThanParam);
+                .getAsSegments(featureIDParam, bboxParam, intersectsParam, withinParam, dwithinParam, sortByParam, greaterThanParam, lessThanParam, betweenInParam);
         try {
             Segments body = asSegments.execute().body();
             return body;

@@ -66,6 +66,10 @@ interface Constants {
     static final String DWITHIN = "dwithin";
     static final String SCHEMA_GREATER_THAN = "SCHEMA_GREATER_THAN";
     static final String GREATERTHAN = "greaterthan";
+    static final String SCHEMA_LESS_THAN = "SCHEMA_LESS_THAN";
+    static final String LESSTHAN = "lessthan";
+    static final String SCHEMA_BETWEEN_IN = "SCHEMA_BETWEEN_IN";
+    static final String BETWEENIN = "betweenIn";
     
     // single track components
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";

@@ -24,10 +24,12 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.BetweenInFilter;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
 import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
+import org.envirocar.ec4bit.core.filter.LessThanFilter;
 import org.envirocar.ec4bit.core.filter.SegmentFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
@@ -72,6 +74,8 @@ public class SegmentRequestHandler extends AbstractRequestHandler<Segments> {
             DWithinFilter dwithinFilter = null;
             WithinFilter withinFilter = null;
             GreaterThanFilter greaterThanFilter = null;
+            LessThanFilter lessThanFilter = null;
+            BetweenInFilter betweenInFilter = null;
             
             if (input.containsKey(FEATUREID)) {
                 featureIDFilter = getFeatureIDFilter(input);
@@ -100,8 +104,16 @@ public class SegmentRequestHandler extends AbstractRequestHandler<Segments> {
             if (input.containsKey(GREATERTHAN)) {
                 greaterThanFilter = getGreaterThanFilter(input);
             }
+            
+            if (input.containsKey(LESSTHAN)) {
+                lessThanFilter = getLessThanFilter(input);
+            }
+            
+            if (input.containsKey(BETWEENIN)) {
+                betweenInFilter = getBetweenFilter(input);
+            }
 
-            SegmentFilter filter = new SegmentFilter(featureIDFilter, sortingFilter, spatialFilter, intersectFilter, withinFilter, dwithinFilter, greaterThanFilter);
+            SegmentFilter filter = new SegmentFilter(featureIDFilter, sortingFilter, spatialFilter, intersectFilter, withinFilter, dwithinFilter, greaterThanFilter, lessThanFilter, betweenInFilter);
             return segmentDAO.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);

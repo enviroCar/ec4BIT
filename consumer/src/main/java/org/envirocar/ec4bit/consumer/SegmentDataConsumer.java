@@ -94,7 +94,11 @@ public class SegmentDataConsumer {
 //                    .addNameValue("box", "50.076,7.5 52.08,8.00")
 //                    .addNameValue("featureID", "10fc17c0-6223-46bc-9606-1bbfb3df42ce");
 //                    .addNameValue("intersects", "7.65,50 7.65,52 7.65,52 8,52 8,52 8,50 8,5 7.65,50")
-                    .addNameValue("dwithin", "7.65,51.3 10000");
+//                    .addNameValue("dwithin", "7.65,51.3 10000")
+//                    .addNameValue("within", "7.65,50 7.65,52 7.65,52 8,52 8,52 8,50 8,5 7.65,50")
+//                    .addNameValue("greaterThan", "NumSpeed 50")
+//                    .addNameValue("lessThan", "NumSpeed 50")
+                    .addNameValue("betweenIn", "NumSpeed 40,60");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

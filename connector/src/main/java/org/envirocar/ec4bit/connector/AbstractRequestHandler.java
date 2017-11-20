@@ -27,10 +27,12 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.BetweenInFilter;
 import org.envirocar.ec4bit.core.filter.DWithinFilter;
 import org.envirocar.ec4bit.core.filter.FeatureIDFilter;
 import org.envirocar.ec4bit.core.filter.GreaterThanFilter;
 import org.envirocar.ec4bit.core.filter.IntersectsFilter;
+import org.envirocar.ec4bit.core.filter.LessThanFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SortingFilter;
@@ -182,6 +184,24 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         String attribute = gtparts[0];
         String value = gtparts[1];
         return new GreaterThanFilter(attribute, value);
+    }
+
+    protected LessThanFilter getLessThanFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String less = checkAndGetValue(LESSTHAN, input);
+        String[] ltparts = less.split(" ");
+        String attribute = ltparts[0];
+        String value = ltparts[1];
+        return new LessThanFilter(attribute, value);
+    }
+
+    protected BetweenInFilter getBetweenFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String less = checkAndGetValue(BETWEENIN, input);
+        String[] biparts = less.split(" ");
+        String attribute = biparts[0];
+        String[] values = biparts[1].split(",");
+        String greaterThan = values[0];
+        String lessThan = values[1];
+        return new BetweenInFilter(attribute, greaterThan, lessThan);
     }
     
     protected PhenomenonFilter getPhenomenonFilterParams(Map<String, Object> input) throws KeyNotFoundException {

@@ -86,6 +86,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addInputData("within", new RDFType(SCHEMA_WITHIN), ValueType.TEXT)
                 .addInputData("dwithin", new RDFType(SCHEMA_DWITHIN), ValueType.TEXT)
                 .addInputData("greaterThan", new RDFType(SCHEMA_GREATER_THAN), ValueType.TEXT)
+                .addInputData("lessThan", new RDFType(SCHEMA_LESS_THAN), ValueType.TEXT)
+                .addInputData("betweenIn", new RDFType(SCHEMA_BETWEEN_IN), ValueType.TEXT)
                 //     segment components:
                 .addOutputData("OSMID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("geometry", new RDFType(SCHEMA_GEOMETRY), IOData.createMembers()
