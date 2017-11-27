@@ -52,7 +52,7 @@ import org.springframework.stereotype.Component;
  *
  * @author Maurin Radtke <m.radtke@52north.org>
  */
-//@Component
+@Component
 public class TrackDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -64,22 +64,16 @@ public class TrackDataConsumer {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
 
-        OfferingQuery query = OfferingQuery.create("TracksDataQuery")
+        OfferingQuery query = Consumer.createOfferingQuery(consumerId)
+                .inCity("Muenster")
                 .withInformation(new Information("TracksDataQuery", "bigiot:DrivingTracks"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.002))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
-        listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);
+        
         List<SubscribableOfferingDescription> list = listFuture.get();
-
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
-
+       
         if (list != null && !list.isEmpty()) {
 
             List<Offering> offerings = new ArrayList<>();

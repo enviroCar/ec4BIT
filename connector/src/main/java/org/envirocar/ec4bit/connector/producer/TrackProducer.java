@@ -80,8 +80,8 @@ public class TrackProducer extends EC4BITProducer {
                 .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
+                .inCity("Muenster")
                 
-                .inRegion(Region.city("Muenster"))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

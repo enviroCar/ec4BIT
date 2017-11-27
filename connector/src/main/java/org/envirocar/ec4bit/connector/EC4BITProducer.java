@@ -67,7 +67,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
     @Override
     public void destroy() throws Exception {
         this.offeringDescription.deregister();
-        this.offeringDescription.terminate();
+//        this.offeringDescription.terminate();
+        this.provider.terminate();
     }
 
     protected void enableSwagger(RegistrableOfferingDescription description) {
@@ -112,7 +113,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .inRegion(Region.city("Muenster"))
+                .inCity("Muenster")
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -166,7 +167,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .inRegion(Region.city("Muenster"))
+                .inCity("Muenster")
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -211,7 +212,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .inRegion(Region.city("Muenster"))
+                
+                .inCity("Muenster")
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -232,7 +234,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
                 // track measurements:
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
-                .inRegion(Region.city("Muenster"))
+                .inCity("Muenster")
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

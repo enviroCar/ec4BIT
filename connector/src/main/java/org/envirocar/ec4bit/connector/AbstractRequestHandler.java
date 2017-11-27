@@ -59,7 +59,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     }
 
     @Override
-    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map) {
+    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map, String subscriberId, String consumerInfo) {
         try {
             E responseEntity = processRequest(od, map);
             String body = mapper.writeValueAsString(responseEntity);

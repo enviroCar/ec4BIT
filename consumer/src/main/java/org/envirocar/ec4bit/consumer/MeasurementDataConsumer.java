@@ -35,6 +35,8 @@ import org.eclipse.bigiot.lib.exceptions.AccessToNonSubscribedOfferingException;
 import org.eclipse.bigiot.lib.exceptions.IncompleteOfferingQueryException;
 import org.eclipse.bigiot.lib.feed.AccessFeed;
 import org.eclipse.bigiot.lib.model.BigIotTypes;
+import org.eclipse.bigiot.lib.model.BigIotTypes.LicenseType;
+import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
 import org.eclipse.bigiot.lib.model.Information;
 import org.eclipse.bigiot.lib.model.Price.Euros;
 import org.eclipse.bigiot.lib.offering.AccessParameters;
@@ -63,22 +65,33 @@ public class MeasurementDataConsumer {
             @Value("${bigiot.consumer.secret}") String consumerSecret) throws IOException, IncompleteOfferingQueryException, InterruptedException, ExecutionException, AccessToNonActivatedOfferingException, AccessToNonSubscribedOfferingException {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
-
-        OfferingQuery query = OfferingQuery.create("MeasurementsDataQuery")
+//
+//        OfferingQuery query = OfferingQuery.create("MeasurementsDataQuery")
+//                .inCity("Muenster")
+//                .withInformation(new Information("MeasurementsDataQuery", "bigiot:DrivingMeasurements"))
+//                .withPricingModel(BigIotTypes.PricingModel.FREE)
+//                .withMaxPrice(Euros.amount(0.003))
+//                .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
+        OfferingQuery query = Consumer.createOfferingQuery(consumerId)
+                .inCity("Muenster")
                 .withInformation(new Information("MeasurementsDataQuery", "bigiot:DrivingMeasurements"))
-                .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
+                .withPricingModel(PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.003))
-                .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
+                .withLicenseType(LicenseType.OPEN_DATA_LICENSE);
+
+//        CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
+//        Object o = consumer.discover(query);
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
-        listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);
+//        listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);
+
         List<SubscribableOfferingDescription> list = listFuture.get();
 
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
+//        for (SubscribableOfferingDescription desc : list) {
+//            System.out.println(desc.toString());
+//        }
+//        for (SubscribableOfferingDescription desc : list) {
+//            System.out.println(desc.toString());
+//        }
 
         if (list != null && !list.isEmpty()) {
 
