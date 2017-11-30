@@ -117,8 +117,8 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
                
                 .inCity("Muenster")
-                .withExpirationInterval(Duration.standardDays(9999))
-                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
+                .withExpirationInterval(Duration.standardDays(74))
+                .withAccessStreamSessionTimeout(Duration.standardDays(74))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

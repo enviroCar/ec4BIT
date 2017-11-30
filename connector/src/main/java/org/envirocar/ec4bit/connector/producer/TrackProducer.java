@@ -83,8 +83,8 @@ public class TrackProducer extends EC4BITProducer {
                 .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
                 .inCity("Muenster")
-                .withExpirationInterval(Duration.standardDays(9999))
-                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
+                .withExpirationInterval(Duration.standardDays(74))
+                .withAccessStreamSessionTimeout(Duration.standardDays(74))
                 
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)

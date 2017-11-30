@@ -115,6 +115,7 @@ public class MeasurementDataConsumer {
                     .addNameValue("endDate", endDT)
                     .addNameValue("page", 1)
                     .addNameValue("phenomenons", "Rpm,speed,co2,Engine Load");
+//                    .addNameValue("measurementID", "");
 
             // Create an Access Feed with callbacks for the received results		
             Duration feedDuration = Duration.standardHours(2);

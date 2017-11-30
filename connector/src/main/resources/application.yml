@@ -2,7 +2,7 @@ spring:
     application:
         name: ec4BIT - Connector
     profiles:
-        active: productive
+        active: development
 
 ec4bit:
     contact: envirocar@52north.org
