@@ -23,6 +23,7 @@ import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.filter.TrackFilter;
+import org.envirocar.ec4bit.core.filter.TrackIDFilter;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
@@ -50,6 +51,7 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
+        String trackIDParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -63,6 +65,11 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
         if (filter.hasPaginationFilter()) {
             PaginationFilter temp = filter.getPaginationFilter();
             pageParam = temp.string();
+        }
+        if (filter.hasTrackIDFilter()) {
+            TrackIDFilter temp = filter.getTrackIDFilter();
+            trackIDParam = temp.string();
+            return get(trackIDParam); // return single track
         }
 
         Call<Tracks> asTracks = trackService

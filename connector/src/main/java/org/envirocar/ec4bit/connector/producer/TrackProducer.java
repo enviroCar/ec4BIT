@@ -75,6 +75,7 @@ public class TrackProducer extends EC4BITProducer {
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
                 //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
                 //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
+                .addInputData("trackID", new RDFType(SCHEMA_SINGLE_TRACK_ID), ValueType.TEXT)
 
                 // track components:
                 .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)

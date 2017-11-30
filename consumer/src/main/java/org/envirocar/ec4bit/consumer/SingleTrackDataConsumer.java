@@ -73,7 +73,6 @@ public class SingleTrackDataConsumer {
         
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
 
-        
         List<SubscribableOfferingDescription> list = listFuture.get();
 
         if (list != null && !list.isEmpty()) {

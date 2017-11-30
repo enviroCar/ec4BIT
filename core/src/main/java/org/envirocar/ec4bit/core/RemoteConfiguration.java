@@ -37,7 +37,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 @Configuration
 public class RemoteConfiguration {
 
-    private static HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://envirocar.org/api/stable/");
+    private static final HttpUrl URL_ENVIROCAR_BASE = HttpUrl.parse("http://envirocar.org/api/stable/");
 
     @Bean
     protected HttpUrl createBaseUrl() {

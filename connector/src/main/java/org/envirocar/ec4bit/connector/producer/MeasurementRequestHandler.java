@@ -25,6 +25,7 @@ import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
+import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
@@ -66,6 +67,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             TemporalFilter temporalFilter = null;
             PaginationFilter paginationFilter = null;
             PhenomenonFilter phenomenonFilter = null;
+            MeasurementIDFilter measurementIDFilter = null;
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
@@ -79,8 +81,11 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             if (input.containsKey(PHENOMENONS)) {
                 phenomenonFilter = getPhenomenonFilterParams(input);
             }
+            if (input.containsKey(MEASUREMENTID)) {
+                measurementIDFilter = getMeasurementIDFilter(input);
+            }
 
-            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, paginationFilter, phenomenonFilter);
+            MeasurementFilter filter = new MeasurementFilter(spatialFilter, temporalFilter, paginationFilter, phenomenonFilter, measurementIDFilter);
             return measurementsDao.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);

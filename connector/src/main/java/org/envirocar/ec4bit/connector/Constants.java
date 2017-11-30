@@ -56,7 +56,10 @@ interface Constants {
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";
     static final String SCHEMA_REF = "SCHEMA_TRACK_REFERENCE";
     static final String SINGLE_TRACK = "track";
+    static final String TRACKID = "trackID";
     static final String SCHEMA_MEASUREMENTS = "SCHEMA_MEASUREMENTS";
+    static final String SCHEMA_SINGLE_MEASUREMENT_ID = "http://schema.org/identifier";
+    static final String MEASUREMENTID = "measurementID";
 
     // measurement components and phenomenons
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";

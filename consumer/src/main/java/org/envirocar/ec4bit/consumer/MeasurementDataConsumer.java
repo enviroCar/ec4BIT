@@ -93,6 +93,10 @@ public class MeasurementDataConsumer {
 //            System.out.println(desc.toString());
 //        }
 
+        for (SubscribableOfferingDescription sod : list) {
+            System.out.println(sod.getInputData().toString());
+        }
+
         if (list != null && !list.isEmpty()) {
 
             List<Offering> offerings = new ArrayList<>();

@@ -27,10 +27,12 @@ import org.eclipse.bigiot.lib.offering.OfferingDescription;
 import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.envirocar.ec4bit.core.filter.TrackIDFilter;
 import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +118,16 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     protected PaginationFilter getPaginationFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         int pageNumber = Integer.valueOf(checkAndGetValue(PAGE, input));
         return new PaginationFilter(pageNumber);
+    }
+
+    protected TrackIDFilter getTrackIDFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String trackID = checkAndGetValue(TRACKID, input);
+        return new TrackIDFilter(trackID);
+    }
+
+    protected MeasurementIDFilter getMeasurementIDFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String measurementID = checkAndGetValue(MEASUREMENTID, input);
+        return new MeasurementIDFilter(measurementID);
     }
 
     protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {

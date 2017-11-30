@@ -82,7 +82,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
+                .addInputData("trackID", new RDFType(SCHEMA_SINGLE_TRACK_ID), ValueType.TEXT)
                 //     track components:
                 .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
@@ -182,10 +182,15 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                // track components:
-                .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
+                .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
+                .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
+                // measurements components:
+                .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("measurementRef", new RDFType(SCHEMA_ID), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
+                .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
+                .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
+                .addOutputData("trackRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
                 // track measurements:
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
                 .addOutputData("co2", new RDFType(SCHEMA_CO2), ValueType.TEXT)

@@ -74,16 +74,16 @@ public class MeasurementProducer extends EC4BITProducer {
                 //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
                 //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
                 //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
                 //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
+                .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
+                .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
                 
                 // measurement components:
                 .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
                 .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
                 .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("measurementRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("time", new RDFType(SCHEMA_TIMESTAMP), ValueType.TEXT)
                 .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
                 .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)

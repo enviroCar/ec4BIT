@@ -39,7 +39,7 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
 
         gen.writeStartObject();
         gen.writeObjectField("measurementID", value.getMeasurementID());
-        gen.writeObjectField("measurementRef", "http://envirocar.org/api/stable/measurements/" + value.getMeasurementID());
+        gen.writeObjectField("measurementRef", "https://processing.envirocar.org:8081/bigiot/access/measurements?measurementID=" + value.getMeasurementID());
         gen.writeObjectField("longitude", value.getLongitude());
         gen.writeObjectField("latitude", value.getLatitude());
         // get TimeStamp String:
@@ -49,7 +49,7 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
 
         if (value.getTrackID() != null) {
             gen.writeObjectField("trackID", value.getTrackID());
-            gen.writeObjectField("trackRef", "http://envirocar.org/api/stable/tracks/" + value.getTrackID());
+            gen.writeObjectField("trackRef", "https://processing.envirocar.org:8081/bigiot/access/tracks?trackID=" + value.getTrackID());
         }
         if (value.getSensorID() != null) {
             gen.writeObjectField("sensorID", value.getSensorID());

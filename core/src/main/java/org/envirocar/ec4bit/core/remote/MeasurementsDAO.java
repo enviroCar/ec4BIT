@@ -20,6 +20,7 @@ package org.envirocar.ec4bit.core.remote;
 
 import java.io.IOException;
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
+import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
@@ -51,6 +52,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
+        String meaasurementIDParam = null;
         PhenomenonFilter phenomenonFilter = new PhenomenonFilter();
         Boolean phenomenonFilterFilters = false;
 
@@ -70,6 +72,11 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         if (filter.hasPhenomenonFilter()) {
             phenomenonFilter = filter.getPhenomenonFilter();
             phenomenonFilterFilters = phenomenonFilter.hasPhenomenonsFiltered();
+        }
+        if (filter.hasMeasurementIDFilter()) {
+            MeasurementIDFilter temp = filter.getMeasurementIDFilter();
+            meaasurementIDParam = temp.string();
+            return get(meaasurementIDParam); // return single measurement
         }
 
         Call<Measurements> asMeasurements = measurementService
@@ -306,4 +313,17 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         return null;
     }
 
+    public Measurements get(String measurementID) {
+        Call<Measurement> asMeasurement = measurementService
+                .getAsMeasurement(measurementID);
+        try {
+            Measurement body = asMeasurement.execute().body();
+            Measurements measurements = new Measurements();
+            measurements.addMeasurement(body);
+            return measurements;
+        } catch (IOException ex) {
+            LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
+        }
+        return null;
+    }
 }

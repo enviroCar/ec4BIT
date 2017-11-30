@@ -43,5 +43,5 @@ public interface TrackService {
             @Query("before") String before, @Query("page") String page);
 
     @GET("tracks/{track}/")
-    Call<Track> getTrack(@Path("track") String track);
+    Call<Track> getTrack(@Path("track") String trackID);
 }

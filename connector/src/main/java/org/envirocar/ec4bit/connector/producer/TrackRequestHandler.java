@@ -28,6 +28,7 @@ import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.filter.TrackFilter;
+import org.envirocar.ec4bit.core.filter.TrackIDFilter;
 import org.envirocar.ec4bit.core.model.Tracks;
 import org.envirocar.ec4bit.core.remote.TracksDAO;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
@@ -64,6 +65,7 @@ public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
             PaginationFilter paginationFilter = null;
+            TrackIDFilter trackIDFilter = null;
 
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
@@ -74,8 +76,11 @@ public class TrackRequestHandler extends AbstractRequestHandler<Tracks> {
             if (input.containsKey(PAGE)) {
                 paginationFilter = getPaginationFilterParams(input);
             }
+            if (input.containsKey(TRACKID)) {
+                trackIDFilter = getTrackIDFilter(input);
+            }
 
-            TrackFilter filter = new TrackFilter(spatialFilter, temporalFilter, paginationFilter);
+            TrackFilter filter = new TrackFilter(spatialFilter, temporalFilter, paginationFilter, trackIDFilter);
             return tracksDAO.get(filter);
         } catch (KeyNotFoundException ex) {
             throw new RequestProcessingException(ex.getMessage(), 500);
