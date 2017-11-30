@@ -94,7 +94,7 @@ public class TrackDecoder extends BaseDeserializer<Track> {
         JsonNode properties = node.get(ELEMENT_PROPERTIES);
 
         String trackID = properties.get(ELEMENT_ID).asText();
-        Double length = properties.get(ELEMENT_LENGTH).asDouble();
+        Double length = round( properties.get(ELEMENT_LENGTH).asDouble(), 3);
         String sensorID = properties
                         .get(ELEMENT_SENSOR)
                         .get(ELEMENT_PROPERTIES)

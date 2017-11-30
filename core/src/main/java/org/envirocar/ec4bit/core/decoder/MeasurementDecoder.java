@@ -113,7 +113,7 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
 
         Integer speed = phenomenons.get(ELEMENT_SPEED).get(ELEMENT_VALUE).asInt();
         if (phenomenons.get(ELEMENT_CO2) != null) {
-            Double co2 = round( phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble() , 7);
+            Double co2 = round( phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble() , 4);
             result.setCo2(co2);
         }
         if (phenomenons.get(ELEMENT_CONSUMPTION) != null) {
