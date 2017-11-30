@@ -27,19 +27,19 @@ bigiot:
         port: 7777
     applications: 
         speed_data:
-            local_id: speed-offering
+            local_id: test-speed-offering
             name: (enviroCar Testing) / Driving Speed Values
             route: speedvalues
         driving_data:
-            local_id: driving-offering
+            local_id: test-measurements-offering
             name: (enviroCar Testing) / Traffic Driving Measurements
             route: measurements
         track_data:
-            local_id: track-offering
+            local_id: test-track-offering
             name: (enviroCar Testing) / Driving Tracks
             route: tracks
         single_track_data:
-            local_id: single-track-offering
+            local_id: test-single-track-offering
             name: (enviroCar Testing) / Driving Track
             route: track
 
@@ -57,11 +57,11 @@ bigiot:
             name: Driving Speed Values
             route: speedvalues
         driving_data:
-            local_id: driving-offering
+            local_id: measurements-offering
             name: Traffic Driving Measurements
             route: measurements
         track_data:
-            local_id: track-offering
+            local_id: tracks-offering
             name: Driving Tracks
             route: tracks
         single_track_data:

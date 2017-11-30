@@ -54,7 +54,7 @@ interface Constants {
     
     // single track components
     static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";
-    static final String SCHEMA_REF = "SCHEMA_TRACK_REFERENCE";
+    static final String SCHEMA_REF = "SCHEMA_REFERENCE";
     static final String SINGLE_TRACK = "track";
     static final String TRACKID = "trackID";
     static final String SCHEMA_MEASUREMENTS = "SCHEMA_MEASUREMENTS";
