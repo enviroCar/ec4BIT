@@ -28,7 +28,7 @@ bigiot:
     applications: 
         speed_data:
             local_id: test-speed-offering
-            name: (enviroCar Testing) / Driving Speed Values
+            name: (enviroCar Testing) / Traffic Driving Speed Values
             route: speedvalues
         driving_data:
             local_id: test-measurements-offering
@@ -36,7 +36,7 @@ bigiot:
             route: measurements
         track_data:
             local_id: test-track-offering
-            name: (enviroCar Testing) / Driving Tracks
+            name: (enviroCar Testing) / Traffic Driving Tracks
             route: tracks
         single_track_data:
             local_id: test-single-track-offering
@@ -54,7 +54,7 @@ bigiot:
     applications:
         speed_data:
             local_id: speed-offering
-            name: Driving Speed Values
+            name: Traffic Driving Speed Values
             route: speedvalues
         driving_data:
             local_id: measurements-offering
@@ -62,7 +62,7 @@ bigiot:
             route: measurements
         track_data:
             local_id: tracks-offering
-            name: Driving Tracks
+            name: Traffic Driving Tracks
             route: tracks
         single_track_data:
             local_id: single-track-offering
