@@ -27,6 +27,7 @@ import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescriptionChain;
 import org.eclipse.bigiot.lib.query.elements.Region;
 import org.eclipse.bigiot.lib.swagger.SwaggerGenerator;
+import org.joda.time.Duration;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +115,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
                 .inCity("Muenster")
+                .withExpirationInterval(Duration.standardDays(9999))
+                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -168,6 +171,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
                 .inCity("Muenster")
+                .withExpirationInterval(Duration.standardDays(9999))
+                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -219,6 +224,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
                 
                 .inCity("Muenster")
+                .withExpirationInterval(Duration.standardDays(9999))
+                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -240,6 +247,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 // track measurements:
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
                 .inCity("Muenster")
+                .withExpirationInterval(Duration.standardDays(9999))
+                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

@@ -28,6 +28,7 @@ import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
 import org.eclipse.bigiot.lib.query.elements.Region;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.EC4BITProducer;
+import org.joda.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -68,6 +69,8 @@ public class SpeedDataProducer extends EC4BITProducer {
                         .addOutputData("longitude", new RDFType("schema:longitude"), ValueType.NUMBER)
                         .addOutputData("latitude", new RDFType("schema:latitude"), ValueType.NUMBER))
                 .inCity("Muenster")
+                .withExpirationInterval(Duration.standardDays(9999))
+                .withAccessStreamSessionTimeout(Duration.standardDays(9999))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

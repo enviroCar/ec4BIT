@@ -2,7 +2,7 @@ spring:
     application:
         name: ec4BIT - Connector
     profiles:
-        active: development
+        active: productive
 
 ec4bit:
     contact: envirocar@52north.org
@@ -53,18 +53,18 @@ bigiot:
         port: 8081
     applications:
         speed_data:
-            local_id: speed-offering
-            name: Traffic Driving Speed Values
+            local_id: ec-speed-offering
+            name: enviroCar Speed Values
             route: speedvalues
         driving_data:
-            local_id: measurements-offering
-            name: Traffic Driving Measurements
+            local_id: ec-measurements-offering
+            name: enviroCar Measurements
             route: measurements
         track_data:
-            local_id: tracks-offering
-            name: Traffic Driving Tracks
+            local_id: ec-tracks-offering
+            name: enviroCar Tracks
             route: tracks
         single_track_data:
-            local_id: single-track-offering
-            name: Driving Track
+            local_id: ec-track-offering
+            name: enviroCar Track
             route: track
