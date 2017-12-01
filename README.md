@@ -24,9 +24,9 @@ under grant agreement No 688038.
 
 ## Installation
 
-1. Clone the repository `git clone https://github.com/enviroCar/ec4BIT`.
+  1. Clone the repository `git clone https://github.com/enviroCar/ec4BIT`.
 
-2. Build the project's modules `mvn clean build`.
+  2. Build the project's modules `mvn clean build`.
 
 ## Configuration
 
