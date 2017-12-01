@@ -59,7 +59,7 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
             gen.writeObjectField("Speed", value.getSpeed());
         }
         if (value.getCo2() != null) {
-            gen.writeObjectField("CO2", value.getCo2());
+            gen.writeObjectField("CO2", value.getCo2()); 
         }
         if (value.getConsumption() != null) {
             gen.writeObjectField("Consumption", value.getConsumption());
