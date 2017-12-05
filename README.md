@@ -1,7 +1,8 @@
 # ec4BIT
 
 **E**nviro**C**ar **for** **B**ridging the **I**nteroperability **G**ap of the **I**nternet of **T**hings. ec4BIT
-implements the connector and a testconsumer for the [BIG IoT marketplace](https://market.big-iot.org/). 
+implements the connector and a testconsumer for the [BIG IoT marketplace](https://market.big-iot.org/). The connector
+maps enviroCar tracks and measurements in a flattened json schema and produces them as offerings on the BIG IoT marketplace.
 
 BIG IoT is a European project to enable IoT Ecosystems. The BIG IoT API and the BIG IoT Marketplace form an IoT 
 ecosystem where European companies can exploit the business potential of the IoT sector.
