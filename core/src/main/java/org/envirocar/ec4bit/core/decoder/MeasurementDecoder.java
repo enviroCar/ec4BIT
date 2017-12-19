@@ -56,7 +56,6 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
     private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
@@ -139,10 +138,6 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         if (phenomenons.get(ELEMENT_INTAKE_PRESSURE) != null) {
             Double intake_press = round( phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble(), 4);
             result.setIntake_pressure(intake_press);
-        }
-        if (phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP) != null) {
-            Integer fuel_system_loop = phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP).get(ELEMENT_VALUE).asInt();
-            result.setFuel_system_loop(fuel_system_loop);
         }
         if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
             Integer fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asInt();

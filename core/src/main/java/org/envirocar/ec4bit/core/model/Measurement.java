@@ -47,7 +47,6 @@ public class Measurement implements BaseEntity {
     private Integer speed,
             rpm,
             engine_load,
-            fuel_system_loop,
             fuel_system_status_code,
             long_term_fuel_trim_1,
             short_term_fuel_trim_1,
@@ -59,8 +58,7 @@ public class Measurement implements BaseEntity {
                 null, null, null, null, null,
                 null, null, null, null, null,
                 null, null, null, null, null,
-                null, null, null, null, null,
-                null);
+                null, null, null, null, null);
     }
 
     public Measurement(String measurementID, DateTime time, String sensor, String trackID, Double longitude, Double latitude,
@@ -69,7 +67,7 @@ public class Measurement implements BaseEntity {
             Double gps_vdop, Double gps_pdop, Double gps_hdop,
             Double calculated_maf, Double Intake_temp,
             Double o2_lambda_current, Double o2_lambda_current_ER, Double o2_lambda_voltage, Double o2_lambda_voltage_ER, Double gps_accuracy,
-            Integer speed, Integer fuel_system_loop, Integer fuel_system_status_code,
+            Integer speed, Integer fuel_system_status_code,
             Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position) {
         this.measurementID = measurementID;
         this.time = time;
@@ -95,7 +93,6 @@ public class Measurement implements BaseEntity {
         this.o2_lambda_current_ER = o2_lambda_current_ER;
         this.o2_lambda_voltage = o2_lambda_voltage;
         this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
-        this.fuel_system_loop = fuel_system_loop;
         this.fuel_system_status_code = fuel_system_status_code;
         this.gps_accuracy = gps_accuracy;
         this.gps_bearing = gps_bearing;
@@ -174,14 +171,6 @@ public class Measurement implements BaseEntity {
 
     public void setO2_lambda_voltage_ER(Double o2_lambda_voltage_ER) {
         this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
-    }
-
-    public Integer getFuel_system_loop() {
-        return fuel_system_loop;
-    }
-
-    public void setFuel_system_loop(Integer fuel_system_loop) {
-        this.fuel_system_loop = fuel_system_loop;
     }
 
     public Integer getFuel_system_status_code() {
@@ -430,10 +419,6 @@ public class Measurement implements BaseEntity {
 
     public boolean hasEngine_load() {
         return this.engine_load != null;
-    }
-
-    public boolean hasFuel_system_loop() {
-        return this.fuel_system_loop != null;
     }
 
     public boolean hasFuel_system_status_code() {

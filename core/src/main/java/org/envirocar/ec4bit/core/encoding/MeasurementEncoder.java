@@ -85,9 +85,6 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         if (value.getRpm() != null) {
             gen.writeObjectField("Rpm", value.getRpm());
         }
-        if (value.getFuel_system_loop() != null) {
-            gen.writeObjectField("Fuel System Loop", value.getFuel_system_loop());
-        }
         if (value.getFuel_system_status_code() != null) {
             gen.writeObjectField("Fuel System Status Code", value.getFuel_system_status_code());
         }

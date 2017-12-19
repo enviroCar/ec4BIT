@@ -160,7 +160,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false, false,
-                    false, false, false, false, false);
+                    false, false, false, false);
             phenomString = phenomString.toLowerCase();            
             String[] phenomenons = phenomString.split(",");
             for (int i = 0; i < phenomenons.length; i++) {
@@ -178,10 +178,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                 }
                 if (phenomenons[i].equals("consumption")) {
                     pf.setConsumption(true);
-                    continue;
-                }
-                if (phenomenons[i].equals("fuel system loop")) {
-                    pf.setFuel_system_loop(true);
                     continue;
                 }
                 if (phenomenons[i].equals("fuel system status code")) {
@@ -271,7 +267,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     true, true, true, true, true,
                     true, true, true, true, true,
                     true, true, true, true, true,
-                    true, true, true, true, true);
+                    true, true, true, true);
         }
         return pf;
     }

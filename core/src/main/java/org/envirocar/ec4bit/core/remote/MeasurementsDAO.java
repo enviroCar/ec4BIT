@@ -109,10 +109,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setEngine_load(m.getEngine_load());
                             hasPhenomenons = true;
                         }
-                        if (m.hasFuel_system_loop() && phenomenonFilter.getFuel_system_loop()) {
-                            filtered.setFuel_system_loop(m.getFuel_system_loop());
-                            hasPhenomenons = true;
-                        }
                         if (m.hasFuel_system_status_code() && phenomenonFilter.getFuel_system_status_code()) {
                             filtered.setFuel_system_status_code(m.getFuel_system_status_code());
                             hasPhenomenons = true;
@@ -230,9 +226,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                     }
                     if (phenomenonFilter.getEngine_load()) {
                         filteredMeasurements.addPhenomDefinition("Engine Load");
-                    }
-                    if (phenomenonFilter.getFuel_system_loop()) {
-                        filteredMeasurements.addPhenomDefinition("Fuel System Loop");
                     }
                     if (phenomenonFilter.getFuel_system_status_code()) {
                         filteredMeasurements.addPhenomDefinition("Fuel System Status Code");

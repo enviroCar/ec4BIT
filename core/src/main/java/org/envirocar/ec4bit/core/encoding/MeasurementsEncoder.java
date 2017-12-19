@@ -42,7 +42,6 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
     private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
@@ -62,7 +61,6 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
     private static final String UNIT_CO2 = "kg/h";
     private static final String UNIT_CONSUMPTION = "l/h";
     private static final String UNIT_ENGINE_LOAD = "%";
-    private static final String UNIT_FUEL_SYSTEM_LOOP = "boolean number";
     private static final String UNIT_FUEL_SYSTEM_STATUS_CODE = "category";
     private static final String UNIT_GPS_ACCURACY = "%";
     private static final String UNIT_GPS_ALTITUDE = "%";
@@ -119,9 +117,6 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
         }
         if (measurements.containsPhenomDefinition(ELEMENT_ENGINE_LOAD)) {
             gen.writeObjectField(ELEMENT_ENGINE_LOAD, UNIT_ENGINE_LOAD);
-        }
-        if (measurements.containsPhenomDefinition(ELEMENT_FUEL_SYSTEM_LOOP)) {
-            gen.writeObjectField(ELEMENT_FUEL_SYSTEM_LOOP, UNIT_FUEL_SYSTEM_LOOP);
         }
         if (measurements.containsPhenomDefinition(ELEMENT_FUEL_SYSTEM_STATUS_CODE)) {
             gen.writeObjectField(ELEMENT_FUEL_SYSTEM_STATUS_CODE, UNIT_FUEL_SYSTEM_STATUS_CODE);

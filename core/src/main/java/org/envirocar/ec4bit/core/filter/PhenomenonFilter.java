@@ -34,7 +34,6 @@ public class PhenomenonFilter {
     private boolean intake_pressure = true;
     private boolean rpm = true;
     private boolean engine_load = true;
-    private boolean fuel_system_loop = true;
     private boolean fuel_system_status_code = true;
     private boolean gps_accuracy = true;
     private boolean gps_bearing = true;
@@ -55,7 +54,7 @@ public class PhenomenonFilter {
 
     ;
 
-    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean fuel_system_loop, boolean fuel_system_status_code, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
+    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean fuel_system_status_code, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
         this.speed = speed;
         this.co2 = co2;
         this.consumption = consumption;
@@ -66,7 +65,6 @@ public class PhenomenonFilter {
         this.intake_pressure = intake_pressure;
         this.rpm = rpm;
         this.engine_load = engine_load;
-        this.fuel_system_loop = fuel_system_loop;
         this.fuel_system_status_code = fuel_system_status_code;
         this.gps_accuracy = gps_accuracy;
         this.gps_bearing = gps_bearing;
@@ -121,10 +119,6 @@ public class PhenomenonFilter {
 
     public boolean getEngine_load() {
         return engine_load;
-    }
-
-    public boolean getFuel_system_loop() {
-        return fuel_system_loop;
     }
 
     public boolean getFuel_system_status_code() {
@@ -195,7 +189,6 @@ public class PhenomenonFilter {
             this.intake_pressure ||
             this.rpm ||
             this.engine_load ||
-            this.fuel_system_loop ||
             this.fuel_system_status_code ||
             this.gps_accuracy ||
             this.gps_bearing ||
@@ -290,10 +283,6 @@ public class PhenomenonFilter {
 
     public void setEngine_load(boolean engine_load) {
         this.engine_load = engine_load;
-    }
-
-    public void setFuel_system_loop(boolean fuel_system_loop) {
-        this.fuel_system_loop = fuel_system_loop;
     }
 
     public void setFuel_system_status_code(boolean fuel_system_status_code) {

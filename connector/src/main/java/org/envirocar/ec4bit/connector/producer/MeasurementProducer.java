@@ -100,7 +100,6 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("Intake Pressure", new RDFType(SCHEMA_INTAKE_PRESSURE), ValueType.TEXT)
                 .addOutputData("rpm", new RDFType(SCHEMA_RPM), ValueType.TEXT)
                 .addOutputData("engine load", new RDFType(SCHEMA_ENGINE_LOAD), ValueType.TEXT)
-                .addOutputData("fuel system loop", new RDFType(SCHEMA_FUEL_SYSTEM_LOOP), ValueType.NUMBER)
                 .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.NUMBER)
                 .addOutputData("GPS accuracy", new RDFType(SCHEMA_GPS_ACCURACY), ValueType.TEXT)
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
