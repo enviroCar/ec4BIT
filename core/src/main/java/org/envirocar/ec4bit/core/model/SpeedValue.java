@@ -62,4 +62,8 @@ public class SpeedValue implements BaseEntity {
         this.speed = speed;
     }
 
+    @Override
+    public String toString() {
+        return "SpeedValue[ Speed=" + speed + "km/h [" + latitude + "," + longitude + "]]";
+    }
 }

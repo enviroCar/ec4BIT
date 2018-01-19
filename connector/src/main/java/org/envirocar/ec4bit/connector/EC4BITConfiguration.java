@@ -18,12 +18,16 @@
  */
 package org.envirocar.ec4bit.connector;
 
-import java.io.IOException;
-import org.eclipse.bigiot.lib.Provider;
-import org.eclipse.bigiot.lib.ProviderSpark;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.eclipse.bigiot.lib.Provider;
+import org.eclipse.bigiot.lib.ProviderSpark;
+
+import java.io.IOException;
+
 
 /**
  *

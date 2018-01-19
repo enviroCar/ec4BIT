@@ -18,12 +18,14 @@
  */
 package org.envirocar.ec4bit.connector;
 
-import org.envirocar.ec4bit.core.RemoteConfiguration;
+
 import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+
+import org.envirocar.ec4bit.core.RemoteConfiguration;
 
 /**
  *
@@ -41,4 +43,5 @@ public class EC4BITConnector {
                 .bannerMode(Banner.Mode.CONSOLE)
                 .run(args);
     }
+    
 }

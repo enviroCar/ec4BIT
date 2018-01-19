@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.remote.services;
 
-import okhttp3.ResponseBody;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
 import retrofit2.Call;
@@ -32,16 +31,16 @@ import retrofit2.http.Query;
  */
 public interface TrackService {
 
-    @GET("tracks/")
+    @GET("tracks")
     Call<Tracks> getAsTracks();
 
-    @GET("tracks/")
+    @GET("tracks")
     Call<Tracks> getAsTracks(@Query("limit") int limit);
 
-    @GET("tracks/")
+    @GET("tracks")
     Call<Tracks> getAsTracks(@Query("bbox") String bbox, @Query("after") String after,
             @Query("before") String before, @Query("page") String page);
 
-    @GET("tracks/{track}/")
+    @GET("tracks/{track}")
     Call<Track> getTrack(@Path("track") String trackID);
 }

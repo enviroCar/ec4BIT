@@ -18,8 +18,7 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
-import java.util.Map;
-import org.eclipse.bigiot.lib.offering.OfferingDescription;
+
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
@@ -30,10 +29,16 @@ import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.remote.SpeedValuesDAO;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Map;
+
+import org.eclipse.bigiot.lib.offering.OfferingDescription;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -66,7 +71,7 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
             }
-            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
+            if (input.containsKey(START_DATE) || input.containsKey(END_DATE)) {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {

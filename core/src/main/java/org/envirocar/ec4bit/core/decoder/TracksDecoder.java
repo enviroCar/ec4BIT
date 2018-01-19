@@ -49,17 +49,20 @@ public class TracksDecoder extends BaseDeserializer<Tracks> {
             Track track = new Track();
 
             String id = m.get(ELEMENT_ID).asText();
-            
-            Double length = m.get(ELEMENT_LENGTH).asDouble();
+
+            if (m.has(ELEMENT_LENGTH)) {
+                Double length = m.get(ELEMENT_LENGTH).asDouble();
+                track.setLength(length);
+            }
+
             String sensor = m
-                            .get(ELEMENT_SENSOR)
-                            .get(ELEMENT_PROPERTIES)
-                            .get(ELEMENT_ID)
-                            .asText();
+                    .get(ELEMENT_SENSOR)
+                    .get(ELEMENT_PROPERTIES)
+                    .get(ELEMENT_ID)
+                    .asText();
 
             track.setSensor(sensor);
             track.setTrackID(id);
-            track.setLength(length);
 
             results.addTrack(track);
         });

@@ -108,11 +108,11 @@ public class MeasurementDataConsumer {
 
             // Prepare Access Parameters
             DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-15T06:06:44");
-            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-10-15T12:06:44");
+            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2018-01-15T12:06:44");
             AccessParameters accessParameters = AccessParameters.create()
                     .addNameValue("box", "50.076,7.5 52.08,8.00")
                     .addNameValue("startDate", startDT)
-                    .addNameValue("endDate", endDT)
+//                    .addNameValue("endDate", endDT)
                     .addNameValue("page", 1)
                     .addNameValue("phenomenons", "Rpm,speed,co2,Engine Load");
 //                    .addNameValue("measurementID", "");

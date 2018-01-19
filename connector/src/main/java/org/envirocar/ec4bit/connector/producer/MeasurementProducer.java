@@ -20,18 +20,22 @@ package org.envirocar.ec4bit.connector.producer;
 
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
-import org.eclipse.bigiot.lib.model.IOData;
 import org.eclipse.bigiot.lib.model.Information;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
-import org.eclipse.bigiot.lib.query.elements.Region;
-import org.envirocar.ec4bit.connector.AbstractRequestHandler;
-import org.envirocar.ec4bit.connector.EC4BITProducer;
-import org.joda.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import org.envirocar.ec4bit.connector.AbstractRequestHandler;
+import org.envirocar.ec4bit.connector.EC4BITProducer;
+import org.joda.time.DateTime;
+
+import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -40,46 +44,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class MeasurementProducer extends EC4BITProducer {
 
-//    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
     private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingMeasurements";
 
-    @Value("${bigiot.applications.driving_data.local_id}")
+    @Value("${bigiot.applications.measurements.local_id}")
     private String localId;
-    @Value("${bigiot.applications.driving_data.name}")
+    @Value("${bigiot.applications.measurements.name}")
     private String name;
-    @Value("${bigiot.applications.driving_data.route}")
+    @Value("${bigiot.applications.measurements.route}")
     private String route;
+    @Value("${bigiot.applications.measurements.expireDate}")
+    private String expires;
 
     @Autowired
     private MeasurementRequestHandler requestHandler;
 
-    /**
-     *
-     * @return
-     */
     @Override
     protected RegistrableOfferingDescription getOfferingDescription() {
+        DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTime now = new DateTime();
+        DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(expires);
+        long millis = expireDate.getMillis() - now.getMillis();
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                // measurement filter options:
-                // not supported in the marketpalce, use non-nested input data elements instead
-                //                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                //                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                //                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                //                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                //                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
-                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
-                //                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
-                //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                .addInputData("bbox", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
+                .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
+                .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
                 .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
                 .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
-                
                 // measurement components:
                 .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
                 .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
@@ -114,10 +106,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-               
-                .inCity("Muenster")
-                .withExpirationInterval(Duration.standardDays(74))
-                .withAccessStreamSessionTimeout(Duration.standardDays(74))
+                .withExpirationInterval(Duration.standardDays(millis))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

@@ -18,9 +18,11 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
-import java.util.Map;
-import okhttp3.ResponseBody;
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
@@ -33,11 +35,11 @@ import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.remote.MeasurementsDAO;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
-//import org.envirocar.ec4bit.core.remote.RawMeasurementsDAO;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  *
@@ -72,7 +74,7 @@ public class MeasurementRequestHandler extends AbstractRequestHandler<Measuremen
             if (input.containsKey(BBOX)) {
                 spatialFilter = getSpatialFilterParams(input);
             }
-            if (input.containsKey(TIME_AFTER) || input.containsKey(TIME_BEFORE)) {
+            if (input.containsKey(START_DATE) || input.containsKey(END_DATE)) {
                 temporalFilter = getTemporalFilterParams(input);
             }
             if (input.containsKey(PAGE)) {

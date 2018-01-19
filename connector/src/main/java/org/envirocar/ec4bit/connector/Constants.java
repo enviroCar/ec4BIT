@@ -28,12 +28,12 @@ interface Constants {
     static final String SCHEMA_BBOX = "http://schema.org/box";
 
     // TemporalFilter
-    static final String SCHEMA_DURING_START = "http://schema.org/startDate";
-    static final String SCHEMA_DURING_END = "http://schema.org/endDate";
+    static final String SCHEMA_START_DATE = "http://schema.org/startDate";
+    static final String SCHEMA_END_DATE = "http://schema.org/endDate";
     static final String AFTER = "after";
     static final String BEFORE = "before";
-    static final String TIME_AFTER = "startDate";
-    static final String TIME_BEFORE = "endDate";
+    static final String START_DATE = "startDate";
+    static final String END_DATE = "endDate";
 
     // PaginationFilter
     static final String PAGE = "page";
@@ -42,7 +42,7 @@ interface Constants {
     static final String SCHEMA_PAGE_NUMBER = "bigiot:pageNumber";
 
     // BoundingBoxFilter
-    static final String BBOX = "box";
+    static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
     static final String BBOX_YMIN = "yMin";
     static final String BBOX_XMAX = "xMax";
@@ -69,7 +69,7 @@ interface Constants {
     static final String SCHEMA_SENSOR = "http://schema.org/identifier";
     static final String SCHEMA_TRACK = "http://schema.org/identifier";
     static final String SCHEMA_LENGTH = "SCHEMA_LENGTH";
-    static final String SCHEMA_SPEED = "http://auto.schema.org/speed"; // http://schema.org/QuantitativeValue für alle number phenomenons?
+    static final String SCHEMA_SPEED = "http://auto.schema.org/speed";
     static final String SCHEMA_CO2 = "http://auto.schema.org/emissionsCO2";
     static final String SCHEMA_CONSUMPTION = "http://schema.org/fuelConsumption";
     static final String SCHEMA_MAF = "SCHEMA_MAF";

@@ -73,7 +73,11 @@ public class TrackFilter {
      * @param paginationFilter
      * @param trackIDFilter
      */
-    public TrackFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter, TrackIDFilter trackIDFilter) {
+    public TrackFilter(
+            SpatialFilter spatialFilter, 
+            TemporalFilter temporalFilter, 
+            PaginationFilter paginationFilter, 
+            TrackIDFilter trackIDFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;

@@ -37,7 +37,7 @@ public class TemporalFilter {
 
     private final DateTime start;
     private final DateTime end;
-    
+
     /**
      * Constructor.
      *
@@ -45,8 +45,16 @@ public class TemporalFilter {
      * @param endDate
      */
     public TemporalFilter(DateTime startDate, DateTime endDate) {
-        this.start = startDate;
-        this.end = endDate;
+        if (startDate != null) {
+            this.start = startDate;
+        }  else {
+            this.start = null;
+        }
+        if (endDate != null) {
+            this.end = endDate;
+        }  else {
+            this.end = null;
+        }
     }
 
     public DateTime getStart() {
@@ -90,18 +98,24 @@ public class TemporalFilter {
         return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN))
                 + "&before=" + String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
     }
-    
+
     public String stringBefore() {
-        return String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+        if (end != null) {
+            return String.valueOf(end.toString(TEMPORAL_TIME_PATTERN));
+        }
+        return null;
     }
-    
+
     public String stringAfter() {
-        return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN));
+        if (start != null) {
+            return String.valueOf(start.toString(TEMPORAL_TIME_PATTERN));
+        }
+        return null;
     }
 
     @Override
     public String toString() {
-        return "TemporalFilter{"+"after="+start.toString(TEMPORAL_TIME_PATTERN)+", before=" + end.toString(TEMPORAL_TIME_PATTERN) + "}";
+        return "TemporalFilter{" + "after=" + start.toString(TEMPORAL_TIME_PATTERN) + ", before=" + end.toString(TEMPORAL_TIME_PATTERN) + "}";
     }
-    
+
 }

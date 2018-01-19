@@ -18,9 +18,7 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.IOException;
 import okhttp3.ResponseBody;
 import org.envirocar.ec4bit.core.RemoteConfiguration;
@@ -50,19 +48,21 @@ public class SpeedValuesDecoderTest {
 
     @Test
     public void testSpeedValuesDecoding() throws IOException {
-        Call<ResponseBody> measurements = this.measurementService.getAsRawResponse(1);
-        String measurementsString = measurements.execute().body().string();
+        Call<SpeedValues> speedvalues = this.measurementService.getAsSpeedValues(1);
+        SpeedValues values = speedvalues.execute().body();
 
-        SpeedValues speedValues = this.objectMapper.readValue(measurementsString, SpeedValues.class);
-        System.out.println(speedValues.toString());
+        System.out.println(values.getSpeedValues().get(0).toString());
 
-        Assert.assertNotNull(speedValues);
+        Assert.assertNotNull(values);
     }
 
     @Test
     public void testSpeedValueResponse() throws IOException {
         Response<SpeedValues> execute = this.measurementService.getAsSpeedValues(1).execute();
         SpeedValues result = execute.body();
+        
+        System.out.println(result.getSpeedValues().get(0).toString());
+        
         Assert.assertNotNull(result);
     }
 
