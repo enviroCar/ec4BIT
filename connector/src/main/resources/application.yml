@@ -10,9 +10,6 @@ envirocar:
 bigiot:
     marketplace: 
         url:  https://market.big-iot.org
-    provider:
-        address: localhost
-        port: 7777
 
 ---
 
