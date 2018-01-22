@@ -61,8 +61,8 @@ public class SpatialFilter {
     }
 
     public String string() {
-        return String.join(",", String.valueOf(ymin), String.valueOf(xmin),
-                String.valueOf(ymax), String.valueOf(xmax));
+        return String.join(",", String.valueOf(xmin), String.valueOf(ymin), 
+                String.valueOf(xmax), String.valueOf(ymax));
     }
 
     @Override

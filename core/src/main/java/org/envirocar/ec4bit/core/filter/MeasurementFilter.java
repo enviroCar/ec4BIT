@@ -29,6 +29,7 @@ public class MeasurementFilter {
     private final TemporalFilter temporalFilter;
     private final PaginationFilter paginationFilter;
     private final MeasurementIDFilter measurementIDFilter;
+    
     /**
      * Constructor.
      *

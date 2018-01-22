@@ -178,31 +178,30 @@ public class PhenomenonFilter {
     }
 
     public boolean hasPhenomenonsFiltered() {
-        return 
-            this.speed ||
-            this.co2 ||
-            this.consumption ||
-            this.gps_speed ||
-            this.gps_altitude ||
-            this.maf ||
-            this.intake_temperature ||
-            this.intake_pressure ||
-            this.rpm ||
-            this.engine_load ||
-            this.fuel_system_status_code ||
-            this.gps_accuracy ||
-            this.gps_bearing ||
-            this.long_term_fuel_trim_1 ||
-            this.short_term_fuel_trim_1 ||
-            this.throlle_position ||
-            this.gps_hdop ||
-            this.gps_vdop ||
-            this.gps_pdop ||
-            this.calculated_maf ||
-            this.o2_lambda_current ||
-            this.o2_lambda_current_er ||
-            this.o2_lambda_voltage ||
-            this.o2_lambda_voltage_er;
+        return this.speed
+                || this.co2
+                || this.consumption
+                || this.gps_speed
+                || this.gps_altitude
+                || this.maf
+                || this.intake_temperature
+                || this.intake_pressure
+                || this.rpm
+                || this.engine_load
+                || this.fuel_system_status_code
+                || this.gps_accuracy
+                || this.gps_bearing
+                || this.long_term_fuel_trim_1
+                || this.short_term_fuel_trim_1
+                || this.throlle_position
+                || this.gps_hdop
+                || this.gps_vdop
+                || this.gps_pdop
+                || this.calculated_maf
+                || this.o2_lambda_current
+                || this.o2_lambda_current_er
+                || this.o2_lambda_voltage
+                || this.o2_lambda_voltage_er;
     }
 
 //    @Override
@@ -339,6 +338,33 @@ public class PhenomenonFilter {
 
     public void setO2_lambda_voltage_er(boolean o2_lambda_voltage_er) {
         this.o2_lambda_voltage_er = o2_lambda_voltage_er;
+    }
+
+    public void setAllPhenomenononsTo(boolean turnOn) {
+        speed = turnOn;
+        co2 = turnOn;
+        consumption = turnOn;
+        gps_speed = turnOn;
+        gps_altitude = turnOn;
+        maf = turnOn;
+        intake_temperature = turnOn;
+        intake_pressure = turnOn;
+        rpm = turnOn;
+        engine_load = turnOn;
+        fuel_system_status_code = turnOn;
+        gps_accuracy = turnOn;
+        gps_bearing = turnOn;
+        long_term_fuel_trim_1 = turnOn;
+        short_term_fuel_trim_1 = turnOn;
+        throlle_position = turnOn;
+        gps_hdop = turnOn;
+        gps_vdop = turnOn;
+        gps_pdop = turnOn;
+        calculated_maf = turnOn;
+        o2_lambda_current = turnOn;
+        o2_lambda_current_er = turnOn;
+        o2_lambda_voltage = turnOn;
+        o2_lambda_voltage_er = turnOn;
     }
 
 }

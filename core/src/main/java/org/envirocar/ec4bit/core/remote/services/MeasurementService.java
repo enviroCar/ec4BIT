@@ -33,26 +33,26 @@ import retrofit2.http.Query;
  */
 public interface MeasurementService {
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements();
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements(@Query("limit") int limit);
     
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements(@Query("bbox") String bbox, @Query("after") String after, 
             @Query("before") String before, @Query("page") String page);
     
-    @GET("measurements/{measurement}/")
+    @GET("measurements/{measurement}")
     Call<Measurement> getAsMeasurement(@Path("measurement") String measurementID);
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues();
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("after") String after,
             @Query("before") String before, @Query("page") String page);
     

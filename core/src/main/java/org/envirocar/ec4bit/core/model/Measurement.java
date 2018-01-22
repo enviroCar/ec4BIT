@@ -412,7 +412,15 @@ public class Measurement implements BaseEntity {
     public boolean hasSpeed() {
         return this.speed != null;
     }
+    
+    public boolean hasLatitude() {
+        return this.latitude != null;
+    }
 
+    public boolean hasLongitude() {
+        return this.longitude != null;
+    }
+    
     public boolean hasRpm() {
         return this.rpm != null;
     }

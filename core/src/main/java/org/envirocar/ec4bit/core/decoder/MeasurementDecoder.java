@@ -67,19 +67,19 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_GPS_PDOP = "GPS PDOP";
     private static final String ELEMENT_CALCULATED_MAF = "Calculated MAF";
     private static final String ELEMENT_O2_LAMBDA_CURRENT = "O2 Lambda Current";
-    private static final String ELEMENT_O2_LAMBDA_CURRENT_ER= "O2 Lambda Current ER";
+    private static final String ELEMENT_O2_LAMBDA_CURRENT_ER = "O2 Lambda Current ER";
     private static final String ELEMENT_O2_LAMBDA_VOLTAGE = "O2 Lambda Voltage";
     private static final String ELEMENT_O2_LAMBDA_VOLTAGE_ER = "O2 Lambda Voltage ER";
-    
+
     private static final String ELEMENT_VALUE = "value";
-    
+
     private static double round(double value, int places) {
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
-    
+
     @Override
     public Measurement deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
         JsonNode node = jp.readValueAsTree();
@@ -89,8 +89,11 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         ArrayNode geometry = (ArrayNode) node
                 .get(ELEMENT_GEOMETRY)
                 .get(ELEMENT_COORDINATES);
-        Double longitude = round(geometry.get(0).asDouble(), 7);
-        Double latitude = round(geometry.get(1).asDouble(), 7);
+        if (geometry.isNull() || geometry.get(0).isNull() || geometry.get(1).isNull()) {
+            System.out.println(geometry+","+geometry.get(0)+","+geometry.get(1));
+        }
+        Double longitude = round(geometry.get(1).asDouble(), 7);
+        Double latitude = round(geometry.get(0).asDouble(), 7);
 
         // parse id, time, track, and sensor:
         JsonNode properties = node.get(ELEMENT_PROPERTIES);
@@ -101,10 +104,10 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         DateTime time = TEMPORAL_TIME_PATTERN.parseDateTime(timeStr);
         String track = properties.get(ELEMENT_TRACK).asText();
         String sensor = properties
-                        .get(ELEMENT_SENSOR)
-                        .get(ELEMENT_PROPERTIES)
-                        .get(ELEMENT_ID)
-                        .asText();
+                .get(ELEMENT_SENSOR)
+                .get(ELEMENT_PROPERTIES)
+                .get(ELEMENT_ID)
+                .asText();
 
         // parse the phenomenons:
         JsonNode phenomenons = properties
@@ -112,31 +115,31 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
 
         Integer speed = phenomenons.get(ELEMENT_SPEED).get(ELEMENT_VALUE).asInt();
         if (phenomenons.get(ELEMENT_CO2) != null) {
-            Double co2 = round( phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble() , 4);
+            Double co2 = round(phenomenons.get(ELEMENT_CO2).get(ELEMENT_VALUE).asDouble(), 4);
             result.setCo2(co2);
         }
         if (phenomenons.get(ELEMENT_CONSUMPTION) != null) {
-            Double consumption = round( phenomenons.get(ELEMENT_CONSUMPTION).get(ELEMENT_VALUE).asDouble() ,4);
+            Double consumption = round(phenomenons.get(ELEMENT_CONSUMPTION).get(ELEMENT_VALUE).asDouble(), 4);
             result.setConsumption(consumption);
         }
         if (phenomenons.get(ELEMENT_GPS_SPEED) != null) {
-            Double gps_speed = round( phenomenons.get(ELEMENT_GPS_SPEED).get(ELEMENT_VALUE).asDouble(), 4);
+            Double gps_speed = round(phenomenons.get(ELEMENT_GPS_SPEED).get(ELEMENT_VALUE).asDouble(), 4);
             result.setGps_speed(gps_speed);
         }
         if (phenomenons.get(ELEMENT_GPS_ALTITUDE) != null) {
-            Double gps_alt = round( phenomenons.get(ELEMENT_GPS_ALTITUDE).get(ELEMENT_VALUE).asDouble(), 7);
+            Double gps_alt = round(phenomenons.get(ELEMENT_GPS_ALTITUDE).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_altitude(gps_alt);
         }
         if (phenomenons.get(ELEMENT_MAF) != null) {
-            Double maf = round( phenomenons.get(ELEMENT_MAF).get(ELEMENT_VALUE).asDouble(), 4);
+            Double maf = round(phenomenons.get(ELEMENT_MAF).get(ELEMENT_VALUE).asDouble(), 4);
             result.setMaf(maf);
         }
         if (phenomenons.get(ELEMENT_INTAKE_TEMP) != null) {
-            Double intake_temp = round( phenomenons.get(ELEMENT_INTAKE_TEMP).get(ELEMENT_VALUE).asDouble(), 2);
+            Double intake_temp = round(phenomenons.get(ELEMENT_INTAKE_TEMP).get(ELEMENT_VALUE).asDouble(), 2);
             result.setIntake_temp(intake_temp);
         }
         if (phenomenons.get(ELEMENT_INTAKE_PRESSURE) != null) {
-            Double intake_press = round( phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble(), 4);
+            Double intake_press = round(phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble(), 4);
             result.setIntake_pressure(intake_press);
         }
         if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
@@ -144,11 +147,11 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
             result.setFuel_system_status_code(fuel_system_status_code);
         }
         if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
-            Double gps_accuracy = round( phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);
+            Double gps_accuracy = round(phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_accuracy(gps_accuracy);
         }
         if (phenomenons.get(ELEMENT_GPS_BEARING) != null) {
-            Double gps_bearing = round( phenomenons.get(ELEMENT_GPS_BEARING).get(ELEMENT_VALUE).asDouble(), 7);
+            Double gps_bearing = round(phenomenons.get(ELEMENT_GPS_BEARING).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_bearing(gps_bearing);
         }
         if (phenomenons.get(ELEMENT_LONG_TERM_FUEL_TRIM_1) != null) {
@@ -172,35 +175,35 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
             result.setEngine_load(engine_load);
         }
         if (phenomenons.get(ELEMENT_GPS_HDOP) != null) {
-            Double gps_hdop = round( phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble(), 7);
+            Double gps_hdop = round(phenomenons.get(ELEMENT_GPS_HDOP).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_hdop(gps_hdop);
         }
         if (phenomenons.get(ELEMENT_GPS_VDOP) != null) {
-            Double vdop = round( phenomenons.get(ELEMENT_GPS_VDOP).get(ELEMENT_VALUE).asDouble(), 7);
+            Double vdop = round(phenomenons.get(ELEMENT_GPS_VDOP).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_vdop(vdop);
         }
         if (phenomenons.get(ELEMENT_GPS_PDOP) != null) {
-            Double gps_pdop = round( phenomenons.get(ELEMENT_GPS_PDOP).get(ELEMENT_VALUE).asDouble(), 7);
+            Double gps_pdop = round(phenomenons.get(ELEMENT_GPS_PDOP).get(ELEMENT_VALUE).asDouble(), 7);
             result.setGps_pdop(gps_pdop);
         }
         if (phenomenons.get(ELEMENT_CALCULATED_MAF) != null) {
-            Double calculated_maf = round( phenomenons.get(ELEMENT_CALCULATED_MAF).get(ELEMENT_VALUE).asDouble(), 7);
+            Double calculated_maf = round(phenomenons.get(ELEMENT_CALCULATED_MAF).get(ELEMENT_VALUE).asDouble(), 7);
             result.setCalculated_maf(calculated_maf);
         }
         if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT) != null) {
-            Double o2_lambda_current = round( phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT).get(ELEMENT_VALUE).asDouble(), 4);
+            Double o2_lambda_current = round(phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT).get(ELEMENT_VALUE).asDouble(), 4);
             result.setO2_lambda_current(o2_lambda_current);
         }
         if (phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER) != null) {
-            Double o2_lambda_current_er = round( phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER).get(ELEMENT_VALUE).asDouble(), 4);
+            Double o2_lambda_current_er = round(phenomenons.get(ELEMENT_O2_LAMBDA_CURRENT_ER).get(ELEMENT_VALUE).asDouble(), 4);
             result.setO2_lambda_current_ER(o2_lambda_current_er);
         }
         if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE) != null) {
-            Double o2_lambda_voltage = round( phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE).get(ELEMENT_VALUE).asDouble(), 4);
+            Double o2_lambda_voltage = round(phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE).get(ELEMENT_VALUE).asDouble(), 4);
             result.setO2_lambda_voltage(o2_lambda_voltage);
         }
         if (phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER) != null) {
-            Double o2_lambda_voltage_er = round( phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble(), 4);
+            Double o2_lambda_voltage_er = round(phenomenons.get(ELEMENT_O2_LAMBDA_VOLTAGE_ER).get(ELEMENT_VALUE).asDouble(), 4);
             result.setO2_lambda_voltage_ER(o2_lambda_voltage_er);
         }
 

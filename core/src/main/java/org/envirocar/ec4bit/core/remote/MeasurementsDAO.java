@@ -36,7 +36,7 @@ import retrofit2.Call;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
 public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFilter> {
@@ -52,7 +52,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
-        String meaasurementIDParam = null;
+        String measurementIDParam = null;
         PhenomenonFilter phenomenonFilter = new PhenomenonFilter();
         Boolean phenomenonFilterFilters = false;
 
@@ -75,8 +75,8 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         }
         if (filter.hasMeasurementIDFilter()) {
             MeasurementIDFilter temp = filter.getMeasurementIDFilter();
-            meaasurementIDParam = temp.string();
-            return get(meaasurementIDParam); // return single measurement
+            measurementIDParam = temp.string();
+            return get(measurementIDParam); // return single measurement
         }
 
         Call<Measurements> asMeasurements = measurementService
@@ -193,7 +193,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setTime(m.getTime());
                             filtered.setMeasurementID(m.getMeasurementID());
                             filtered.setSensorID(m.getSensorID());
-
                             filteredMeasurements.addMeasurement(filtered);
                         }
                     }
@@ -302,7 +301,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
         }
-
         return null;
     }
 

@@ -131,7 +131,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
             dt_start = DateTime.parse(after,
                     DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
         } catch (KeyNotFoundException knfe) {
-            // do nothing;
         }
 
         try {
@@ -139,7 +138,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
             dt_end = DateTime.parse(before,
                     DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
         } catch (KeyNotFoundException knfe) {
-            // do nothing;
         }
         return new TemporalFilter(dt_start, dt_end);
     }
