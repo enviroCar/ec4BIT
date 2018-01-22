@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,20 +18,25 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import okhttp3.ResponseBody;
+
 import org.envirocar.ec4bit.core.RemoteConfiguration;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import retrofit2.Call;
 import retrofit2.Response;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 
 /**
  *
@@ -51,8 +56,6 @@ public class SpeedValuesDecoderTest {
         Call<SpeedValues> speedvalues = this.measurementService.getAsSpeedValues(1);
         SpeedValues values = speedvalues.execute().body();
 
-        System.out.println(values.getSpeedValues().get(0).toString());
-
         Assert.assertNotNull(values);
     }
 
@@ -60,8 +63,6 @@ public class SpeedValuesDecoderTest {
     public void testSpeedValueResponse() throws IOException {
         Response<SpeedValues> execute = this.measurementService.getAsSpeedValues(1).execute();
         SpeedValues result = execute.body();
-        
-        System.out.println(result.getSpeedValues().get(0).toString());
         
         Assert.assertNotNull(result);
     }

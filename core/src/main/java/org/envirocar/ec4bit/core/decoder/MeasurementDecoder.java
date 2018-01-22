@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,16 +18,20 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
+
+import org.envirocar.ec4bit.core.model.Measurement;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.io.IOException;
-import org.envirocar.ec4bit.core.model.Measurement;
-import org.joda.time.DateTime;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.DateTime;
+
+import java.io.IOException;
 
 /**
  *
@@ -56,7 +60,6 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
@@ -141,10 +144,6 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         if (phenomenons.get(ELEMENT_INTAKE_PRESSURE) != null) {
             Double intake_press = round(phenomenons.get(ELEMENT_INTAKE_PRESSURE).get(ELEMENT_VALUE).asDouble(), 4);
             result.setIntake_pressure(intake_press);
-        }
-        if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
-            Integer fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asInt();
-            result.setFuel_system_status_code(fuel_system_status_code);
         }
         if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
             Double gps_accuracy = round(phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,14 +18,17 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
+
+import org.envirocar.ec4bit.core.model.Track;
+import org.envirocar.ec4bit.core.model.Tracks;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import java.io.IOException;
-import org.envirocar.ec4bit.core.model.Track;
-import org.envirocar.ec4bit.core.model.Tracks;
 
 /**
  *

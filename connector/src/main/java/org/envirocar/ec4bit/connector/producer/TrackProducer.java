@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -45,7 +45,7 @@ import org.joda.time.format.DateTimeFormatter;
 @Component
 public class TrackProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingTracks";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:enviroCarTracks";
 
     @Value("${bigiot.applications.tracks.local_id}")
     private String localId;

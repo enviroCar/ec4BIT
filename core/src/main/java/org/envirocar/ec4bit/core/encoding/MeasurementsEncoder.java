@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,13 +18,14 @@
  */
 package org.envirocar.ec4bit.core.encoding;
 
+
+import org.envirocar.ec4bit.core.model.Measurements;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.IOException;
-import org.envirocar.ec4bit.core.model.Measurements;
 
 /**
  *
@@ -42,7 +43,6 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
@@ -117,9 +117,6 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
         }
         if (measurements.containsPhenomDefinition(ELEMENT_ENGINE_LOAD)) {
             gen.writeObjectField(ELEMENT_ENGINE_LOAD, UNIT_ENGINE_LOAD);
-        }
-        if (measurements.containsPhenomDefinition(ELEMENT_FUEL_SYSTEM_STATUS_CODE)) {
-            gen.writeObjectField(ELEMENT_FUEL_SYSTEM_STATUS_CODE, UNIT_FUEL_SYSTEM_STATUS_CODE);
         }
         if (measurements.containsPhenomDefinition(ELEMENT_GPS_ACCURACY)) {
             gen.writeObjectField(ELEMENT_GPS_ACCURACY, UNIT_GPS_ACCURACY);

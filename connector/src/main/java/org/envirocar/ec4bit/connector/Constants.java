@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -20,7 +20,7 @@ package org.envirocar.ec4bit.connector;
 
 /**
  *
- * @author hafenkran
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 interface Constants {
 
@@ -80,7 +80,6 @@ interface Constants {
     static final String SCHEMA_RPM = "SCHEMA_RPM";
     static final String SCHEMA_ENGINE_LOAD = "SCHEMA_ENGINE_LOAD";
     static final String SCHEMA_FUEL_SYSTEM_LOOP = "SCHEMA_FUEL_SYSTEM_LOOP";
-    static final String SCHEMA_FUEL_SYSTEM_STATUS_CODE = "SCHEMA_FUEL_SYSTEM_STATUS_CODE";
     static final String SCHEMA_GPS_ACCURACY = "SCHEMA_GPS_ACCURACY";
     static final String SCHEMA_GPS_BEARING = "SCHEMA_GPS_BEARING";
     static final String SCHEMA_LONG_TERM_FUEL_TRIM_1 = "SCHEMA_LONG_TERM_FUEL_TRIM_1";

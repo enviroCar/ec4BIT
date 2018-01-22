@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -156,7 +156,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false, false,
-                    false, false, false, false);
+                    false, false, false);
             phenomString = phenomString.toLowerCase();
             String[] phenomenons = phenomString.split(",");
             for (int i = 0; i < phenomenons.length; i++) {
@@ -174,10 +174,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                 }
                 if (phenomenons[i].equals("consumption")) {
                     pf.setConsumption(true);
-                    continue;
-                }
-                if (phenomenons[i].equals("fuel system status code")) {
-                    pf.setFuel_system_status_code(true);
                     continue;
                 }
                 if (phenomenons[i].equals("gps accuracy")) {
@@ -263,7 +259,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     true, true, true, true, true,
                     true, true, true, true, true,
                     true, true, true, true, true,
-                    true, true, true, true);
+                    true, true, true);
         }
         return pf;
     }

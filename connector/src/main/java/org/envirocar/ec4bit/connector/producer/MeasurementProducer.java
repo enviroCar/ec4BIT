@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -17,6 +17,7 @@
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
 package org.envirocar.ec4bit.connector.producer;
+
 
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
@@ -44,7 +45,7 @@ import org.joda.time.format.DateTimeFormatter;
 @Component
 public class MeasurementProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingMeasurements";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:enviroCarMeasurements";
 
     @Value("${bigiot.applications.measurements.local_id}")
     private String localId;
@@ -92,7 +93,6 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("Intake Pressure", new RDFType(SCHEMA_INTAKE_PRESSURE), ValueType.TEXT)
                 .addOutputData("rpm", new RDFType(SCHEMA_RPM), ValueType.TEXT)
                 .addOutputData("engine load", new RDFType(SCHEMA_ENGINE_LOAD), ValueType.TEXT)
-                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.NUMBER)
                 .addOutputData("GPS accuracy", new RDFType(SCHEMA_GPS_ACCURACY), ValueType.TEXT)
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
                 .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)

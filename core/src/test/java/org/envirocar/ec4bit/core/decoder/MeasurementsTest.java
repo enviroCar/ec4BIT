@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,21 +18,27 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
+
 import org.envirocar.ec4bit.core.RemoteConfiguration;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Measurements;
-import org.envirocar.ec4bit.core.remote.MeasurementsDAO;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
-import org.joda.time.DateTime;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import org.joda.time.DateTime;
+
 import retrofit2.Call;
 
 /**
@@ -174,10 +180,6 @@ public class MeasurementsTest {
                     filtered.setEngine_load(m.getEngine_load());
                     hasPhenomenons = true;
                 }
-                if (m.hasFuel_system_status_code() && phenomenonFilter.getFuel_system_status_code()) {
-                    filtered.setFuel_system_status_code(m.getFuel_system_status_code());
-                    hasPhenomenons = true;
-                }
                 if (m.hasGps_accuracy() && phenomenonFilter.getGps_accuracy()) {
                     filtered.setGps_accuracy(m.getGps_accuracy());
                     hasPhenomenons = true;
@@ -290,9 +292,6 @@ public class MeasurementsTest {
             }
             if (phenomenonFilter.getEngine_load()) {
                 filteredMeasurements.addPhenomDefinition("Engine Load");
-            }
-            if (phenomenonFilter.getFuel_system_status_code()) {
-                filteredMeasurements.addPhenomDefinition("Fuel System Status Code");
             }
             if (phenomenonFilter.getGps_accuracy()) {
                 filteredMeasurements.addPhenomDefinition("GPS Accuracy");

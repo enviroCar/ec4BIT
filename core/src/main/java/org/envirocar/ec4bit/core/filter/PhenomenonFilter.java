@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,6 +18,7 @@
  */
 package org.envirocar.ec4bit.core.filter;
 
+
 /**
  *
  * @author Maurin Radtke <m.radtke@52north.org>
@@ -34,7 +35,6 @@ public class PhenomenonFilter {
     private boolean intake_pressure = true;
     private boolean rpm = true;
     private boolean engine_load = true;
-    private boolean fuel_system_status_code = true;
     private boolean gps_accuracy = true;
     private boolean gps_bearing = true;
     private boolean long_term_fuel_trim_1 = true;
@@ -54,7 +54,7 @@ public class PhenomenonFilter {
 
     ;
 
-    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean fuel_system_status_code, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
+    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
         this.speed = speed;
         this.co2 = co2;
         this.consumption = consumption;
@@ -65,7 +65,6 @@ public class PhenomenonFilter {
         this.intake_pressure = intake_pressure;
         this.rpm = rpm;
         this.engine_load = engine_load;
-        this.fuel_system_status_code = fuel_system_status_code;
         this.gps_accuracy = gps_accuracy;
         this.gps_bearing = gps_bearing;
         this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
@@ -119,10 +118,6 @@ public class PhenomenonFilter {
 
     public boolean getEngine_load() {
         return engine_load;
-    }
-
-    public boolean getFuel_system_status_code() {
-        return fuel_system_status_code;
     }
 
     public boolean getGps_accuracy() {
@@ -188,7 +183,6 @@ public class PhenomenonFilter {
                 || this.intake_pressure
                 || this.rpm
                 || this.engine_load
-                || this.fuel_system_status_code
                 || this.gps_accuracy
                 || this.gps_bearing
                 || this.long_term_fuel_trim_1
@@ -204,46 +198,6 @@ public class PhenomenonFilter {
                 || this.o2_lambda_voltage_er;
     }
 
-//    @Override
-//    public String toString() {
-//        return "SpatialFilter{" + "xmin=" + xmin + ", ymin=" + ymin + ", xmax=" + xmax + ", ymax=" + ymax + '}';
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        int hash = 7;
-//        hash = 71 * hash + (int) (Double.booleanToLongBits(this.xmin) ^ (Double.booleanToLongBits(this.xmin) >>> 32));
-//        hash = 71 * hash + (int) (Double.booleanToLongBits(this.ymin) ^ (Double.booleanToLongBits(this.ymin) >>> 32));
-//        hash = 71 * hash + (int) (Double.booleanToLongBits(this.xmax) ^ (Double.booleanToLongBits(this.xmax) >>> 32));
-//        hash = 71 * hash + (int) (Double.booleanToLongBits(this.ymax) ^ (Double.booleanToLongBits(this.ymax) >>> 32));
-//        return hash;
-//    }
-//    @Override
-//    public boolean equals(Object obj) {
-//        if (this == obj) {
-//            return true;
-//        }
-//        if (obj == null) {
-//            return false;
-//        }
-//        if (getClass() != obj.getClass()) {
-//            return false;
-//        }
-//        final PhenomenonFilter other = (PhenomenonFilter) obj;
-//        if (Double.booleanToLongBits(this.xmin) != Double.booleanToLongBits(other.xmin)) {
-//            return false;
-//        }
-//        if (Double.booleanToLongBits(this.ymin) != Double.booleanToLongBits(other.ymin)) {
-//            return false;
-//        }
-//        if (Double.booleanToLongBits(this.xmax) != Double.booleanToLongBits(other.xmax)) {
-//            return false;
-//        }
-//        if (Double.booleanToLongBits(this.ymax) != Double.booleanToLongBits(other.ymax)) {
-//            return false;
-//        }
-//        return true;
-//    }
     public void setSpeed(boolean speed) {
         this.speed = speed;
     }
@@ -282,10 +236,6 @@ public class PhenomenonFilter {
 
     public void setEngine_load(boolean engine_load) {
         this.engine_load = engine_load;
-    }
-
-    public void setFuel_system_status_code(boolean fuel_system_status_code) {
-        this.fuel_system_status_code = fuel_system_status_code;
     }
 
     public void setGps_accuracy(boolean gps_accuracy) {
@@ -351,7 +301,6 @@ public class PhenomenonFilter {
         intake_pressure = turnOn;
         rpm = turnOn;
         engine_load = turnOn;
-        fuel_system_status_code = turnOn;
         gps_accuracy = turnOn;
         gps_bearing = turnOn;
         long_term_fuel_trim_1 = turnOn;

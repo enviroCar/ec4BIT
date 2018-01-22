@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,21 +18,29 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.util.List;
+
 import org.envirocar.ec4bit.core.RemoteConfiguration;
 import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Tracks;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
-import org.joda.time.DateTime;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
+import java.util.List;
+
+import org.joda.time.DateTime;
+
 import retrofit2.Call;
 
 /**

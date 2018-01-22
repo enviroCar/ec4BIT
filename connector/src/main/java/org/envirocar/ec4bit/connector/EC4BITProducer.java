@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,22 +18,22 @@
  */
 package org.envirocar.ec4bit.connector;
 
+
 import org.eclipse.bigiot.lib.Provider;
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescriptionChain;
-import org.joda.time.DateTime;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.DateTime;
 
 /**
  *
@@ -70,8 +70,8 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
 
     @Override
     public void destroy() throws Exception {
-        this.provider.deregister(offeringDescription.getOfferingId());
         this.offeringDescription.deregister();
+        this.provider.deregister(offeringDescription.getOfferingId());
         this.provider.terminate();
     }
 

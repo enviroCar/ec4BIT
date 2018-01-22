@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,7 +18,7 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-import java.io.IOException;
+
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
@@ -27,11 +27,16 @@ import org.envirocar.ec4bit.core.filter.TrackIDFilter;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import retrofit2.Call;
+
+import java.io.IOException;
 
 /**
  *

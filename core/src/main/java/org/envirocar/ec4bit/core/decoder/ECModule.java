@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -18,8 +18,7 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import okhttp3.ResponseBody;
+
 import org.envirocar.ec4bit.core.encoding.MeasurementEncoder;
 import org.envirocar.ec4bit.core.encoding.MeasurementsEncoder;
 import org.envirocar.ec4bit.core.encoding.SpeedValueEncoder;
@@ -32,6 +31,8 @@ import org.envirocar.ec4bit.core.model.SpeedValue;
 import org.envirocar.ec4bit.core.model.SpeedValues;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
+
+import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
  *
