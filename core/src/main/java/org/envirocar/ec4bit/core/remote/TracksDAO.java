@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,19 +18,25 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-import java.io.IOException;
+
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.filter.TrackFilter;
+import org.envirocar.ec4bit.core.filter.TrackIDFilter;
 import org.envirocar.ec4bit.core.model.Track;
 import org.envirocar.ec4bit.core.model.Tracks;
 import org.envirocar.ec4bit.core.remote.services.TrackService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import retrofit2.Call;
+
+import java.io.IOException;
 
 /**
  *
@@ -50,6 +56,7 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
+        String trackIDParam = null;
 
         if (filter.hasSpatialFilter()) {
             SpatialFilter bbox = filter.getSpatialFilter();
@@ -64,8 +71,13 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
             PaginationFilter temp = filter.getPaginationFilter();
             pageParam = temp.string();
         }
+        if (filter.hasTrackIDFilter()) {
+            TrackIDFilter temp = filter.getTrackIDFilter();
+            trackIDParam = temp.string();
+            return get(trackIDParam); // return single track
+        }
 
-        Call<Tracks> asTracks = trackService
+            Call<Tracks> asTracks = trackService
                 .getAsTracks(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
         try {
             Tracks body = asTracks.execute().body();

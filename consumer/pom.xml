@@ -22,10 +22,6 @@
             <groupId>org.eclipse.bigiot.lib</groupId>
             <artifactId>bigiot-lib-advanced</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.bigiot.lib</groupId>
-            <artifactId>bigiot-lib-swagger</artifactId>
-        </dependency>
         
         <!-- Spring dependencies -->
         <dependency>
@@ -40,6 +36,12 @@
         <dependency>
             <groupId>commons-logging</groupId>
             <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.9.9</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
     <build>

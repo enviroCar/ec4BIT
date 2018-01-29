@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -23,12 +23,7 @@
  */
 package org.envirocar.ec4bit.consumer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+
 import org.eclipse.bigiot.lib.Consumer;
 import org.eclipse.bigiot.lib.exceptions.AccessToNonActivatedOfferingException;
 import org.eclipse.bigiot.lib.exceptions.AccessToNonSubscribedOfferingException;
@@ -41,18 +36,28 @@ import org.eclipse.bigiot.lib.offering.AccessParameters;
 import org.eclipse.bigiot.lib.offering.Offering;
 import org.eclipse.bigiot.lib.offering.SubscribableOfferingDescription;
 import org.eclipse.bigiot.lib.query.OfferingQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  *
  * @author dewall
  */
-//@Component
+@Component
 public class SpeedDataConsumer {
 
     private static final DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
@@ -64,22 +69,15 @@ public class SpeedDataConsumer {
         Consumer consumer = new Consumer(consumerId, marketplaceUrl);
         consumer.authenticate(consumerSecret);
 
-        OfferingQuery query = OfferingQuery.create("SpeedDataQuery")
-                .withInformation(new Information("SpeedDataQuery", "bigiot:trafficSpeed"))
+        OfferingQuery query = Consumer.createOfferingQuery(consumerId)
+                .withInformation(new Information("SpeedDataQuery", "bigiot:enviroCarSpeed"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.002))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
 
         CompletableFuture<List<SubscribableOfferingDescription>> listFuture = consumer.discover(query);
-        listFuture.thenApply(SubscribableOfferingDescription::showOfferingDescriptions);
+        
         List<SubscribableOfferingDescription> list = listFuture.get();
-
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
-        for (SubscribableOfferingDescription desc : list) {
-            System.out.println(desc.toString());
-        }
 
         if (list != null && !list.isEmpty()) {
 

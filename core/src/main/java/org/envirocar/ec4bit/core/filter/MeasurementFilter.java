@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -17,6 +17,7 @@
  * with the enviroCar app. If not, see http://www.gnu.org/licenses/.
  */
 package org.envirocar.ec4bit.core.filter;
+
 
 /**
  *
@@ -28,14 +29,15 @@ public class MeasurementFilter {
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
     private final PaginationFilter paginationFilter;
-
+    private final MeasurementIDFilter measurementIDFilter;
+    
     /**
      * Constructor.
      *
      * @param spatialFilter
      */
     public MeasurementFilter(SpatialFilter spatialFilter) {
-        this(spatialFilter, null, null, null);
+        this(spatialFilter, null, null, null, null);
     }
 
     /**
@@ -44,7 +46,7 @@ public class MeasurementFilter {
      * @param temporalFilter
      */
     public MeasurementFilter(TemporalFilter temporalFilter) {
-        this(null, temporalFilter, null, null);
+        this(null, temporalFilter, null, null, null);
     }
 
     /**
@@ -53,7 +55,7 @@ public class MeasurementFilter {
      * @param paginationFilter
      */
     public MeasurementFilter(PaginationFilter paginationFilter) {
-        this(null, null, paginationFilter, null);
+        this(null, null, paginationFilter, null, null);
     }
     
     /**
@@ -62,7 +64,16 @@ public class MeasurementFilter {
      * @param phenomenonFilter
      */
     public MeasurementFilter(PhenomenonFilter phenomenonFilter) {
-        this(null, null, null, phenomenonFilter);
+        this(null, null, null, phenomenonFilter, null);
+    }
+    
+    /**
+     * Constructor.
+     *
+     * @param measurementIDFilter
+     */
+    public MeasurementFilter(MeasurementIDFilter measurementIDFilter) {
+        this(null, null, null, null, measurementIDFilter);
     }
 
     /**
@@ -72,13 +83,15 @@ public class MeasurementFilter {
      * @param temporalFilter
      * @param paginationFilter
      * @param phenomenonFilter
+     * @param measurementIDFilter
      */
     public MeasurementFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, 
-            PaginationFilter paginationFilter, PhenomenonFilter phenomenonFilter) {
+            PaginationFilter paginationFilter, PhenomenonFilter phenomenonFilter, MeasurementIDFilter measurementIDFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;
         this.phenomenonFilter = phenomenonFilter;
+        this.measurementIDFilter = measurementIDFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -111,6 +124,14 @@ public class MeasurementFilter {
 
     public boolean hasPaginationFilter() {
         return this.paginationFilter != null;
+    }
+
+    public MeasurementIDFilter getMeasurementIDFilter() {
+        return measurementIDFilter;
+    }
+    
+    public boolean hasMeasurementIDFilter() {
+        return this.measurementIDFilter != null;
     }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,19 +18,25 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
+
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
-import org.eclipse.bigiot.lib.model.IOData;
 import org.eclipse.bigiot.lib.model.Information;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
-import org.eclipse.bigiot.lib.query.elements.Region;
-import org.envirocar.ec4bit.connector.AbstractRequestHandler;
-import org.envirocar.ec4bit.connector.EC4BITProducer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import org.envirocar.ec4bit.connector.AbstractRequestHandler;
+import org.envirocar.ec4bit.connector.EC4BITProducer;
+import org.joda.time.DateTime;
+
+import org.joda.time.Duration;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 /**
  *
@@ -39,51 +45,39 @@ import org.springframework.stereotype.Component;
 @Component
 public class MeasurementProducer extends EC4BITProducer {
 
-//    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:RawMeasurements";
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:DrivingMeasurements";
+    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:enviroCarMeasurements";
 
-    @Value("${bigiot.applications.driving_data.local_id}")
+    @Value("${bigiot.applications.measurements.local_id}")
     private String localId;
-    @Value("${bigiot.applications.driving_data.name}")
+    @Value("${bigiot.applications.measurements.name}")
     private String name;
-    @Value("${bigiot.applications.driving_data.route}")
+    @Value("${bigiot.applications.measurements.route}")
     private String route;
+    @Value("${bigiot.applications.measurements.expireDate}")
+    private String expires;
 
     @Autowired
     private MeasurementRequestHandler requestHandler;
 
-    /**
-     *
-     * @return
-     */
     @Override
     protected RegistrableOfferingDescription getOfferingDescription() {
+        DateTimeFormatter TEMPORAL_TIME_PATTERN = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTime now = new DateTime();
+        DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(expires);
+        long millis = expireDate.getMillis() - now.getMillis();
         return provider.createOfferingDescription(localId)
                 .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                // measurement filter options:
-                // not supported in the marketpalce, use non-nested input data elements instead
-                //                .addInputData("bbox", new RDFType(SCHEMA_BBOX), IOData.createMembers()
-                //                        .addInputData("xMin", new RDFType(SCHEMA_BBOX_XMIN), ValueType.NUMBER)
-                //                        .addInputData("yMin", new RDFType(SCHEMA_BBOX_YMIN), ValueType.NUMBER)
-                //                        .addInputData("xMax", new RDFType(SCHEMA_BBOX_XMAX), ValueType.NUMBER)
-                //                        .addInputData("yMax", new RDFType(SCHEMA_BBOX_YMAX), ValueType.NUMBER))
-                .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
-                .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME)
-                //                .addInputData("during", new RDFType("bigiot:timeInterval"), IOData.createMembers()
-                //                        .addInputData("startDate", new RDFType(SCHEMA_DURING_START), ValueType.DATETIME)
-                //                        .addInputData("endDate", new RDFType(SCHEMA_DURING_END), ValueType.DATETIME))
+                .addInputData("bbox", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
+                .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
+                .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
                 .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
                 .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
-                //                .addInputData("page", new RDFType(SCHEMA_PAGE), IOData.createMembers()
-                //                        .addInputData("pageNumber", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER))
-                
+                .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
                 // measurement components:
                 .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
                 .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
                 .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
                 .addOutputData("measurementRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("time", new RDFType(SCHEMA_TIMESTAMP), ValueType.TEXT)
                 .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
                 .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
                 .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
@@ -99,8 +93,6 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("Intake Pressure", new RDFType(SCHEMA_INTAKE_PRESSURE), ValueType.TEXT)
                 .addOutputData("rpm", new RDFType(SCHEMA_RPM), ValueType.TEXT)
                 .addOutputData("engine load", new RDFType(SCHEMA_ENGINE_LOAD), ValueType.TEXT)
-                .addOutputData("fuel system loop", new RDFType(SCHEMA_FUEL_SYSTEM_LOOP), ValueType.NUMBER)
-                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.NUMBER)
                 .addOutputData("GPS accuracy", new RDFType(SCHEMA_GPS_ACCURACY), ValueType.TEXT)
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
                 .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)
@@ -114,8 +106,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-               
-                .inRegion(Region.city("Muenster"))
+                .withExpirationInterval(Duration.standardDays(millis))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

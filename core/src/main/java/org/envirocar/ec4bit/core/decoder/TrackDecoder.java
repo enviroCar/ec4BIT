@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,18 +18,23 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
+
+import org.envirocar.ec4bit.core.model.Measurement;
+import org.envirocar.ec4bit.core.model.Measurements;
+import org.envirocar.ec4bit.core.model.Track;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import java.io.IOException;
-import org.envirocar.ec4bit.core.model.Measurement;
-import org.envirocar.ec4bit.core.model.Measurements;
-import org.envirocar.ec4bit.core.model.Track;
-import org.joda.time.DateTime;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
+import java.io.IOException;
+
+import org.joda.time.DateTime;
 
 /**
  *
@@ -61,7 +66,6 @@ public class TrackDecoder extends BaseDeserializer<Track> {
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
     private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
-    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
@@ -94,7 +98,7 @@ public class TrackDecoder extends BaseDeserializer<Track> {
         JsonNode properties = node.get(ELEMENT_PROPERTIES);
 
         String trackID = properties.get(ELEMENT_ID).asText();
-        Double length = properties.get(ELEMENT_LENGTH).asDouble();
+        Double length = round( properties.get(ELEMENT_LENGTH).asDouble(), 3);
         String sensorID = properties
                         .get(ELEMENT_SENSOR)
                         .get(ELEMENT_PROPERTIES)
@@ -179,11 +183,7 @@ public class TrackDecoder extends BaseDeserializer<Track> {
             }
             if (phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP) != null) {
                 Integer fuel_system_loop = phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP).get(ELEMENT_VALUE).asInt();
-                measurement.setFuel_system_status_code(fuel_system_loop);
-            }
-            if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
-                Integer fuel_system__status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asInt();
-                measurement.setFuel_system_status_code(fuel_system__status_code);
+                measurement.setFuel_system_loop(fuel_system_loop);
             }
             if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
                 Double gps_accuracy = round( phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);

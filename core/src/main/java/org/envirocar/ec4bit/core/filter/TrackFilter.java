@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -27,6 +27,7 @@ public class TrackFilter {
     private final SpatialFilter spatialFilter;
     private final TemporalFilter temporalFilter;
     private final PaginationFilter paginationFilter;
+    private final TrackIDFilter trackIDFilter;
 
     /**
      * Constructor.
@@ -34,7 +35,7 @@ public class TrackFilter {
      * @param spatialFilter
      */
     public TrackFilter(SpatialFilter spatialFilter) {
-        this(spatialFilter, null, null);
+        this(spatialFilter, null, null, null);
     }
 
     /**
@@ -43,7 +44,7 @@ public class TrackFilter {
      * @param temporalFilter
      */
     public TrackFilter(TemporalFilter temporalFilter) {
-        this(null, temporalFilter, null);
+        this(null, temporalFilter, null, null);
     }
 
     /**
@@ -52,7 +53,16 @@ public class TrackFilter {
      * @param paginationFilter
      */
     public TrackFilter(PaginationFilter paginationFilter) {
-        this(null, null, paginationFilter);
+        this(null, null, paginationFilter, null);
+    }
+    
+    /**
+     * Constructor.
+     *
+     * @param trackIDFilter
+     */
+    public TrackFilter(TrackIDFilter trackIDFilter) {
+        this(null, null, null, trackIDFilter);
     }
 
     /**
@@ -61,11 +71,17 @@ public class TrackFilter {
      * @param spatialFilter
      * @param temporalFilter
      * @param paginationFilter
+     * @param trackIDFilter
      */
-    public TrackFilter(SpatialFilter spatialFilter, TemporalFilter temporalFilter, PaginationFilter paginationFilter) {
+    public TrackFilter(
+            SpatialFilter spatialFilter, 
+            TemporalFilter temporalFilter, 
+            PaginationFilter paginationFilter, 
+            TrackIDFilter trackIDFilter) {
         this.spatialFilter = spatialFilter;
         this.temporalFilter = temporalFilter;
         this.paginationFilter = paginationFilter;
+        this.trackIDFilter = trackIDFilter;
     }
 
     public SpatialFilter getSpatialFilter() {
@@ -92,4 +108,12 @@ public class TrackFilter {
         return this.paginationFilter != null;
     }
 
+    public TrackIDFilter getTrackIDFilter() {
+        return trackIDFilter;
+    }
+
+    public boolean hasTrackIDFilter() {
+        return this.trackIDFilter != null;
+    }
+    
 }

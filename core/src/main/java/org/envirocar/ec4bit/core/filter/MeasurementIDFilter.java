@@ -26,31 +26,31 @@ import java.util.Objects;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
-public class PaginationFilter {
+public class MeasurementIDFilter {
     
-    private static final Logger LOG = LoggerFactory.getLogger(PaginationFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MeasurementIDFilter.class);
     
-    private final int page;
+    private final String measurementID;
     
     /**
      * Constructor
      * 
-     * @param page
+     * @param measurementID
      */
-    public PaginationFilter(int page) {
-        this.page = page;
+    public MeasurementIDFilter(String measurementID) {
+        this.measurementID = measurementID;
     }
     
-    public int getPage() {
-        return this.page;
+    public String getMeasurementID() {
+        return this.measurementID;
     }
     
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.page);
+        hash = 53 * hash + Objects.hashCode(this.measurementID);
         return hash;
     }
 
@@ -65,19 +65,19 @@ public class PaginationFilter {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PaginationFilter other = (PaginationFilter) obj;
-        if (!Objects.equals(this.page, other.page)) {
+        final MeasurementIDFilter other = (MeasurementIDFilter) obj;
+        if (!Objects.equals(this.measurementID, other.measurementID)) {
             return false;
         }
         return true;
     }
 
     public String string() {
-        return String.valueOf(page);
+        return String.valueOf(measurementID);
     }
 
     @Override
     public String toString() {
-        return "PaginationFilter{" + "page=" + page + "}";
+        return "MeasurementIDFilter{" + "measurementID=" + measurementID + "}";
     }
 }

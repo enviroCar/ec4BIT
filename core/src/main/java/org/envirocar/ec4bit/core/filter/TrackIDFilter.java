@@ -28,29 +28,29 @@ import java.util.Objects;
  *
  * @author dewall
  */
-public class PaginationFilter {
+public class TrackIDFilter {
     
-    private static final Logger LOG = LoggerFactory.getLogger(PaginationFilter.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TrackIDFilter.class);
     
-    private final int page;
+    private final String trackID;
     
     /**
      * Constructor
      * 
-     * @param page
+     * @param trackID
      */
-    public PaginationFilter(int page) {
-        this.page = page;
+    public TrackIDFilter(String trackID) {
+        this.trackID = trackID;
     }
     
-    public int getPage() {
-        return this.page;
+    public String getTrackID() {
+        return this.trackID;
     }
     
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.page);
+        hash = 53 * hash + Objects.hashCode(this.trackID);
         return hash;
     }
 
@@ -65,19 +65,19 @@ public class PaginationFilter {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final PaginationFilter other = (PaginationFilter) obj;
-        if (!Objects.equals(this.page, other.page)) {
+        final TrackIDFilter other = (TrackIDFilter) obj;
+        if (!Objects.equals(this.trackID, other.trackID)) {
             return false;
         }
         return true;
     }
 
     public String string() {
-        return String.valueOf(page);
+        return String.valueOf(trackID);
     }
 
     @Override
     public String toString() {
-        return "PaginationFilter{" + "page=" + page + "}";
+        return "TrackIDFilter{" + "trackID=" + trackID + "}";
     }
 }

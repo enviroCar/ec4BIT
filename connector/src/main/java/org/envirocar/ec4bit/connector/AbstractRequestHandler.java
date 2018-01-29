@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,23 +18,32 @@
  */
 package org.envirocar.ec4bit.connector;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.joda.time.DateTime;
-import java.util.Map;
-import org.eclipse.bigiot.lib.handlers.AccessRequestHandler;
-import org.eclipse.bigiot.lib.offering.OfferingDescription;
-import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
+
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
+import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.PhenomenonFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
+import org.envirocar.ec4bit.core.filter.TrackIDFilter;
+
+import org.eclipse.bigiot.lib.handlers.AccessRequestHandler;
+import org.eclipse.bigiot.lib.offering.OfferingDescription;
+import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Map;
 
 /**
  *
@@ -59,7 +68,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     }
 
     @Override
-    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map) {
+    public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map, String subscriberId, String consumerInfo) {
         try {
             E responseEntity = processRequest(od, map);
             String body = mapper.writeValueAsString(responseEntity);
@@ -91,26 +100,12 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
 
     protected SpatialFilter getSpatialFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         String bbox = checkAndGetValue(BBOX, input);
-        String[] points = bbox.split(" ");
-        String[] coordsA = points[0].split(",");
-        String[] coordsB = points[1].split(",");
-        double xMin = Double.valueOf(coordsA[0]);
-        double yMin = Double.valueOf(coordsA[1]);
-        double xMax = Double.valueOf(coordsB[0]);
-        double yMax = Double.valueOf(coordsB[1]);
+        String[] coords = bbox.split(",");
+        double xMin = Double.valueOf(coords[0]);
+        double yMin = Double.valueOf(coords[1]);
+        double xMax = Double.valueOf(coords[2]);
+        double yMax = Double.valueOf(coords[3]);
         return new SpatialFilter(xMin, yMin, xMax, yMax);
-    }
-
-    protected double[] getBoundingBoxParams(Map<String, Object> input) throws KeyNotFoundException {
-        String bbox = checkAndGetValue(BBOX, input);
-        String[] points = bbox.split(" ");
-        String[] coordsA = points[0].split(",");
-        String[] coordsB = points[1].split(",");
-        double xMin = Double.valueOf(coordsA[0]);
-        double yMin = Double.valueOf(coordsA[1]);
-        double xMax = Double.valueOf(coordsB[0]);
-        double yMax = Double.valueOf(coordsB[1]);
-        return new double[]{xMin, yMin, xMax, yMax};
     }
 
     protected PaginationFilter getPaginationFilterParams(Map<String, Object> input) throws KeyNotFoundException {
@@ -118,18 +113,31 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
         return new PaginationFilter(pageNumber);
     }
 
+    protected TrackIDFilter getTrackIDFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String trackID = checkAndGetValue(TRACKID, input);
+        return new TrackIDFilter(trackID);
+    }
+
+    protected MeasurementIDFilter getMeasurementIDFilter(Map<String, Object> input) throws KeyNotFoundException {
+        String measurementID = checkAndGetValue(MEASUREMENTID, input);
+        return new MeasurementIDFilter(measurementID);
+    }
+
     protected TemporalFilter getTemporalFilterParams(Map<String, Object> input) throws KeyNotFoundException {
         DateTime dt_start = null;
         DateTime dt_end = null;
-        String after = checkAndGetValue(TIME_AFTER, input);
-        if (after != null) {
+        try {
+            String after = checkAndGetValue(START_DATE, input);
             dt_start = DateTime.parse(after,
                     DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
+        } catch (KeyNotFoundException knfe) {
         }
-        String before = checkAndGetValue(TIME_BEFORE, input);
-        if (before != null) {
+
+        try {
+            String before = checkAndGetValue(END_DATE, input);
             dt_end = DateTime.parse(before,
                     DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ"));
+        } catch (KeyNotFoundException knfe) {
         }
         return new TemporalFilter(dt_start, dt_end);
     }
@@ -148,8 +156,8 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false, false,
-                    false, false, false, false, false);
-            phenomString = phenomString.toLowerCase();            
+                    false, false, false);
+            phenomString = phenomString.toLowerCase();
             String[] phenomenons = phenomString.split(",");
             for (int i = 0; i < phenomenons.length; i++) {
                 if (phenomenons[i].equals("co2")) {
@@ -166,14 +174,6 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                 }
                 if (phenomenons[i].equals("consumption")) {
                     pf.setConsumption(true);
-                    continue;
-                }
-                if (phenomenons[i].equals("fuel system loop")) {
-                    pf.setFuel_system_loop(true);
-                    continue;
-                }
-                if (phenomenons[i].equals("fuel system status code")) {
-                    pf.setFuel_system_status_code(true);
                     continue;
                 }
                 if (phenomenons[i].equals("gps accuracy")) {
@@ -259,7 +259,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     true, true, true, true, true,
                     true, true, true, true, true,
                     true, true, true, true, true,
-                    true, true, true, true, true);
+                    true, true, true);
         }
         return pf;
     }
