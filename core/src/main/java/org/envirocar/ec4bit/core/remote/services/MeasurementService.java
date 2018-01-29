@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,10 +18,11 @@
  */
 package org.envirocar.ec4bit.core.remote.services;
 
-import okhttp3.ResponseBody;
+
 import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.model.SpeedValues;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -34,36 +35,27 @@ import retrofit2.http.Query;
  */
 public interface MeasurementService {
 
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse();
-
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("limit") int limit);
-    
-    @GET("measurements/")
-    Call<ResponseBody> getAsRawResponse(@Query("bbox") String bbox, @Query("after") String after, 
-            @Query("before") String before, @Query("page") String page);
-
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements();
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements(@Query("limit") int limit);
     
-    @GET("measurements/")
+    @GET("measurements")
     Call<Measurements> getAsMeasurements(@Query("bbox") String bbox, @Query("after") String after, 
             @Query("before") String before, @Query("page") String page);
+    
+    @GET("measurements/{measurement}")
+    Call<Measurement> getAsMeasurement(@Path("measurement") String measurementID);
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues();
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues(@Query("limit") int limit);
 
-    @GET("measurements/")
+    @GET("measurements")
     Call<SpeedValues> getAsSpeedValues(@Query("bbox") String bbox, @Query("after") String after,
             @Query("before") String before, @Query("page") String page);
     
-    @GET("measurements/{measurement}/")
-    Call<Measurement> getAsMeasurement(@Path("measurement") String measurementID);
 }

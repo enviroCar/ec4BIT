@@ -24,10 +24,6 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.bigiot.lib</groupId>
-            <artifactId>bigiot-lib-swagger</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.bigiot.lib</groupId>
             <artifactId>bigiot-lib-embeddedspark</artifactId>
         </dependency>
         

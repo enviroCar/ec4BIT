@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,7 +18,7 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-import java.io.IOException;
+
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
@@ -28,15 +28,20 @@ import org.envirocar.ec4bit.core.filter.TemporalFilter;
 import org.envirocar.ec4bit.core.model.Measurement;
 import org.envirocar.ec4bit.core.model.Measurements;
 import org.envirocar.ec4bit.core.remote.services.MeasurementService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import retrofit2.Call;
+
+import java.io.IOException;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 @Component
 public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFilter> {
@@ -52,7 +57,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         String timeBeforeParam = null;
         String timeAfterParam = null;
         String pageParam = null;
-        String meaasurementIDParam = null;
+        String measurementIDParam = null;
         PhenomenonFilter phenomenonFilter = new PhenomenonFilter();
         Boolean phenomenonFilterFilters = false;
 
@@ -75,8 +80,8 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         }
         if (filter.hasMeasurementIDFilter()) {
             MeasurementIDFilter temp = filter.getMeasurementIDFilter();
-            meaasurementIDParam = temp.string();
-            return get(meaasurementIDParam); // return single measurement
+            measurementIDParam = temp.string();
+            return get(measurementIDParam); // return single measurement
         }
 
         Call<Measurements> asMeasurements = measurementService
@@ -107,10 +112,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                         }
                         if (m.hasEngine_load() && phenomenonFilter.getEngine_load()) {
                             filtered.setEngine_load(m.getEngine_load());
-                            hasPhenomenons = true;
-                        }
-                        if (m.hasFuel_system_status_code() && phenomenonFilter.getFuel_system_status_code()) {
-                            filtered.setFuel_system_status_code(m.getFuel_system_status_code());
                             hasPhenomenons = true;
                         }
                         if (m.hasGps_accuracy() && phenomenonFilter.getGps_accuracy()) {
@@ -193,7 +194,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setTime(m.getTime());
                             filtered.setMeasurementID(m.getMeasurementID());
                             filtered.setSensorID(m.getSensorID());
-
                             filteredMeasurements.addMeasurement(filtered);
                         }
                     }
@@ -226,9 +226,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                     }
                     if (phenomenonFilter.getEngine_load()) {
                         filteredMeasurements.addPhenomDefinition("Engine Load");
-                    }
-                    if (phenomenonFilter.getFuel_system_status_code()) {
-                        filteredMeasurements.addPhenomDefinition("Fuel System Status Code");
                     }
                     if (phenomenonFilter.getGps_accuracy()) {
                         filteredMeasurements.addPhenomDefinition("GPS Accuracy");
@@ -283,7 +280,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                 body.addPhenomDefinition("Rpm");
                 body.addPhenomDefinition("Engine Load");
                 body.addPhenomDefinition("Fuel System Loop");
-                body.addPhenomDefinition("Fuel System Status Code");
                 body.addPhenomDefinition("GPS Accuracy");
                 body.addPhenomDefinition("GPS Bearing");
                 body.addPhenomDefinition("Long-Term Fuel Trim 1");
@@ -302,7 +298,6 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
         }
-
         return null;
     }
 

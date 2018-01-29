@@ -22,10 +22,6 @@
             <groupId>org.eclipse.bigiot.lib</groupId>
             <artifactId>bigiot-lib-advanced</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.eclipse.bigiot.lib</groupId>
-            <artifactId>bigiot-lib-swagger</artifactId>
-        </dependency>
         
         <!-- Spring dependencies -->
         <dependency>

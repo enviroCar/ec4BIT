@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,14 +18,17 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
+
+import org.envirocar.ec4bit.core.model.Track;
+import org.envirocar.ec4bit.core.model.Tracks;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import java.io.IOException;
-import org.envirocar.ec4bit.core.model.Track;
-import org.envirocar.ec4bit.core.model.Tracks;
 
 /**
  *
@@ -49,17 +52,20 @@ public class TracksDecoder extends BaseDeserializer<Tracks> {
             Track track = new Track();
 
             String id = m.get(ELEMENT_ID).asText();
-            
-            Double length = m.get(ELEMENT_LENGTH).asDouble();
+
+            if (m.has(ELEMENT_LENGTH)) {
+                Double length = m.get(ELEMENT_LENGTH).asDouble();
+                track.setLength(length);
+            }
+
             String sensor = m
-                            .get(ELEMENT_SENSOR)
-                            .get(ELEMENT_PROPERTIES)
-                            .get(ELEMENT_ID)
-                            .asText();
+                    .get(ELEMENT_SENSOR)
+                    .get(ELEMENT_PROPERTIES)
+                    .get(ELEMENT_ID)
+                    .asText();
 
             track.setSensor(sensor);
             track.setTrackID(id);
-            track.setLength(length);
 
             results.addTrack(track);
         });

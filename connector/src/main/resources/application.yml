@@ -4,18 +4,12 @@ spring:
     profiles:
         active: development
 
-ec4bit:
-    contact: envirocar@52north.org
-
 envirocar:
     url: http://envirocar.org/api/stable
 
 bigiot:
     marketplace: 
         url:  https://market.big-iot.org
-    provider:
-        address: localhost
-        port: 7777
 
 ---
 
@@ -26,22 +20,21 @@ bigiot:
         address: localhost
         port: 7777
     applications: 
-        speed_data:
+        speedvalues:
             local_id: test-speed-offering
             name: (enviroCar Testing) / Traffic Driving Speed Values
             route: speedvalues
-        driving_data:
+            expireDate: 2018-02-28T01:23:45
+        measurements:
             local_id: test-measurements-offering
             name: (enviroCar Testing) / Traffic Driving Measurements
             route: measurements
-        track_data:
+            expireDate: 2018-02-28T01:23:45
+        tracks:
             local_id: test-track-offering
             name: (enviroCar Testing) / Traffic Driving Tracks
             route: tracks
-        single_track_data:
-            local_id: test-single-track-offering
-            name: (enviroCar Testing) / Driving Track
-            route: track
+            expireDate: 2018-02-28T01:23:45
 
 ---
 
@@ -52,19 +45,18 @@ bigiot:
         address: processing.envirocar.org
         port: 8081
     applications:
-        speed_data:
+        speedvalues:
             local_id: ec-speed-offering
             name: enviroCar Speed Values
             route: speedvalues
-        driving_data:
+            expireDate: 2018-02-28T01:23:45
+        measurements:
             local_id: ec-measurements-offering
             name: enviroCar Measurements
             route: measurements
-        track_data:
+            expireDate: 2018-02-28T01:23:45
+        tracks:
             local_id: ec-tracks-offering
             name: enviroCar Tracks
             route: tracks
-        single_track_data:
-            local_id: ec-track-offering
-            name: enviroCar Track
-            route: track
+            expireDate: 2018-02-28T01:23:45

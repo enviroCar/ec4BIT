@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -23,12 +23,7 @@
  */
 package org.envirocar.ec4bit.consumer;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+
 import org.eclipse.bigiot.lib.Consumer;
 import org.eclipse.bigiot.lib.exceptions.AccessToNonActivatedOfferingException;
 import org.eclipse.bigiot.lib.exceptions.AccessToNonSubscribedOfferingException;
@@ -41,13 +36,22 @@ import org.eclipse.bigiot.lib.offering.AccessParameters;
 import org.eclipse.bigiot.lib.offering.Offering;
 import org.eclipse.bigiot.lib.offering.SubscribableOfferingDescription;
 import org.eclipse.bigiot.lib.query.OfferingQuery;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 /**
  *
  * @author Maurin Radtke <m.radtke@52north.org>
@@ -65,8 +69,7 @@ public class TrackDataConsumer {
         consumer.authenticate(consumerSecret);
 
         OfferingQuery query = Consumer.createOfferingQuery(consumerId)
-                .inCity("Muenster")
-                .withInformation(new Information("TracksDataQuery", "bigiot:DrivingTracks"))
+                .withInformation(new Information("TracksDataQuery", "bigiot:enviroCarTracks"))
                 .withPricingModel(BigIotTypes.PricingModel.PER_ACCESS)
                 .withMaxPrice(Euros.amount(0.002))
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE);
@@ -84,12 +87,10 @@ public class TrackDataConsumer {
             }
 
             // Prepare Access Parameters
-            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-09-15T06:06:44");
-            DateTime endDT = TEMPORAL_TIME_PATTERN.parseDateTime("2017-10-15T12:06:44");
+            DateTime startDT = TEMPORAL_TIME_PATTERN.parseDateTime("2018-01-10T00:00:04");
             AccessParameters accessParameters = AccessParameters.create()
                     .addNameValue("box", "50.076,7.5 52.08,8.00")
                     .addNameValue("startDate", startDT)
-                    .addNameValue("endDate", endDT)
                     .addNameValue("page", 1);
 
             // Create an Access Feed with callbacks for the received results		

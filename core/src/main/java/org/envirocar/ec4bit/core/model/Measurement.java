@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 - 2017 the enviroCar community
+ * Copyright (C) 2013 - 2018 the enviroCar community
  *
  * This file is part of the enviroCar 4 BIG IoT Connector.
  *
@@ -8,7 +8,7 @@
  * by the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * The ec4BIT connector i is distributed in the hope that it will be useful, but
+ * The ec4BIT connector is distributed in the hope that it will be useful, but
  * WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
@@ -18,8 +18,7 @@
  */
 package org.envirocar.ec4bit.core.model;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import org.joda.time.DateTime;
 
 /**
@@ -47,9 +46,9 @@ public class Measurement implements BaseEntity {
     private Integer speed,
             rpm,
             engine_load,
-            fuel_system_status_code,
             long_term_fuel_trim_1,
             short_term_fuel_trim_1,
+            fuel_system_loop,
             throttle_position;
 
     public Measurement() {
@@ -67,8 +66,8 @@ public class Measurement implements BaseEntity {
             Double gps_vdop, Double gps_pdop, Double gps_hdop,
             Double calculated_maf, Double Intake_temp,
             Double o2_lambda_current, Double o2_lambda_current_ER, Double o2_lambda_voltage, Double o2_lambda_voltage_ER, Double gps_accuracy,
-            Integer speed, Integer fuel_system_status_code,
-            Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position) {
+            Integer speed,
+            Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position, Integer fuel_system_loop) {
         this.measurementID = measurementID;
         this.time = time;
         this.sensor = sensor;
@@ -93,12 +92,12 @@ public class Measurement implements BaseEntity {
         this.o2_lambda_current_ER = o2_lambda_current_ER;
         this.o2_lambda_voltage = o2_lambda_voltage;
         this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
-        this.fuel_system_status_code = fuel_system_status_code;
         this.gps_accuracy = gps_accuracy;
         this.gps_bearing = gps_bearing;
         this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
         this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
         this.throttle_position = throttle_position;
+        this.fuel_system_loop = fuel_system_loop;
     }
 
     public String getMeasurementID() {
@@ -171,14 +170,6 @@ public class Measurement implements BaseEntity {
 
     public void setO2_lambda_voltage_ER(Double o2_lambda_voltage_ER) {
         this.o2_lambda_voltage_ER = o2_lambda_voltage_ER;
-    }
-
-    public Integer getFuel_system_status_code() {
-        return fuel_system_status_code;
-    }
-
-    public void setFuel_system_status_code(Integer fuel_system_status_code) {
-        this.fuel_system_status_code = fuel_system_status_code;
     }
 
     public Double getGps_accuracy() {
@@ -341,6 +332,22 @@ public class Measurement implements BaseEntity {
         this.speed = speed;
     }
 
+    public String getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(String sensor) {
+        this.sensor = sensor;
+    }
+
+    public Integer getFuel_system_loop() {
+        return fuel_system_loop;
+    }
+
+    public void setFuel_system_loop(Integer fuel_system_loop) {
+        this.fuel_system_loop = fuel_system_loop;
+    }
+
     public boolean hasCo2() {
         return this.co2 != null;
     }
@@ -412,17 +419,21 @@ public class Measurement implements BaseEntity {
     public boolean hasSpeed() {
         return this.speed != null;
     }
+    
+    public boolean hasLatitude() {
+        return this.latitude != null;
+    }
 
+    public boolean hasLongitude() {
+        return this.longitude != null;
+    }
+    
     public boolean hasRpm() {
         return this.rpm != null;
     }
 
     public boolean hasEngine_load() {
         return this.engine_load != null;
-    }
-
-    public boolean hasFuel_system_status_code() {
-        return this.fuel_system_status_code != null;
     }
 
     public boolean hasLong_term_fuel_trim_1() {
@@ -435,6 +446,10 @@ public class Measurement implements BaseEntity {
 
     public boolean hasThrottle_position() {
         return this.throttle_position != null;
+    }
+    
+    public boolean hasFuel_system_loop() {
+        return this.fuel_system_loop != null;
     }
 
 }
