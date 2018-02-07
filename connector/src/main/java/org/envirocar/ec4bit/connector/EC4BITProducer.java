@@ -18,9 +18,10 @@
  */
 package org.envirocar.ec4bit.connector;
 
-
 import org.eclipse.bigiot.lib.Provider;
 import org.eclipse.bigiot.lib.model.BigIotTypes;
+import org.eclipse.bigiot.lib.model.BoundingBox;
+import org.eclipse.bigiot.lib.model.Location;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
@@ -34,6 +35,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.DateTime;
+import org.joda.time.Duration;
 
 /**
  *
@@ -53,6 +55,9 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
     private String route_speed_measurements;
     @Value("${bigiot.applications.speedvalues.expireDate}")
     private String speed_expireDate;
+    private static final String SCHEMA_BIGIOT_SPEEDVALUE_CATEGORY = "urn:proposed:Traffic_Speed";
+    private static final String SCHEMA_BIGIOT_MEASUREMENT_CATEGORY = "urn:proposed:Traffic_Measurement";
+    private static final String SCHEMA_BIGIOT_TRACK_CATEGORY = "urn:proposed:Traffic_Track";
 
     @Autowired
     protected Provider provider;
@@ -82,16 +87,23 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(tracks_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
+                .withCategory(SCHEMA_BIGIOT_TRACK_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                .addInputData("trackID", new RDFType(SCHEMA_SINGLE_TRACK_ID), ValueType.TEXT)
+                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), ValueType.NUMBER)
+                .addInputData("trackID", new RDFType(SCHEMA_TRACK_ID), ValueType.TEXT)
                 //     track components:
-                .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
+                .addOutputData("trackID", new RDFType(SCHEMA_TRACK_ID), ValueType.TEXT)
+                .addOutputData("trackRef", new RDFType(SCHEMA_TRACK_URL), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR_ID), ValueType.TEXT)
+                .addOutputData("sensorRef", new RDFType(SCHEMA_SENSOR_URL), ValueType.TEXT)
+                .addOutputData("length", new RDFType(SCHEMA_TRACK_LENGTH), ValueType.NUMBER)
                 //     track measurements:
+                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.TEXT)
                 .addOutputData("co2", new RDFType(SCHEMA_CO2), ValueType.TEXT)
                 .addOutputData("consumption", new RDFType(SCHEMA_CONSUMPTION), ValueType.TEXT)
@@ -102,6 +114,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("Intake Pressure", new RDFType(SCHEMA_INTAKE_PRESSURE), ValueType.TEXT)
                 .addOutputData("rpm", new RDFType(SCHEMA_RPM), ValueType.TEXT)
                 .addOutputData("engine load", new RDFType(SCHEMA_ENGINE_LOAD), ValueType.TEXT)
+                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.TEXT)
                 .addOutputData("GPS accuracy", new RDFType(SCHEMA_GPS_ACCURACY), ValueType.TEXT)
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
                 .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)
@@ -115,7 +128,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .withExpirationInterval(millis)
+                .withExpirationInterval(new Duration(millis))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -130,20 +143,25 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(measurements_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
+                .withCategory(SCHEMA_BIGIOT_MEASUREMENT_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
+                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), ValueType.NUMBER)
                 .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
-                .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
+                .addInputData("measurementID", new RDFType(SCHEMA_MEASUREMENT_ID), ValueType.TEXT)
                 // measurements components:
-                .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("measurementRef", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
-                .addOutputData("trackRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                // track measurements:
+                .addOutputData("measurementID", new RDFType(SCHEMA_MEASUREMENT_ID), ValueType.TEXT)
+                .addOutputData("measurementRef", new RDFType(SCHEMA_MEASUREMENT_URL), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR_ID), ValueType.TEXT)
+                .addOutputData("sensorRef", new RDFType(SCHEMA_SENSOR_URL), ValueType.TEXT)
+                .addOutputData("trackID", new RDFType(SCHEMA_TRACK_ID), ValueType.TEXT)
+                .addOutputData("trackRef", new RDFType(SCHEMA_TRACK_URL), ValueType.TEXT)
+                // measurements phenomenons:
+                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
                 .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
                 .addOutputData("co2", new RDFType(SCHEMA_CO2), ValueType.TEXT)
                 .addOutputData("consumption", new RDFType(SCHEMA_CONSUMPTION), ValueType.TEXT)
@@ -158,6 +176,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
                 .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)
                 .addOutputData("short term fuel Trim 1", new RDFType(SCHEMA_SHORT_TERM_FUEL_TRIM_1), ValueType.NUMBER)
+                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.TEXT)
                 .addOutputData("throttle position", new RDFType(SCHEMA_THROTTLE_POSITION), ValueType.TEXT)
                 .addOutputData("GPS HDOP", new RDFType(SCHEMA_GPS_HDOP), ValueType.TEXT)
                 .addOutputData("GPS VDOP", new RDFType(SCHEMA_GPS_VDOP), ValueType.TEXT)
@@ -167,7 +186,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .withExpirationInterval(millis)
+                .withExpirationInterval(new Duration(millis))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)
@@ -182,17 +201,19 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(speed_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
+                .withCategory(SCHEMA_BIGIOT_SPEEDVALUE_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
+                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), ValueType.NUMBER)
                 // track components:
-                .addOutputData("id", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("sensor", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("length", new RDFType(SCHEMA_LENGTH), ValueType.NUMBER)
+
                 // track measurements:
-                .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)                
-                .withExpirationInterval(millis)
+                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
+                .withExpirationInterval(new Duration(millis))
                 .withPricingModel(BigIotTypes.PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

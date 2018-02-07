@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
 import org.envirocar.ec4bit.core.filter.SpatialFilter;
 import org.envirocar.ec4bit.core.filter.TemporalFilter;
@@ -77,7 +76,7 @@ public class TracksDAO implements AbstractDAO<Tracks, TrackFilter> {
             return get(trackIDParam); // return single track
         }
 
-            Call<Tracks> asTracks = trackService
+        Call<Tracks> asTracks = trackService
                 .getAsTracks(bboxParam, timeAfterParam, timeBeforeParam, pageParam);
         try {
             Tracks body = asTracks.execute().body();

@@ -18,14 +18,18 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
-
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.eclipse.bigiot.lib.exceptions.InvalidOfferingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
-import org.eclipse.bigiot.lib.model.Information;
+import org.eclipse.bigiot.lib.model.BoundingBox;
+import org.eclipse.bigiot.lib.model.Location;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
@@ -37,6 +41,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+
 /**
  *
  * @author Arne de Wall <a.dewall@52north.org>
@@ -44,7 +49,7 @@ import org.joda.time.format.DateTimeFormatter;
 @Component
 public class SpeedDataProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:enviroCarSpeed";
+    private static final String SCHEMA_BIGIOT_SPEEDVALUE_CATEGORY = "urn:proposed:Traffic_Speed";
 
     @Value("${bigiot.applications.speedvalues.local_id}")
     private String localId;
@@ -65,13 +70,18 @@ public class SpeedDataProducer extends EC4BITProducer {
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(expires);
         long millis = expireDate.getMillis() - now.getMillis();
         return provider.createOfferingDescription(localId)
-                .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
+                .withName(name)
+                .withCategory(SCHEMA_BIGIOT_SPEEDVALUE_CATEGORY)
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
                 .addInputData("bbox", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
-                .addOutputData("speed", new RDFType("schema:trafficSpeed"), ValueType.NUMBER)
-                .withExpirationInterval(Duration.standardDays(millis))
+                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), ValueType.NUMBER)
+                .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
+                .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
+                .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
+                .withExpirationInterval(new Duration(millis))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

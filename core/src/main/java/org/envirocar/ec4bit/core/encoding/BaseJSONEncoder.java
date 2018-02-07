@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.encoding;
 
-
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 

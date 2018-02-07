@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.connector.producer;
 
-
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.exception.KeyNotFoundException;
 import org.envirocar.ec4bit.connector.exception.RequestProcessingException;
@@ -39,6 +38,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 import org.eclipse.bigiot.lib.offering.OfferingDescription;
+import org.eclipse.bigiot.lib.serverwrapper.BigIotHttpResponse;
 
 /**
  *
@@ -64,6 +64,9 @@ public class SpeedRequestHandler extends AbstractRequestHandler<SpeedValues> {
     @Override
     public SpeedValues processRequest(OfferingDescription od, Map<String, Object> input) throws RequestProcessingException {
         try {
+
+            BigIotHttpResponse errorResponse = BigIotHttpResponse.error().withBody("{\"status\":\"error\"}")
+                    .withStatus(422).asJsonType();
             SpatialFilter spatialFilter = null;
             TemporalFilter temporalFilter = null;
             PaginationFilter paginationFilter = null;

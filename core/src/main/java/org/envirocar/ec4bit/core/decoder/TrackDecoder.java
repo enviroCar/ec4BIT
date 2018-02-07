@@ -65,7 +65,7 @@ public class TrackDecoder extends BaseDeserializer<Track> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
+    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
@@ -181,9 +181,9 @@ public class TrackDecoder extends BaseDeserializer<Track> {
                 Integer engine_load = phenomenons.get(ELEMENT_ENGINE_LOAD).get(ELEMENT_VALUE).asInt();
                 measurement.setEngine_load(engine_load);
             }
-            if (phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP) != null) {
-                Integer fuel_system_loop = phenomenons.get(ELEMENT_FUEL_SYSTEM_LOOP).get(ELEMENT_VALUE).asInt();
-                measurement.setFuel_system_loop(fuel_system_loop);
+            if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
+                String fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asText();
+                measurement.setFuel_system_status_code(fuel_system_status_code);
             }
             if (phenomenons.get(ELEMENT_GPS_ACCURACY) != null) {
                 Double gps_accuracy = round( phenomenons.get(ELEMENT_GPS_ACCURACY).get(ELEMENT_VALUE).asDouble(), 7);

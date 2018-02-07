@@ -21,7 +21,8 @@ package org.envirocar.ec4bit.connector.producer;
 
 import org.eclipse.bigiot.lib.model.BigIotTypes;
 import org.eclipse.bigiot.lib.model.BigIotTypes.PricingModel;
-import org.eclipse.bigiot.lib.model.Information;
+import org.eclipse.bigiot.lib.model.BoundingBox;
+import org.eclipse.bigiot.lib.model.Location;
 import org.eclipse.bigiot.lib.model.RDFType;
 import org.eclipse.bigiot.lib.model.ValueType;
 import org.eclipse.bigiot.lib.offering.RegistrableOfferingDescription;
@@ -33,8 +34,8 @@ import org.springframework.stereotype.Component;
 import org.envirocar.ec4bit.connector.AbstractRequestHandler;
 import org.envirocar.ec4bit.connector.EC4BITProducer;
 import org.joda.time.DateTime;
-
 import org.joda.time.Duration;
+
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -45,7 +46,7 @@ import org.joda.time.format.DateTimeFormatter;
 @Component
 public class MeasurementProducer extends EC4BITProducer {
 
-    private static final String SCHEMA_BIGIOT_RDFTYPE = "bigiot:enviroCarMeasurements";
+    private static final String SCHEMA_BIGIOT_MEASUREMENT_CATEGORY = "urn:proposed:Traffic_Measurement";
 
     @Value("${bigiot.applications.measurements.local_id}")
     private String localId;
@@ -66,24 +67,27 @@ public class MeasurementProducer extends EC4BITProducer {
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(expires);
         long millis = expireDate.getMillis() - now.getMillis();
         return provider.createOfferingDescription(localId)
-                .withInformation(new Information(name, new RDFType(SCHEMA_BIGIOT_RDFTYPE)))
-                .addInputData("bbox", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
+                .withName(name)
+                .withCategory(SCHEMA_BIGIOT_MEASUREMENT_CATEGORY)
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
+                .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
                 .addInputData("startDate", new RDFType(SCHEMA_START_DATE), ValueType.DATETIME)
                 .addInputData("endDate", new RDFType(SCHEMA_END_DATE), ValueType.DATETIME)
-                .addInputData("page", new RDFType(SCHEMA_PAGE_NUMBER), ValueType.NUMBER)
+                .addInputData("page", new RDFType(SCHEMA_PAGINATION_PAGENUMBER), ValueType.NUMBER)
                 .addInputData("phenomenons", new RDFType(SCHEMA_PHENOMENONS), ValueType.TEXT)
-                .addInputData("measurementID", new RDFType(SCHEMA_SINGLE_MEASUREMENT_ID), ValueType.TEXT)
+                .addInputData("measurementID", new RDFType(SCHEMA_MEASUREMENT_ID), ValueType.TEXT)
                 // measurement components:
+                .addOutputData("measurementID", new RDFType(SCHEMA_MEASUREMENT_ID), ValueType.TEXT)
+                .addOutputData("measurementRef", new RDFType(SCHEMA_MEASUREMENT_URL), ValueType.TEXT)
+                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR_ID), ValueType.TEXT)
+                .addOutputData("sensorRef", new RDFType(SCHEMA_SENSOR_URL), ValueType.TEXT)
+                .addOutputData("trackID", new RDFType(SCHEMA_TRACK_ID), ValueType.TEXT)
+                .addOutputData("trackRef", new RDFType(SCHEMA_TRACK_URL), ValueType.TEXT)
+                // measurement phenomenons:
                 .addOutputData("longitude", new RDFType(SCHEMA_LONGITUDE), ValueType.NUMBER)
                 .addOutputData("latitude", new RDFType(SCHEMA_LATITUDE), ValueType.NUMBER)
-                .addOutputData("measurementID", new RDFType(SCHEMA_ID), ValueType.TEXT)
-                .addOutputData("measurementRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("sensorID", new RDFType(SCHEMA_SENSOR), ValueType.TEXT)
-                .addOutputData("sensorRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                .addOutputData("trackID", new RDFType(SCHEMA_TRACK), ValueType.TEXT)
-                .addOutputData("trackRef", new RDFType(SCHEMA_REF), ValueType.TEXT)
-                // measurement phenomenons:
-                .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.TEXT)
+                .addOutputData("speed", new RDFType(SCHEMA_SPEED), ValueType.NUMBER)
                 .addOutputData("co2", new RDFType(SCHEMA_CO2), ValueType.TEXT)
                 .addOutputData("consumption", new RDFType(SCHEMA_CONSUMPTION), ValueType.TEXT)
                 .addOutputData("maf", new RDFType(SCHEMA_MAF), ValueType.TEXT)
@@ -97,6 +101,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("GPS bearing", new RDFType(SCHEMA_GPS_BEARING), ValueType.TEXT)
                 .addOutputData("long term fuel Trim 1", new RDFType(SCHEMA_LONG_TERM_FUEL_TRIM_1), ValueType.NUMBER)
                 .addOutputData("short term fuel Trim 1", new RDFType(SCHEMA_SHORT_TERM_FUEL_TRIM_1), ValueType.NUMBER)
+                .addOutputData("fuel system status code", new RDFType(SCHEMA_FUEL_SYSTEM_STATUS_CODE), ValueType.TEXT)
                 .addOutputData("throttle position", new RDFType(SCHEMA_THROTTLE_POSITION), ValueType.TEXT)
                 .addOutputData("GPS HDOP", new RDFType(SCHEMA_GPS_HDOP), ValueType.TEXT)
                 .addOutputData("GPS VDOP", new RDFType(SCHEMA_GPS_VDOP), ValueType.TEXT)
@@ -106,7 +111,7 @@ public class MeasurementProducer extends EC4BITProducer {
                 .addOutputData("o2 lambda current ER", new RDFType(SCHEMA_O2_LAMBDA_CURRENT_ER), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE), ValueType.TEXT)
                 .addOutputData("o2 lambda voltage ER", new RDFType(SCHEMA_O2_LAMBDA_VOLTAGE_ER), ValueType.TEXT)
-                .withExpirationInterval(Duration.standardDays(millis))
+                .withExpirationInterval(new Duration(millis))
                 .withPricingModel(PricingModel.FREE)
                 .withLicenseType(BigIotTypes.LicenseType.OPEN_DATA_LICENSE)
                 .withProtocol(BigIotTypes.EndpointType.HTTP_GET)

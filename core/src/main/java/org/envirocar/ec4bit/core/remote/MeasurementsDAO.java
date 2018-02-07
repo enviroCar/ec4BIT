@@ -178,6 +178,10 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setShort_term_fuel_trim_1(m.getShort_term_fuel_trim_1());
                             hasPhenomenons = true;
                         }
+                        if (m.hasFuel_system_status_code()&& phenomenonFilter.getFuel_system_status_code()) {
+                            filtered.setFuel_system_status_code(m.getFuel_system_status_code());
+                            hasPhenomenons = true;
+                        }
                         if (m.hasSpeed() && phenomenonFilter.getSpeed()) {
                             filtered.setSpeed(m.getSpeed());
                             hasPhenomenons = true;
@@ -239,6 +243,9 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                     if (phenomenonFilter.getShort_term_fuel_trim_1()) {
                         filteredMeasurements.addPhenomDefinition("Short-Term Fuel Trim 1");
                     }
+                    if (phenomenonFilter.getFuel_system_status_code()) {
+                        filteredMeasurements.addPhenomDefinition("Fuel System Status Code");
+                    }
                     if (phenomenonFilter.getThrolle_position()) {
                         filteredMeasurements.addPhenomDefinition("Throttle Position");
                     }
@@ -284,6 +291,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                 body.addPhenomDefinition("GPS Bearing");
                 body.addPhenomDefinition("Long-Term Fuel Trim 1");
                 body.addPhenomDefinition("Short-Term Fuel Trim 1");
+                body.addPhenomDefinition("Fuel System Status Code");
                 body.addPhenomDefinition("Throttle Position");
                 body.addPhenomDefinition("GPS HDOP");
                 body.addPhenomDefinition("GPS PDOP");
