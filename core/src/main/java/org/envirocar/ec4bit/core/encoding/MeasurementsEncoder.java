@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.encoding;
 
-
 import org.envirocar.ec4bit.core.model.Measurements;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -85,88 +84,89 @@ public class MeasurementsEncoder extends BaseJSONEncoder<Measurements> {
 
     @Override
     public void serialize(Measurements measurements, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
-//        gen.writeStartObject();
+        gen.writeStartArray();
+        gen.writeStartObject();
 
-//        gen.writeObjectFieldStart("phenomenonUnits");
-//
-//        if (measurements.containsPhenomDefinition(ELEMENT_SPEED)) {
-//            gen.writeObjectField(ELEMENT_SPEED, UNIT_SPEED);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_CO2)) {
-//            gen.writeObjectField(ELEMENT_CO2, UNIT_CO2);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_CONSUMPTION)) {
-//            gen.writeObjectField(ELEMENT_CONSUMPTION, UNIT_CONSUMPTION);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_SPEED)) {
-//            gen.writeObjectField(ELEMENT_GPS_SPEED, UNIT_GPS_SPEED);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_ALTITUDE)) {
-//            gen.writeObjectField(ELEMENT_GPS_ALTITUDE, UNIT_GPS_ALTITUDE);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_MAF)) {
-//            gen.writeObjectField(ELEMENT_MAF, UNIT_MAF);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_INTAKE_TEMP)) {
-//            gen.writeObjectField(ELEMENT_INTAKE_TEMP, UNIT_INTAKE_TEMP);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_INTAKE_PRESSURE)) {
-//            gen.writeObjectField(ELEMENT_INTAKE_PRESSURE, UNIT_INTAKE_PRESSURE);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_RPM)) {
-//            gen.writeObjectField(ELEMENT_RPM, UNIT_RPM);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_ENGINE_LOAD)) {
-//            gen.writeObjectField(ELEMENT_ENGINE_LOAD, UNIT_ENGINE_LOAD);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_ACCURACY)) {
-//            gen.writeObjectField(ELEMENT_GPS_ACCURACY, UNIT_GPS_ACCURACY);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_BEARING)) {
-//            gen.writeObjectField(ELEMENT_GPS_BEARING, UNIT_GPS_BEARING);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_LONG_TERM_FUEL_TRIM_1)) {
-//            gen.writeObjectField(ELEMENT_LONG_TERM_FUEL_TRIM_1, UNIT_LONG_TERM_FUEL_TRIM_1);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_SHORT_TERM_FUEL_TRIM_1)) {
-//            gen.writeObjectField(ELEMENT_SHORT_TERM_FUEL_TRIM_1, UNIT_SHORT_TERM_FUEL_TRIM_1);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_FUEL_SYSTEM_STATUS_CODE)) {
-//            gen.writeObjectField(ELEMENT_FUEL_SYSTEM_STATUS_CODE, UNIT_FUEL_SYSTEM_STATUS_CODE);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_THROTTLE_POSITION)) {
-//            gen.writeObjectField(ELEMENT_THROTTLE_POSITION, UNIT_THROTTLE_POSITION);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_HDOP)) {
-//            gen.writeObjectField(ELEMENT_GPS_HDOP, UNIT_GPS_HDOP);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_VDOP)) {
-//            gen.writeObjectField(ELEMENT_GPS_VDOP, UNIT_GPS_VDOP);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_GPS_PDOP)) {
-//            gen.writeObjectField(ELEMENT_GPS_PDOP, UNIT_GPS_PDOP);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_CALCULATED_MAF)) {
-//            gen.writeObjectField(ELEMENT_CALCULATED_MAF, UNIT_CALCULATED_MAF);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_CURRENT)) {
-//            gen.writeObjectField(ELEMENT_O2_LAMBDA_CURRENT, UNIT_O2_LAMBDA_CURRENT);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_CURRENT_ER)) {
-//            gen.writeObjectField(ELEMENT_O2_LAMBDA_CURRENT_ER, UNIT_O2_LAMBDA_CURRENT_ER);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_VOLTAGE)) {
-//            gen.writeObjectField(ELEMENT_O2_LAMBDA_VOLTAGE, UNIT_O2_LAMBDA_VOLTAGE);
-//        }
-//        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_VOLTAGE_ER)) {
-//            gen.writeObjectField(ELEMENT_O2_LAMBDA_VOLTAGE_ER, UNIT_O2_LAMBDA_VOLTAGE_ER);
-//        }
-//        gen.writeEndObject();
+        gen.writeObjectFieldStart("phenomenonUnits");
 
-//        writeArrayOfObjects(gen, "Measurements", measurements.getMeasurements());
-        writeArrayOfObjects(gen, measurements.getMeasurements());
+        if (measurements.containsPhenomDefinition(ELEMENT_SPEED)) {
+            gen.writeObjectField(ELEMENT_SPEED, UNIT_SPEED);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_CO2)) {
+            gen.writeObjectField(ELEMENT_CO2, UNIT_CO2);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_CONSUMPTION)) {
+            gen.writeObjectField(ELEMENT_CONSUMPTION, UNIT_CONSUMPTION);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_SPEED)) {
+            gen.writeObjectField(ELEMENT_GPS_SPEED, UNIT_GPS_SPEED);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_ALTITUDE)) {
+            gen.writeObjectField(ELEMENT_GPS_ALTITUDE, UNIT_GPS_ALTITUDE);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_MAF)) {
+            gen.writeObjectField(ELEMENT_MAF, UNIT_MAF);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_INTAKE_TEMP)) {
+            gen.writeObjectField(ELEMENT_INTAKE_TEMP, UNIT_INTAKE_TEMP);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_INTAKE_PRESSURE)) {
+            gen.writeObjectField(ELEMENT_INTAKE_PRESSURE, UNIT_INTAKE_PRESSURE);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_RPM)) {
+            gen.writeObjectField(ELEMENT_RPM, UNIT_RPM);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_ENGINE_LOAD)) {
+            gen.writeObjectField(ELEMENT_ENGINE_LOAD, UNIT_ENGINE_LOAD);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_ACCURACY)) {
+            gen.writeObjectField(ELEMENT_GPS_ACCURACY, UNIT_GPS_ACCURACY);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_BEARING)) {
+            gen.writeObjectField(ELEMENT_GPS_BEARING, UNIT_GPS_BEARING);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_LONG_TERM_FUEL_TRIM_1)) {
+            gen.writeObjectField(ELEMENT_LONG_TERM_FUEL_TRIM_1, UNIT_LONG_TERM_FUEL_TRIM_1);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_SHORT_TERM_FUEL_TRIM_1)) {
+            gen.writeObjectField(ELEMENT_SHORT_TERM_FUEL_TRIM_1, UNIT_SHORT_TERM_FUEL_TRIM_1);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_FUEL_SYSTEM_STATUS_CODE)) {
+            gen.writeObjectField(ELEMENT_FUEL_SYSTEM_STATUS_CODE, UNIT_FUEL_SYSTEM_STATUS_CODE);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_THROTTLE_POSITION)) {
+            gen.writeObjectField(ELEMENT_THROTTLE_POSITION, UNIT_THROTTLE_POSITION);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_HDOP)) {
+            gen.writeObjectField(ELEMENT_GPS_HDOP, UNIT_GPS_HDOP);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_VDOP)) {
+            gen.writeObjectField(ELEMENT_GPS_VDOP, UNIT_GPS_VDOP);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_GPS_PDOP)) {
+            gen.writeObjectField(ELEMENT_GPS_PDOP, UNIT_GPS_PDOP);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_CALCULATED_MAF)) {
+            gen.writeObjectField(ELEMENT_CALCULATED_MAF, UNIT_CALCULATED_MAF);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_CURRENT)) {
+            gen.writeObjectField(ELEMENT_O2_LAMBDA_CURRENT, UNIT_O2_LAMBDA_CURRENT);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_CURRENT_ER)) {
+            gen.writeObjectField(ELEMENT_O2_LAMBDA_CURRENT_ER, UNIT_O2_LAMBDA_CURRENT_ER);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_VOLTAGE)) {
+            gen.writeObjectField(ELEMENT_O2_LAMBDA_VOLTAGE, UNIT_O2_LAMBDA_VOLTAGE);
+        }
+        if (measurements.containsPhenomDefinition(ELEMENT_O2_LAMBDA_VOLTAGE_ER)) {
+            gen.writeObjectField(ELEMENT_O2_LAMBDA_VOLTAGE_ER, UNIT_O2_LAMBDA_VOLTAGE_ER);
+        }
+        gen.writeEndObject();
 
-//        gen.writeEndObject();
+        writeArrayOfObjects(gen, "Measurements", measurements.getMeasurements());
+
+        gen.writeEndObject();
+        gen.writeEndArray();
     }
 
 }

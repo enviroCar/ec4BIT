@@ -32,7 +32,8 @@ import java.util.List;
 public abstract class BaseJSONEncoder<T> extends JsonSerializer<T> {
 
     protected final void writeArrayOfObjects(JsonGenerator gen, String fieldName, List<?> objects) throws IOException {
-        gen.writeArrayFieldStart(fieldName);
+        gen.writeFieldName(fieldName);
+        gen.writeStartArray();
         for (Object o : objects) {
             gen.writeObject(o);
         }

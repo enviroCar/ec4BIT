@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.remote;
 
-
 import org.envirocar.ec4bit.core.filter.MeasurementFilter;
 import org.envirocar.ec4bit.core.filter.MeasurementIDFilter;
 import org.envirocar.ec4bit.core.filter.PaginationFilter;
@@ -178,7 +177,7 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
                             filtered.setShort_term_fuel_trim_1(m.getShort_term_fuel_trim_1());
                             hasPhenomenons = true;
                         }
-                        if (m.hasFuel_system_status_code()&& phenomenonFilter.getFuel_system_status_code()) {
+                        if (m.hasFuel_system_status_code() && phenomenonFilter.getFuel_system_status_code()) {
                             filtered.setFuel_system_status_code(m.getFuel_system_status_code());
                             hasPhenomenons = true;
                         }
@@ -316,6 +315,31 @@ public class MeasurementsDAO implements AbstractDAO<Measurements, MeasurementFil
             Measurement body = asMeasurement.execute().body();
             Measurements measurements = new Measurements();
             measurements.addMeasurement(body);
+            measurements.addPhenomDefinition("Speed");
+            measurements.addPhenomDefinition("CO2");
+            measurements.addPhenomDefinition("Consumption");
+            measurements.addPhenomDefinition("GPS Speed");
+            measurements.addPhenomDefinition("GPS Altitude");
+            measurements.addPhenomDefinition("MAF");
+            measurements.addPhenomDefinition("Intake Temperature");
+            measurements.addPhenomDefinition("Intake Pressure");
+            measurements.addPhenomDefinition("Rpm");
+            measurements.addPhenomDefinition("Engine Load");
+            measurements.addPhenomDefinition("Fuel System Loop");
+            measurements.addPhenomDefinition("GPS Accuracy");
+            measurements.addPhenomDefinition("GPS Bearing");
+            measurements.addPhenomDefinition("Long-Term Fuel Trim 1");
+            measurements.addPhenomDefinition("Short-Term Fuel Trim 1");
+            measurements.addPhenomDefinition("Fuel System Status Code");
+            measurements.addPhenomDefinition("Throttle Position");
+            measurements.addPhenomDefinition("GPS HDOP");
+            measurements.addPhenomDefinition("GPS PDOP");
+            measurements.addPhenomDefinition("GPS VDOP");
+            measurements.addPhenomDefinition("Calculated MAF");
+            measurements.addPhenomDefinition("O2 Lambda Current");
+            measurements.addPhenomDefinition("O2 Lambda Current ER");
+            measurements.addPhenomDefinition("O2 Lambda Voltage");
+            measurements.addPhenomDefinition("O2 Lambda Voltage ER");
             return measurements;
         } catch (IOException ex) {
             LOG.error(ex.getMessage(), ex); // TODO proper logging and exception handling
