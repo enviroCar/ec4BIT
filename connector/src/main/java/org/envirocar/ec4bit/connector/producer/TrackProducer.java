@@ -69,7 +69,7 @@ public class TrackProducer extends EC4BITProducer {
         return provider.createOfferingDescription(localId)
                 .withName(name)
                 .withCategory(SCHEMA_BIGIOT_TRACK_CATEGORY)
-                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,27,0,0,0))
                 .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
                 // track filter options:
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
