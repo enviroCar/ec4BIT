@@ -87,7 +87,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(tracks_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
-                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,27,0,0,0))
                 .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
                 .withCategory(SCHEMA_BIGIOT_TRACK_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
@@ -143,7 +143,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(measurements_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
-                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,27,0,0,0))
                 .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
                 .withCategory(SCHEMA_BIGIOT_MEASUREMENT_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
@@ -201,7 +201,7 @@ public abstract class EC4BITProducer implements InitializingBean, DisposableBean
         DateTime expireDate = TEMPORAL_TIME_PATTERN.parseDateTime(speed_expireDate);
         long millis = expireDate.getMillis() - now.getMillis();
         return offering
-                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,8,0,0,0))
+                .withTimePeriod(new DateTime(2013, 1, 1, 0, 0, 0), new DateTime(2018,2,27,0,0,0))
                 .inRegion(BoundingBox.create(Location.create(-70, -180), Location.create(90, 180)))
                 .withCategory(SCHEMA_BIGIOT_SPEEDVALUE_CATEGORY)
                 .addInputData("box", new RDFType(SCHEMA_BBOX), ValueType.TEXT)
