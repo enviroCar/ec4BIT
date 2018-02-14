@@ -30,7 +30,8 @@ public class Measurement implements BaseEntity {
     private String measurementID;
     private DateTime time;
     private String sensor;
-    private String trackID;
+    private String trackID,
+            fuel_system_status_code;
     private Double longitude;
     private Double latitude;
     private Double co2,
@@ -48,7 +49,6 @@ public class Measurement implements BaseEntity {
             engine_load,
             long_term_fuel_trim_1,
             short_term_fuel_trim_1,
-            fuel_system_loop,
             throttle_position;
 
     public Measurement() {
@@ -60,14 +60,14 @@ public class Measurement implements BaseEntity {
                 null, null, null, null, null);
     }
 
-    public Measurement(String measurementID, DateTime time, String sensor, String trackID, Double longitude, Double latitude,
+    public Measurement(String measurementID, DateTime time, String sensor, String trackID, String fuel_system_status_code, Double longitude, Double latitude,
             Double co2, Double consumption, Double gps_speed, Double gps_bearing, Double gps_altitude, Double maf,
             Double Intake_pressure, Integer rpm, Integer engine_load,
             Double gps_vdop, Double gps_pdop, Double gps_hdop,
             Double calculated_maf, Double Intake_temp,
             Double o2_lambda_current, Double o2_lambda_current_ER, Double o2_lambda_voltage, Double o2_lambda_voltage_ER, Double gps_accuracy,
             Integer speed,
-            Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position, Integer fuel_system_loop) {
+            Integer long_term_fuel_trim_1, Integer short_term_fuel_trim_1, Integer throttle_position) {
         this.measurementID = measurementID;
         this.time = time;
         this.sensor = sensor;
@@ -97,7 +97,7 @@ public class Measurement implements BaseEntity {
         this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
         this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
         this.throttle_position = throttle_position;
-        this.fuel_system_loop = fuel_system_loop;
+        this.fuel_system_status_code = fuel_system_status_code;
     }
 
     public String getMeasurementID() {
@@ -340,14 +340,14 @@ public class Measurement implements BaseEntity {
         this.sensor = sensor;
     }
 
-    public Integer getFuel_system_loop() {
-        return fuel_system_loop;
+    public String getFuel_system_status_code() {
+        return fuel_system_status_code;
     }
 
-    public void setFuel_system_loop(Integer fuel_system_loop) {
-        this.fuel_system_loop = fuel_system_loop;
+    public void setFuel_system_status_code(String fuel_system_status_code) {
+        this.fuel_system_status_code = fuel_system_status_code;
     }
-
+    
     public boolean hasCo2() {
         return this.co2 != null;
     }
@@ -448,8 +448,8 @@ public class Measurement implements BaseEntity {
         return this.throttle_position != null;
     }
     
-    public boolean hasFuel_system_loop() {
-        return this.fuel_system_loop != null;
+    public boolean hasFuel_system_status_code() {
+        return this.fuel_system_status_code != null;
     }
 
 }

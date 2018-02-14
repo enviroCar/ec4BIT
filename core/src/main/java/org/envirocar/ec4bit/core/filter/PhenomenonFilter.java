@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.filter;
 
-
 /**
  *
  * @author Maurin Radtke <m.radtke@52north.org>
@@ -39,6 +38,7 @@ public class PhenomenonFilter {
     private boolean gps_bearing = true;
     private boolean long_term_fuel_trim_1 = true;
     private boolean short_term_fuel_trim_1 = true;
+    private boolean fuel_system_status_code = true;
     private boolean throlle_position = true;
     private boolean gps_hdop = true;
     private boolean gps_vdop = true;
@@ -50,11 +50,9 @@ public class PhenomenonFilter {
     private boolean o2_lambda_voltage_er = true;
 
     public PhenomenonFilter() {
-    }
+    };
 
-    ;
-
-    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
+    public PhenomenonFilter(boolean speed, boolean co2, boolean consumption, boolean gps_speed, boolean gps_altitude, boolean maf, boolean intake_temperature, boolean intake_pressure, boolean rpm, boolean engine_load, boolean gps_accuracy, boolean gps_bearing, boolean long_term_fuel_trim_1, boolean short_term_fuel_trim_1, boolean fuel_system_status_code, boolean throlle_position, boolean gps_hdop, boolean gps_vdop, boolean gps_pdop, boolean calculated_maf, boolean o2_lambda_current, boolean o2_lambda_current_er, boolean o2_lambda_voltage, boolean o2_lambda_voltage_er) {
         this.speed = speed;
         this.co2 = co2;
         this.consumption = consumption;
@@ -69,6 +67,7 @@ public class PhenomenonFilter {
         this.gps_bearing = gps_bearing;
         this.long_term_fuel_trim_1 = long_term_fuel_trim_1;
         this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
+        this.fuel_system_status_code = fuel_system_status_code;
         this.throlle_position = throlle_position;
         this.gps_hdop = gps_hdop;
         this.gps_vdop = gps_vdop;
@@ -136,6 +135,10 @@ public class PhenomenonFilter {
         return short_term_fuel_trim_1;
     }
 
+    public boolean getFuel_system_status_code() {
+        return fuel_system_status_code;
+    }
+
     public boolean getThrolle_position() {
         return throlle_position;
     }
@@ -187,6 +190,7 @@ public class PhenomenonFilter {
                 || this.gps_bearing
                 || this.long_term_fuel_trim_1
                 || this.short_term_fuel_trim_1
+                || this.fuel_system_status_code
                 || this.throlle_position
                 || this.gps_hdop
                 || this.gps_vdop
@@ -254,6 +258,10 @@ public class PhenomenonFilter {
         this.short_term_fuel_trim_1 = short_term_fuel_trim_1;
     }
 
+    public void setFuel_system_status_code(boolean fuel_system_status_code) {
+        this.fuel_system_status_code = fuel_system_status_code;
+    }
+
     public void setThrolle_position(boolean throlle_position) {
         this.throlle_position = throlle_position;
     }
@@ -305,6 +313,7 @@ public class PhenomenonFilter {
         gps_bearing = turnOn;
         long_term_fuel_trim_1 = turnOn;
         short_term_fuel_trim_1 = turnOn;
+        fuel_system_status_code = turnOn;
         throlle_position = turnOn;
         gps_hdop = turnOn;
         gps_vdop = turnOn;

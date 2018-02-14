@@ -26,7 +26,7 @@ import java.util.Set;
 
 /**
  *
- * @author dewall
+ * @author Maurin Radtke <m.radtke@52north.org>
  */
 public class Measurements implements BaseEntity {
 

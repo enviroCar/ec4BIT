@@ -24,12 +24,10 @@ package org.envirocar.ec4bit.connector;
  */
 interface Constants {
 
-    // BoundingBoxFilter
-    static final String SCHEMA_BBOX = "http://schema.org/box";
 
     // TemporalFilter
-    static final String SCHEMA_START_DATE = "http://schema.org/startDate";
-    static final String SCHEMA_END_DATE = "http://schema.org/endDate";
+    static final String SCHEMA_START_DATE = "http://schema.big-iot.org/mobility/startDate";
+    static final String SCHEMA_END_DATE = "http://schema.big-iot.org/mobility/endDate";
     static final String AFTER = "after";
     static final String BEFORE = "before";
     static final String START_DATE = "startDate";
@@ -38,10 +36,10 @@ interface Constants {
     // PaginationFilter
     static final String PAGE = "page";
     static final String PAGE_NUMBER = "pageNumber";
-    static final String SCHEMA_PAGINATION_PAGENUMBER = "SCHEMA_PAGINATION_PAGENUMBER";
-    static final String SCHEMA_PAGE_NUMBER = "bigiot:pageNumber";
+    static final String SCHEMA_PAGINATION_PAGENUMBER = "http://schema.big-iot.org/common/pageNumber";
 
     // BoundingBoxFilter
+    static final String SCHEMA_BBOX = "http://schema.org/box";
     static final String BBOX = "bbox";
     static final String BBOX_XMIN = "xMin";
     static final String BBOX_YMIN = "yMin";
@@ -49,49 +47,49 @@ interface Constants {
     static final String BBOX_YMAX = "yMax";
     
     // PhenomenonFilter
-    static final String SCHEMA_PHENOMENONS = "SCHEMA_PHENOMENONS";
+    static final String SCHEMA_PHENOMENONS = "http://schema.big-iot.org/mobility/carParameter";
     static final String PHENOMENONS = "phenomenons";
     
-    // single track components
-    static final String SCHEMA_SINGLE_TRACK_ID = "http://schema.org/identifier";
-    static final String SCHEMA_REF = "SCHEMA_REFERENCE";
+    // track components
+    static final String SCHEMA_TRACK = "http://schema.big-iot.org/mobility/Track";
     static final String SINGLE_TRACK = "track";
     static final String TRACKID = "trackID";
-    static final String SCHEMA_MEASUREMENTS = "SCHEMA_MEASUREMENTS";
-    static final String SCHEMA_SINGLE_MEASUREMENT_ID = "http://schema.org/identifier";
+    static final String SCHEMA_MEASUREMENT_ID = "http://schema.big-iot.org/common/measurementID";
+    static final String SCHEMA_MEASUREMENT_URL = "http://schema.big-iot.org/common/measurementURL";
     static final String MEASUREMENTID = "measurementID";
+    static final String SCHEMA_TRACK_ID = "http://schema.big-iot.org/mobility/trackID";
+    static final String SCHEMA_TRACK_URL = "http://schema.big-iot.org/mobility/trackURL";
+    static final String SCHEMA_TRACK_LENGTH = "http://schema.big-iot.org/mobility/trackLength";
 
     // measurement components and phenomenons
     static final String SCHEMA_LONGITUDE = "http://schema.org/longitude";
     static final String SCHEMA_LATITUDE = "http://schema.org/latitude";
-    static final String SCHEMA_ID = "http://schema.org/identifier";
     static final String SCHEMA_TIMESTAMP = "http://schema.org/DateTime";
-    static final String SCHEMA_SENSOR = "http://schema.org/identifier";
-    static final String SCHEMA_TRACK = "http://schema.org/identifier";
-    static final String SCHEMA_LENGTH = "SCHEMA_LENGTH";
-    static final String SCHEMA_SPEED = "http://auto.schema.org/speed";
-    static final String SCHEMA_CO2 = "http://auto.schema.org/emissionsCO2";
-    static final String SCHEMA_CONSUMPTION = "http://schema.org/fuelConsumption";
-    static final String SCHEMA_MAF = "SCHEMA_MAF";
-    static final String SCHEMA_GPS_SPEED = "http://auto.schema.org/speed";
-    static final String SCHEMA_GPS_ALTITUDE = "http://schema.org/elevation";
-    static final String SCHEMA_INTAKE_TEMPERATURE = "SCHEMA_INTAKE_TEMPERATURE";
-    static final String SCHEMA_INTAKE_PRESSURE = "SCHEMA_INTAKE_PRESSURE";
-    static final String SCHEMA_RPM = "SCHEMA_RPM";
-    static final String SCHEMA_ENGINE_LOAD = "SCHEMA_ENGINE_LOAD";
-    static final String SCHEMA_FUEL_SYSTEM_LOOP = "SCHEMA_FUEL_SYSTEM_LOOP";
-    static final String SCHEMA_GPS_ACCURACY = "SCHEMA_GPS_ACCURACY";
-    static final String SCHEMA_GPS_BEARING = "SCHEMA_GPS_BEARING";
-    static final String SCHEMA_LONG_TERM_FUEL_TRIM_1 = "SCHEMA_LONG_TERM_FUEL_TRIM_1";
-    static final String SCHEMA_SHORT_TERM_FUEL_TRIM_1 = "SCHEMA_SHORT_TERM_FUEL_TRIM_1";
-    static final String SCHEMA_THROTTLE_POSITION = "SCHEMA_THROTTLE_POSITION";
-    static final String SCHEMA_GPS_HDOP = "SCHEMA_GPS_HDOP";
-    static final String SCHEMA_GPS_VDOP = "SCHEMA_GPS_VDOP";
-    static final String SCHEMA_GPS_PDOP = "SCHEMA_GPS_PDOP";
-    static final String SCHEMA_CALCULATED_MAF = "SCHEMA_CALCULATED_MAF";
-    static final String SCHEMA_O2_LAMBDA_CURRENT = "SCHEMA_O2_LAMBDA_CURRENT";
-    static final String SCHEMA_O2_LAMBDA_CURRENT_ER = "SCHEMA_O2_LAMBDA_CURRENT_ER";
-    static final String SCHEMA_O2_LAMBDA_VOLTAGE = "SCHEMA_O2_LAMBDA_VOLTAGE";
-    static final String SCHEMA_O2_LAMBDA_VOLTAGE_ER = "SCHEMA_O2_LAMBDA_VOLTAGE_ER";
+    static final String SCHEMA_SENSOR_ID = "http://schema.big-iot.org/common/sensorID";
+    static final String SCHEMA_SENSOR_URL = "http://schema.big-iot.org/common/sensorURL";
+    static final String SCHEMA_SPEED = "http://schema.big-iot.org/mobility/measuredSpeed";
+    static final String SCHEMA_CO2 = "http://schema.big-iot.org/mobility/emissionsCO2";
+    static final String SCHEMA_CONSUMPTION = "http://schema.big-iot.org/mobility/fuelConsumption";
+    static final String SCHEMA_MAF = "http://schema.big-iot.org/mobility/massAirFlow";
+    static final String SCHEMA_GPS_SPEED = "http://schema.big-iot.org/mobility/gpsSpeed";
+    static final String SCHEMA_GPS_ALTITUDE = "http://schema.big-iot.org/mobility/gpsAltitude";
+    static final String SCHEMA_INTAKE_TEMPERATURE = "http://schema.big-iot.org/mobility/intakeAirTemperature";
+    static final String SCHEMA_INTAKE_PRESSURE = "http://schema.big-iot.org/mobility/intakeManifoldAbsolutePressure";
+    static final String SCHEMA_RPM = "http://schema.big-iot.org/mobility/engineRevolutionsPerMinute";
+    static final String SCHEMA_ENGINE_LOAD = "http://schema.big-iot.org/mobility/calculatedEngineLoad";
+    static final String SCHEMA_FUEL_SYSTEM_STATUS_CODE = "http://schema.big-iot.org/mobility/fuelSystemStatusCode";
+    static final String SCHEMA_GPS_ACCURACY = "http://schema.big-iot.org/mobility/gpsAccuracy";
+    static final String SCHEMA_GPS_BEARING = "http://schema.big-iot.org/mobility/gpsBearing";
+    static final String SCHEMA_LONG_TERM_FUEL_TRIM_1 = "http://schema.big-iot.org/mobility/longTermFuelTrim1";
+    static final String SCHEMA_SHORT_TERM_FUEL_TRIM_1 = "http://schema.big-iot.org/mobility/shortTermFuelTrim1";
+    static final String SCHEMA_THROTTLE_POSITION = "http://schema.big-iot.org/mobility/throttlePosition";
+    static final String SCHEMA_GPS_HDOP = "http://schema.big-iot.org/mobility/gpsHDOP";
+    static final String SCHEMA_GPS_VDOP = "http://schema.big-iot.org/mobility/gpsVDOP";
+    static final String SCHEMA_GPS_PDOP = "http://schema.big-iot.org/mobility/gpsPDOP";
+    static final String SCHEMA_CALCULATED_MAF = "http://schema.big-iot.org/mobility/calculatedMassAirFlow";
+    static final String SCHEMA_O2_LAMBDA_CURRENT = "http://schema.big-iot.org/mobility/o2LambdaCurrent";
+    static final String SCHEMA_O2_LAMBDA_CURRENT_ER = "http://schema.big-iot.org/mobility/o2LambdaCurrentER";
+    static final String SCHEMA_O2_LAMBDA_VOLTAGE = "http://schema.big-iot.org/mobility/o2LambdaVoltage";
+    static final String SCHEMA_O2_LAMBDA_VOLTAGE_ER = "http://schema.big-iot.org/mobility/o2LambdaVoltageER";
 
 }

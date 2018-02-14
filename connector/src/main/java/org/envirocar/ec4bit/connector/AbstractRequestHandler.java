@@ -70,6 +70,9 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
     @Override
     public BigIotHttpResponse processRequestHandler(OfferingDescription od, Map<String, Object> map, String subscriberId, String consumerInfo) {
         try {
+            BigIotHttpResponse errorResponse = BigIotHttpResponse.error().withBody("{\"status\":\"error\"}")
+                    .withStatus(422).asJsonType();
+            
             E responseEntity = processRequest(od, map);
             String body = mapper.writeValueAsString(responseEntity);
 
@@ -156,7 +159,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     false, false, false, false, false,
                     false, false, false, false, false,
                     false, false, false, false, false,
-                    false, false, false);
+                    false, false, false, false);
             phenomString = phenomString.toLowerCase();
             String[] phenomenons = phenomString.split(",");
             for (int i = 0; i < phenomenons.length; i++) {
@@ -244,6 +247,10 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     pf.setShort_term_fuel_trim_1(true);
                     continue;
                 }
+                if (phenomenons[i].equals("fuel system status code")) {
+                    pf.setShort_term_fuel_trim_1(true);
+                    continue;
+                }
                 if (phenomenons[i].equals("speed")) {
                     pf.setSpeed(true);
                     continue;
@@ -259,7 +266,7 @@ public abstract class AbstractRequestHandler<E> implements AccessRequestHandler,
                     true, true, true, true, true,
                     true, true, true, true, true,
                     true, true, true, true, true,
-                    true, true, true);
+                    true, true, true, true);
         }
         return pf;
     }
