@@ -5,4 +5,5 @@ cd "${scriptDir}"
 
 cd ../ && \
   mvn clean install && \
-  docker build -t ec4bit/adapter ./docker/Dockerfile
+  docker build -t ec4bit/adapter ./docker/
+
