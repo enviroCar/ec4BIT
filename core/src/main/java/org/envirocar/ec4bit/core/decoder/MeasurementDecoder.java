@@ -18,7 +18,6 @@
  */
 package org.envirocar.ec4bit.core.decoder;
 
-
 import org.envirocar.ec4bit.core.model.Measurement;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -64,6 +63,7 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
     private static final String ELEMENT_SHORT_TERM_FUEL_TRIM_1 = "Short-Term Fuel Trim 1";
+    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_THROTTLE_POSITION = "Throttle Position";
     private static final String ELEMENT_GPS_HDOP = "GPS HDOP";
     private static final String ELEMENT_GPS_VDOP = "GPS VDOP";
@@ -93,7 +93,7 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
                 .get(ELEMENT_GEOMETRY)
                 .get(ELEMENT_COORDINATES);
         if (geometry.isNull() || geometry.get(0).isNull() || geometry.get(1).isNull()) {
-            System.out.println(geometry+","+geometry.get(0)+","+geometry.get(1));
+            System.out.println(geometry + "," + geometry.get(0) + "," + geometry.get(1));
         }
         Double longitude = round(geometry.get(1).asDouble(), 7);
         Double latitude = round(geometry.get(0).asDouble(), 7);
@@ -160,6 +160,10 @@ public class MeasurementDecoder extends BaseDeserializer<Measurement> {
         if (phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1) != null) {
             Integer short_term_fuel_trim = phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1).get(ELEMENT_VALUE).asInt();
             result.setShort_term_fuel_trim_1(short_term_fuel_trim);
+        }
+        if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
+            String fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asText();
+            result.setFuel_system_status_code(fuel_system_status_code);
         }
         if (phenomenons.get(ELEMENT_THROTTLE_POSITION) != null) {
             Integer throttle_position = phenomenons.get(ELEMENT_THROTTLE_POSITION).get(ELEMENT_VALUE).asInt();

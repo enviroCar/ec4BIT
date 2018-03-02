@@ -40,25 +40,8 @@ public class TracksEncoder extends BaseJSONEncoder<Tracks> {
     @Override
     public void serialize(Tracks tracks, JsonGenerator gen, SerializerProvider serializers) throws IOException, JsonProcessingException {
 
-        gen.writeStartObject();
-
-        if (tracks.getTracks().size() != 1) {
-            writeArrayOfObjects(gen, "Tracks", tracks.getTracks());
-        } else {
-            Track track = tracks.getTracks().get(0);
-            gen.writeObjectField("trackID", track.getTrackID());
-            gen.writeObjectField("trackRef", "https://processing.envirocar.org:8081/bigiot/access/tracks?trackID=" + track.getTrackID());
-            gen.writeObjectField("sensorID", track.getSensor());
-            gen.writeObjectField("sensorRef", "http://envirocar.org/api/stable/sensors/" + track.getSensor());
-            gen.writeObjectField("length", track.getLength());
-
-            List<Measurement> measurements = track.getMeasurements();
-            if (!measurements.isEmpty()) {
-                writeArrayOfObjects(gen, "Measurements", measurements);
-            }
-        }
-
-        gen.writeEndObject();
+            writeArrayOfObjects(gen, tracks.getTracks());
+            
     }
 
 }

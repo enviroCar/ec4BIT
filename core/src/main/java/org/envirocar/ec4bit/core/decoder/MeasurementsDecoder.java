@@ -62,7 +62,7 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
     private static final String ELEMENT_INTAKE_PRESSURE = "Intake Pressure";
     private static final String ELEMENT_RPM = "Rpm";
     private static final String ELEMENT_ENGINE_LOAD = "Engine Load";
-    private static final String ELEMENT_FUEL_SYSTEM_LOOP = "Fuel System Loop";
+    private static final String ELEMENT_FUEL_SYSTEM_STATUS_CODE = "Fuel System Status Code";
     private static final String ELEMENT_GPS_ACCURACY = "GPS Accuracy";
     private static final String ELEMENT_GPS_BEARING = "GPS Bearing";
     private static final String ELEMENT_LONG_TERM_FUEL_TRIM_1 = "Long-Term Fuel Trim 1";
@@ -185,6 +185,10 @@ public class MeasurementsDecoder extends BaseDeserializer<Measurements> {
             if (phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1) != null) {
                 Integer short_term_fuel_trim_1 = phenomenons.get(ELEMENT_SHORT_TERM_FUEL_TRIM_1).get(ELEMENT_VALUE).asInt();
                 result.setShort_term_fuel_trim_1(short_term_fuel_trim_1);
+            }
+            if (phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE) != null) {
+                String fuel_system_status_code = phenomenons.get(ELEMENT_FUEL_SYSTEM_STATUS_CODE).get(ELEMENT_VALUE).asText();
+                result.setFuel_system_status_code(fuel_system_status_code);
             }
             if (phenomenons.get(ELEMENT_THROTTLE_POSITION) != null) {
                 Integer throttle_position = phenomenons.get(ELEMENT_THROTTLE_POSITION).get(ELEMENT_VALUE).asInt();

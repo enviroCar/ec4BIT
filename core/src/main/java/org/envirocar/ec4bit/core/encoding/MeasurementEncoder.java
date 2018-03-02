@@ -101,6 +101,9 @@ public class MeasurementEncoder extends BaseJSONEncoder<Measurement> {
         if (value.getShort_term_fuel_trim_1() != null) {
             gen.writeObjectField("Short-Term Fuel Trim 1", value.getShort_term_fuel_trim_1());
         }
+        if (value.getFuel_system_status_code() != null) {
+            gen.writeObjectField("Fuel System Status Code", value.getFuel_system_status_code());
+        }
         if (value.getThrottle_position() != null) {
             gen.writeObjectField("Throttle Position", value.getThrottle_position());
         }
